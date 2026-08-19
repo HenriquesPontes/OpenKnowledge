@@ -33,26 +33,12 @@ function ExternalArrow() {
 export default function ForroVivoAppPage() {
   return (
     <div className="forro-app flex flex-1 flex-col bg-background">
-      <style>{`
-        html, body {
-          background-color: #121c17;
-          --background: #121c17;
-          --muted: #a6b0bd;
-          --border: #598c6b;
-          --surface: #202a25;
-          --surface-alt: #243829;
-          --surface-elevated: #174729;
-        }
-      `}</style>
       <section className="relative overflow-hidden pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
         <Container className="relative">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <p className="text-[#4CAF50] text-sm sm:text-base tracking-[-0.01em]">
-                {appLanding.eyebrow}
-              </p>
               <h1
-                className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
+                className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
                 style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
               >
                 Aprenda Forro.
@@ -112,6 +98,13 @@ export default function ForroVivoAppPage() {
         </Container>
       </section>
 
+      <Architecture
+        id="roadmap"
+        title={appRoadmap.title}
+        description={appRoadmap.description}
+        steps={appRoadmap.steps}
+      />
+
       <section className="pt-10 pb-14 sm:pt-16 sm:pb-20">
         <Container>
           <h2
@@ -148,13 +141,6 @@ export default function ForroVivoAppPage() {
           </div>
         </Container>
       </section>
-
-      <Architecture
-        id="roadmap"
-        title={appRoadmap.title}
-        description={appRoadmap.description}
-        steps={appRoadmap.steps}
-      />
     </div>
   );
 }

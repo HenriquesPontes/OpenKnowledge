@@ -531,7 +531,6 @@ export const appArchitecture = {
 } as const;
 
 export const appLanding = {
-  eyebrow: "Plataforma de aprendizagem",
   title: "Aprenda Forro. Preserve a Cultura.",
   description:
     "O primeiro aplicativo completo dedicado à língua Forro de São Tomé e Príncipe. Vocabulário, lições e contexto cultural na ponta dos seus dedos.",
@@ -631,6 +630,55 @@ export const productOverview = {
   title: "Overview",
   description:
     "ForroVivo products for learning, community, languages, and public linguistic data. Open Knowledge is this site. Machine translation is a capability, not a product.",
+  statement: {
+    before: "Our work is to ",
+    preserve: "document, preserve, and structure",
+    middle: " African Creole languages and make them ",
+    accessible: "accessible",
+    after: " to new generations.",
+  },
+  collage: [
+    {
+      src: "/images/overview/coconut.png",
+      alt: "Opening a coconut",
+      grow: 1.15,
+    },
+    {
+      src: "/images/overview/palm.png",
+      alt: "Climbing a palm tree",
+      grow: 0.9,
+    },
+    {
+      src: "/images/overview/rest.png",
+      alt: "Resting in the shade",
+      grow: 1.2,
+    },
+    {
+      src: "/images/overview/bao.png",
+      alt: "Playing Bao",
+      grow: 1,
+    },
+    {
+      src: "/images/overview/path.png",
+      alt: "Walking at dusk",
+      grow: 1.05,
+    },
+    {
+      src: "/images/overview/market.png",
+      alt: "A street market",
+      grow: 1.3,
+    },
+    {
+      src: "/images/overview/bicycle.png",
+      alt: "A child riding a bicycle",
+      grow: 0.85,
+    },
+    {
+      src: "/images/overview/baskets.png",
+      alt: "Baskets of coconuts",
+      grow: 1.2,
+    },
+  ],
   products: [
     {
       label: "Forro Vivo App",

@@ -1,61 +1,111 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
-import { ProductTree } from "@/components/sections/Architecture";
 import { productOverview } from "@/lib/constants";
-import { APP_STORE_URL } from "@/lib/catalog";
 
 export const metadata = {
   title: "Overview",
+  description: productOverview.description,
 };
 
-export default function OverviewPage() {
+function Collage() {
+  const top = productOverview.collage.slice(0, 4);
+  const bottom = productOverview.collage.slice(4);
+
   return (
-    <section className="pt-28 pb-20 sm:pt-36">
-      <Container>
-        <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-          {productOverview.eyebrow}
-        </p>
+    <>
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:hidden">
+        {productOverview.collage.map((tile) => (
+          <div
+            key={`${tile.src}-${tile.alt}`}
+            className="relative aspect-[5/4] overflow-hidden rounded-[1.25rem]"
+          >
+            <Image
+              src={tile.src}
+              alt={tile.alt}
+              fill
+              priority
+              className="object-cover"
+              sizes="50vw"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:block space-y-3 lg:space-y-4">
+        {[top, bottom].map((row, rowIndex) => (
+          <div key={rowIndex} className="flex gap-3 lg:gap-4">
+            {row.map((tile) => (
+              <div
+                key={`${tile.src}-${tile.grow}`}
+                className="relative min-w-0 overflow-hidden rounded-[2rem]"
+                style={{
+                  flexGrow: tile.grow,
+                  flexBasis: 0,
+                  height: rowIndex === 0 ? "11.5rem" : "13.5rem",
+                }}
+              >
+                <Image
+                  src={tile.src}
+                  alt={tile.alt}
+                  fill
+                  priority={rowIndex === 0}
+                  className="object-cover"
+                  sizes="25vw"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default function OverviewPage() {
+  const { statement } = productOverview;
+
+  return (
+    <div className="flex flex-1 flex-col bg-background">
+      <section className="pt-[4.75rem] sm:pt-[5.25rem]">
+        <Container className="max-w-[90rem]">
+          <Collage />
+        </Container>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <h1
-          className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
-          style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          className="mx-auto max-w-[44rem] text-center font-heading text-white tracking-[-0.03em] leading-[1.25]"
+          style={{ fontSize: "clamp(1.85rem, 4.8vw, 3.5rem)" }}
         >
-          {productOverview.title}
+          {statement.before}
+          <span className="text-[#4CAF50]">{statement.preserve}</span>
+          <br />
+          {statement.middle.trim()}
+          <br />
+          <span className="text-[#4CAF50]">{statement.accessible}</span>
+          {statement.after}
         </h1>
-        <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          {productOverview.description}
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button href={APP_STORE_URL} className="w-full sm:w-auto">
-            Try Forro Vivo
-          </Button>
-          <Button href="/#waitlist" variant="outline" className="w-full sm:w-auto">
-            Join waitlist
-          </Button>
-        </div>
+      </section>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {productOverview.products.map((product) => (
-            <a
-              key={product.href}
-              href={product.href}
-              className="rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-[#454545] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
-            >
-              <h2 className="text-white/90 font-heading text-lg tracking-[-0.02em]">
-                {product.label}
-              </h2>
-              <p className="mt-3 text-muted text-base leading-7 tracking-[-0.01em]">
-                {product.description}
-              </p>
-            </a>
-          ))}
-        </div>
-      </Container>
-
-      <Container>
-        <div className="mt-16 sm:mt-20">
-          <ProductTree />
-        </div>
-      </Container>
-    </section>
+      <section className="pb-20 sm:pb-28">
+        <Container>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {productOverview.products.map((product) => (
+              <a
+                key={product.href}
+                href={product.href}
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6 transition-colors duration-150 hover:border-[#454545] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+              >
+                <h2 className="font-heading text-white text-lg tracking-[-0.02em]">
+                  {product.label}
+                </h2>
+                <p className="mt-3 text-muted text-sm leading-6 tracking-[-0.01em]">
+                  {product.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+    </div>
   );
 }

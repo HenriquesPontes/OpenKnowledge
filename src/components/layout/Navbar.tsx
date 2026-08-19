@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, type CSSProperties } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
@@ -13,7 +13,7 @@ function Wordmark() {
   return (
     <span
       aria-hidden="true"
-      className="wordmark hidden sm:inline-flex font-heading font-bold text-[22px] leading-none tracking-[-0.03em] text-white"
+      className="wordmark hidden sm:inline-flex font-heading font-bold text-[22px] leading-none tracking-[-0.03em] text-foreground"
     >
       {WORDMARK.split("").map((char, index) => (
         <span
@@ -55,6 +55,11 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle("forro-theme", pathname === "/app");
+    return () => document.documentElement.classList.remove("forro-theme");
+  }, [pathname]);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -81,9 +86,9 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled || open
-          ? "border-white/8 bg-[#141414]/72 backdrop-blur-xl"
+          ? "border-border bg-background/72 backdrop-blur-xl"
           : "border-transparent bg-transparent"
       }`}
     >
@@ -113,7 +118,7 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="hidden sm:inline text-muted hover:text-white transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+              className="hidden sm:inline text-muted hover:text-foreground transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
             >
               {link.label}
             </a>
@@ -128,7 +133,7 @@ export function Navbar() {
                 setOpen((value) => !value);
               }}
               className={`inline-flex shrink-0 items-center h-8 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
-                open ? "text-white" : "text-muted hover:text-white"
+                open ? "text-foreground" : "text-muted hover:text-foreground"
               }`}
             >
               {nav.menu.label}
@@ -136,7 +141,7 @@ export function Navbar() {
             {open ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-2xl border border-white/10 bg-[#141414]/95 px-4 py-4 sm:px-5 sm:py-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.7)] backdrop-blur-xl max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
+                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-2xl border border-border bg-background/95 px-4 py-4 sm:px-5 sm:py-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.18)] backdrop-blur-xl max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (
@@ -163,8 +168,8 @@ export function Navbar() {
                               onClick={() => setOpen(false)}
                               className={
                                 column.size === "large"
-                                  ? "block py-1.5 text-white text-[15px] leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
-                                  : "block py-1.5 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                                  ? "block py-1.5 text-foreground text-[15px] leading-snug tracking-[-0.02em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                                  : "block py-1.5 text-foreground text-sm tracking-[-0.01em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                               }
                             >
                               {item.label}
