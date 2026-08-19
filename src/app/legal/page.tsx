@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { footer } from "@/lib/constants";
 
 export const metadata = {
-  title: "Legal — Open Knowledge",
+  title: "Legal",
 };
 
 export default function LegalPage() {

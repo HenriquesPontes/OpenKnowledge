@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/Button";
 import { principle } from "@/lib/constants";
 import { API_ORIGIN, GITHUB_URL } from "@/lib/catalog";
 
+export const metadata = {
+  title: "Introduction",
+};
+
 export default function DocsIndexPage() {
   return (
     <>

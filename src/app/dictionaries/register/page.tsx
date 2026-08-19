@@ -3,7 +3,7 @@ import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountFo
 import { nav } from "@/lib/constants";
 
 export const metadata = {
-  title: "Create an account — Dictionaries",
+  title: "Create an account",
 };
 
 export default function DictionaryRegisterPage() {

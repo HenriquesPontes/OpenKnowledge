@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { GITHUB_URL } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Research — ForroVivo",
+  title: "Research",
 };
 
 export default function ResearchPage() {

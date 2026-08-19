@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { API_ORIGIN, GITHUB_URL } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Developers — ForroVivo",
+  title: "Developers",
 };
 
 export default function DevelopersPage() {

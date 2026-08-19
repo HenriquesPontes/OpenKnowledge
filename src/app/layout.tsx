@@ -22,8 +22,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Open knowledge",
-    template: "%s",
+    default: "Open Knowledge",
+    template: "%s | Open Knowledge",
   },
   description:
     "Open knowledge for the Creole languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. A structured, evidence-based linguistic knowledge base with an open API.",

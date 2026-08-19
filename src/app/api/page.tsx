@@ -5,7 +5,7 @@ import { apiPaths, apiSection } from "@/lib/constants";
 import { API_ORIGIN, fetchLanguagesCatalog, sampleByCountry } from "@/lib/catalog";
 
 export const metadata = {
-  title: "API — ForroVivo",
+  title: "API",
 };
 
 export default async function ApiPage() {

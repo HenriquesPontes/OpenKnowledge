@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
   const language = languages.find((item) => item.id === id);
   const title = country?.title ?? language?.title;
   return {
-    title: title ? `${title} — ForroVivo` : "ForroVivo",
+    title: title ?? { absolute: "Open Knowledge" },
   };
 }
 

@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/Button";
 import { apiPaths } from "@/lib/constants";
 import { API_ORIGIN } from "@/lib/catalog";
 
+export const metadata = {
+  title: "API reference",
+};
+
 export default function ApiReferencePage() {
   return (
     <>

@@ -6,7 +6,7 @@ import { connectArchitecture } from "@/lib/constants";
 import { APP_ORIGIN } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Forro Connect — ForroVivo",
+  title: "Forro Connect",
 };
 
 export default function ForroConnectPage() {

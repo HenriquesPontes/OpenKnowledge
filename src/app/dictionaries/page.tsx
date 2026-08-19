@@ -1,10 +1,11 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { DictionarySearch } from "@/components/sections/DictionarySearch";
 import { languages } from "@/lib/constants";
 import { fetchLanguagesCatalog } from "@/lib/catalog";
 
-export const metadata = {
-  title: "Dictionaries — Open Knowledge",
+export const metadata: Metadata = {
+  title: "Dictionaries",
 };
 
 export default async function DictionariesPage() {

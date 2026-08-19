@@ -3,7 +3,7 @@ import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountFo
 import { nav } from "@/lib/constants";
 
 export const metadata = {
-  title: "Log in — Dictionaries",
+  title: "Log in",
 };
 
 export default function DictionaryLoginPage() {

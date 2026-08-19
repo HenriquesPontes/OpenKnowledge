@@ -3,6 +3,10 @@ import { BrowserMockup } from "@/components/sections/BrowserMockup";
 import { apiSection } from "@/lib/constants";
 import { API_ORIGIN } from "@/lib/catalog";
 
+export const metadata = {
+  title: "Quickstart",
+};
+
 export default function QuickstartPage() {
   const lookup = `curl "${API_ORIGIN}/v1/saotome/forro/lookup?headword=kume"`;
 

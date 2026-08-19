@@ -6,7 +6,7 @@ import { principle } from "@/lib/constants";
 import { fetchLanguagesCatalog, GITHUB_URL } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Knowledge — ForroVivo",
+  title: "Knowledge",
 };
 
 export default async function KnowledgePage() {

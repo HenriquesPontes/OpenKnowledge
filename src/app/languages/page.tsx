@@ -5,7 +5,7 @@ import { countries, languages } from "@/lib/constants";
 import { fetchLanguagesCatalog } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Languages — ForroVivo",
+  title: "Languages",
 };
 
 type Props = {

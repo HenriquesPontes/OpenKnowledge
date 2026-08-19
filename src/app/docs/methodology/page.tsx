@@ -3,6 +3,10 @@ import { MethodologyPipeline } from "@/components/sections/Architecture";
 import { principle } from "@/lib/constants";
 import { GITHUB_URL } from "@/lib/catalog";
 
+export const metadata = {
+  title: "Methodology",
+};
+
 export default function MethodologyPage() {
   return (
     <>
