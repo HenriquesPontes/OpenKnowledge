@@ -720,6 +720,57 @@ export const translationArchitecture = {
   ],
 } as const;
 
+export const translationPage = {
+  description:
+    "Machine translation for African Creole languages, grounded in isolated lexicons and attested sources. Low-resource languages are especially vulnerable to fabricated vocabulary.",
+  heroLead: "Grounded",
+  heroEmphasisA: "translation",
+  heroMid: " for African Creole ",
+  heroEmphasisB: "languages",
+  heroTail: " that puts evidence first",
+  questionsTitle: "Translation is only as reliable as the evidence under it.",
+  questionsBody:
+    "See how isolated lexicons, attested sources, and human review come before any model.",
+  questionsCta: "Learn more",
+  questionsHref: "/docs/methodology",
+  releasesTitle: "How it works",
+  releases: [
+    {
+      title: "Isolated lexicon",
+      body: "Each folder is its own lexicon. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola stay separate. Do not copy between them.",
+      href: "/languages",
+      linkLabel: "Open languages",
+      layer: "Isolated lexicon",
+      surface: "Languages",
+    },
+    {
+      title: "Attested sources",
+      body: "The ForroVivo Knowledge Base does not treat AI-generated information as linguistic evidence. Every documented linguistic claim should be traceable to a source.",
+      href: "/research",
+      linkLabel: "Open research",
+      layer: "Attested sources",
+      surface: "Research",
+    },
+    {
+      title: "Human review",
+      body: "Structured pairs, then grounded models. Missing data is preferable to incorrect data. This Open Knowledge site does not implement translation.",
+      href: "/docs/methodology",
+      linkLabel: "Open methodology",
+      layer: "Human review",
+      surface: "Methodology",
+    },
+  ],
+  wellBeing:
+    "This Open Knowledge site does not implement translation. Translation is a ForroVivo capability, not a product.",
+  links: [
+    { heading: "Languages", label: "Isolated lexicons", href: "/languages" },
+    { heading: "Research", label: "Linguistic Research", href: "/research" },
+    { heading: "Methodology", label: "Evidence-first pipeline", href: "/docs/methodology" },
+    { heading: "Knowledge", label: "Knowledge Base", href: "/knowledge" },
+    { heading: "API", label: "API Platform", href: "/api" },
+  ],
+} as const;
+
 export const docsNav = [
   {
     heading: "Getting started",

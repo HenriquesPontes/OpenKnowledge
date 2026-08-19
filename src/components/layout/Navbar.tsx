@@ -35,8 +35,11 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    document.documentElement.classList.toggle("forro-theme", pathname === "/app");
-    return () => document.documentElement.classList.remove("forro-theme");
+    const root = document.documentElement;
+    root.classList.toggle("forro-theme", pathname === "/app");
+    return () => {
+      root.classList.remove("forro-theme");
+    };
   }, [pathname]);
 
   useEffect(() => {
@@ -193,7 +196,11 @@ export function Navbar() {
               <span className="hidden sm:inline">{nav.dictionaryAuth.cta}</span>
             </Button>
           ) : (
-            <Button href={nav.ctaHref} size="sm" className="shrink-0 gap-1.5 whitespace-nowrap">
+            <Button
+              href={nav.ctaHref}
+              size="sm"
+              className="shrink-0 gap-1.5 whitespace-nowrap"
+            >
               {nav.cta}
               <ExternalArrow />
             </Button>

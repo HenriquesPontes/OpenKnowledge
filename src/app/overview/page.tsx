@@ -73,16 +73,16 @@ export default function OverviewPage() {
 
       <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <h1
-          className="mx-auto max-w-[44rem] text-center font-heading text-white tracking-[-0.03em] leading-[1.25]"
+          className="mx-auto max-w-[44rem] text-center font-heading tracking-[-0.03em] leading-[1.25]"
           style={{ fontSize: "clamp(1.85rem, 4.8vw, 3.5rem)" }}
         >
-          {statement.before}
-          <span className="text-[#4CAF50]">{statement.preserve}</span>
+          <span className="text-muted">{statement.before}</span>
+          <span className="text-white">{statement.preserve}</span>
           <br />
-          {statement.middle.trim()}
+          <span className="text-muted">{statement.middle.trim()}</span>
           <br />
-          <span className="text-[#4CAF50]">{statement.accessible}</span>
-          {statement.after}
+          <span className="text-white">{statement.accessible}</span>
+          <span className="text-muted">{statement.after}</span>
         </h1>
       </section>
 
