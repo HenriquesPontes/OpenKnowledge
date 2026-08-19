@@ -1,32 +1,11 @@
 "use client";
 
-import { useState, useEffect, useLayoutEffect, useRef, type CSSProperties } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { nav } from "@/lib/constants";
-
-const WORDMARK = "Forro Vivo";
-
-function Wordmark() {
-  return (
-    <span
-      aria-hidden="true"
-      className="wordmark hidden sm:inline-flex font-heading font-bold text-[22px] leading-none tracking-[-0.03em] text-foreground"
-    >
-      {WORDMARK.split("").map((char, index) => (
-        <span
-          key={`${char}-${index}`}
-          className="wordmark-char"
-          style={{ "--i": index } as CSSProperties}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-}
 
 function ExternalArrow() {
   return (
@@ -96,7 +75,7 @@ export function Navbar() {
         <a
           href="/"
           aria-label="Forro Vivo home"
-          className="group flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+          className="group flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
         >
           <Image
             src="/images/logo-icon.png"
@@ -108,7 +87,6 @@ export function Navbar() {
             sizes="28px"
             className="h-7 w-7"
           />
-          <Wordmark />
         </a>
 
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
