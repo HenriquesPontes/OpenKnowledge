@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type KeyboardEvent } from "react";
+import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { FeatureCollection, Geometry } from "geojson";
 import africaGeojson from "@/data/africa-countries.json";
@@ -161,6 +161,7 @@ export function AfricaMap({
   const marker = focusLocation ? layout.project(focusLocation.lon, focusLocation.lat) : null;
   const language = languages.find((item) => item.dataset === focusDataset);
   const country = countries.find((item) => item.isoA2 === focusCountryId);
+  const namibia = layout.paths.find((path) => path.id === "NA");
 
   return (
     <div
@@ -171,6 +172,19 @@ export function AfricaMap({
       }
     >
       <div className="relative">
+        {!focused ? (
+          <div className="mb-5 sm:mb-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[16%] z-20 w-full sm:w-[min(22rem,78%)] sm:pr-3 lg:bottom-[18%] lg:w-[min(28rem,34%)]">
+            <h2
+              className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
+              style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}
+            >
+              {africaMap.title}
+            </h2>
+            <p className="mt-2 text-muted text-xs sm:text-sm lg:text-base leading-[1.45] tracking-[-0.01em]">
+              {africaMap.subtitle}
+            </p>
+          </div>
+        ) : null}
         <svg
           viewBox={`0 0 ${layout.width} ${layout.height}`}
           role="img"
@@ -286,7 +300,20 @@ export function AfricaMap({
               ))
           : null}
         {active ? (
-          <div className="absolute left-0 right-auto top-2 z-20 max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4">
+          <div
+            className={
+              focused
+                ? "absolute left-0 right-auto top-2 z-20 max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4"
+                : "absolute left-0 top-[var(--card-y,64%)] z-20 max-w-[min(15rem,calc(100%-0.75rem))] -translate-y-1/2 rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4 sm:translate-y-0"
+            }
+            style={
+              focused || !namibia
+                ? undefined
+                : ({
+                    "--card-y": `${(namibia.centroid[1] / layout.height) * 100}%`,
+                  } satisfies CSSProperties)
+            }
+          >
             <p className="text-white text-sm tracking-[-0.01em]">
               {focused ? (language?.title ?? active.name) : active.name}
             </p>
@@ -306,19 +333,6 @@ export function AfricaMap({
                   : "Lexicon not published yet"}
               </p>
             ) : null}
-          </div>
-        ) : null}
-        {!focused ? (
-          <div className="mt-5 sm:mt-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[12%] z-20 w-full sm:w-[min(22rem,78%)] pr-0 sm:pr-3 sm:bottom-[16%] lg:bottom-[18%] lg:w-[min(28rem,34%)]">
-            <h2
-              className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
-              style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}
-            >
-              {africaMap.title}
-            </h2>
-            <p className="mt-2 text-muted text-xs sm:text-sm lg:text-base leading-[1.45] tracking-[-0.01em]">
-              {africaMap.subtitle}
-            </p>
           </div>
         ) : null}
       </div>
