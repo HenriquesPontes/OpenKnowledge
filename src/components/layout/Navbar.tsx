@@ -118,40 +118,28 @@ export function Navbar() {
                       <ul className="space-y-1">
                         {column.items.map((item) => (
                           <li key={item.label}>
-                            {"href" in item && item.href ? (
-                              <a
-                                href={item.href}
-                                role="menuitem"
-                                target={
-                                  "external" in item && item.external
-                                    ? "_blank"
-                                    : undefined
-                                }
-                                rel={
-                                  "external" in item && item.external
-                                    ? "noopener noreferrer"
-                                    : undefined
-                                }
-                                onClick={() => setOpen(false)}
-                                className={
-                                  column.size === "large"
-                                    ? "block py-1 text-white text-base leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors"
-                                    : "block py-1 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors"
-                                }
-                              >
-                                {item.label}
-                              </a>
-                            ) : (
-                              <span
-                                className={
-                                  column.size === "large"
-                                    ? "block py-1 text-white/60 text-base leading-snug tracking-[-0.02em]"
-                                    : "block py-1 text-white/60 text-sm tracking-[-0.01em]"
-                                }
-                              >
-                                {item.label}
-                              </span>
-                            )}
+                            <a
+                              href={item.href}
+                              role="menuitem"
+                              target={
+                                "external" in item && item.external
+                                  ? "_blank"
+                                  : undefined
+                              }
+                              rel={
+                                "external" in item && item.external
+                                  ? "noopener noreferrer"
+                                  : undefined
+                              }
+                              onClick={() => setOpen(false)}
+                              className={
+                                column.size === "large"
+                                  ? "block py-1 text-white text-base leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors"
+                                  : "block py-1 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors"
+                              }
+                            >
+                              {item.label}
+                            </a>
                           </li>
                         ))}
                       </ul>
