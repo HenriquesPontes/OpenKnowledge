@@ -18,24 +18,40 @@ function Arrow() {
 export default function MachineTranslationPage() {
   return (
     <div className="flex flex-1 flex-col bg-background text-foreground">
-      <section className="px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40">
+      <section className="pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-40">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
+            <h1
+              className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+              style={{ fontSize: "clamp(2.25rem, 6vw, 4.25rem)" }}
+            >
+              {translationPage.heroLead}{" "}
+              <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
+                {translationPage.heroEmphasisA}
+              </span>
+              {translationPage.heroMid}
+              <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
+                {translationPage.heroEmphasisB}
+              </span>
+              {translationPage.heroTail}
+            </h1>
+            <p className="text-muted text-lg sm:text-[21px] leading-normal tracking-[-0.01em] lg:pt-2">
+              {translationPage.description}
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         <div className="mx-auto max-w-[77.5rem] rounded-[1.75rem] border border-border bg-surface px-6 py-20 text-center sm:px-12 sm:py-28">
-          <h1
-            className="mx-auto max-w-[40rem] font-heading text-white tracking-[-0.03em] leading-[1.12]"
-            style={{ fontSize: "clamp(2.25rem, 6vw, 4.25rem)" }}
+          <h2
+            className="mx-auto max-w-[40rem] font-heading text-white tracking-[-0.03em] leading-[1.2]"
+            style={{ fontSize: "clamp(1.85rem, 4.5vw, 3.25rem)" }}
           >
-            {translationPage.heroLead}{" "}
-            <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
-              {translationPage.heroEmphasisA}
-            </span>
-            {translationPage.heroMid}
-            <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
-              {translationPage.heroEmphasisB}
-            </span>
-            {translationPage.heroTail}
-          </h1>
-          <p className="mx-auto mt-5 max-w-[32rem] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-            {translationPage.description}
+            {translationPage.questionsTitle}
+          </h2>
+          <p className="mx-auto mt-5 max-w-[32rem] text-muted text-sm sm:text-base tracking-[-0.01em] leading-6">
+            {translationPage.questionsBody}
           </p>
           <Button href={translationPage.questionsHref} className="mt-8">
             {translationPage.questionsCta}
