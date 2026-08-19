@@ -53,7 +53,7 @@ export function Navbar() {
           />
         </a>
 
-        <nav className="flex min-w-0 items-center gap-2 sm:gap-4">
+        <nav className="relative flex min-w-0 items-center gap-2 sm:gap-4">
           {nav.links.map((link) => (
             <a
               key={link.label}
@@ -64,7 +64,7 @@ export function Navbar() {
             </a>
           ))}
 
-          <div ref={menuRef} className="relative">
+          <div ref={menuRef}>
             <button
               type="button"
               aria-expanded={open}
@@ -89,19 +89,31 @@ export function Navbar() {
                       </p>
                       <ul className="space-y-1">
                         {column.items.map((item) => (
-                          <li key={item.href}>
-                            <a
-                              href={item.href}
-                              role="menuitem"
-                              onClick={() => setOpen(false)}
-                              className={
-                                column.size === "large"
-                                  ? "block py-1 text-white text-base leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors"
-                                  : "block py-1 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors"
-                              }
-                            >
-                              {item.label}
-                            </a>
+                          <li key={item.label}>
+                            {"href" in item && item.href ? (
+                              <a
+                                href={item.href}
+                                role="menuitem"
+                                onClick={() => setOpen(false)}
+                                className={
+                                  column.size === "large"
+                                    ? "block py-1 text-white text-base leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors"
+                                    : "block py-1 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors"
+                                }
+                              >
+                                {item.label}
+                              </a>
+                            ) : (
+                              <span
+                                className={
+                                  column.size === "large"
+                                    ? "block py-1 text-white/60 text-base leading-snug tracking-[-0.02em]"
+                                    : "block py-1 text-white/60 text-sm tracking-[-0.01em]"
+                                }
+                              >
+                                {item.label}
+                              </span>
+                            )}
                           </li>
                         ))}
                       </ul>

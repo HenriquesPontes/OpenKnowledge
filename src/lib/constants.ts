@@ -9,20 +9,21 @@ export const nav = {
         heading: "Explore Forro Vivo",
         size: "large",
         items: [
-          { label: "Knowledge", href: "/knowledge" },
-          { label: "Languages", href: "/languages" },
-          { label: "API", href: "/api" },
-          { label: "Docs", href: "/docs" },
-          { label: "Research", href: "/research" },
-          { label: "About", href: "/about" },
+          { label: "Open Knowledge", href: "/" },
+          { label: "ForroVivo App", href: APP_STORE_URL },
+          { label: "ForroConnect" },
         ],
       },
       {
         heading: "Resources",
         size: "medium",
         items: [
-          { label: "Quickstart", href: "/docs/quickstart" },
-          { label: "API reference", href: "/docs/api-reference" },
+          { label: "Knowledge", href: "/knowledge" },
+          { label: "Languages", href: "/languages" },
+          { label: "Docs", href: "/docs" },
+          { label: "About", href: "/about" },
+          { label: "API", href: "/api" },
+          { label: "Research", href: "/research" },
           { label: "Developers", href: "/developers" },
         ],
       },
@@ -426,16 +427,40 @@ export const architecture = {
   tree: {
     root: { label: "ForroVivo", href: APP_ORIGIN },
     products: [
-      { label: "Knowledge", href: "/knowledge" },
-      { label: "API", href: "/api", feedsData: true },
-      { label: "Docs", href: "/docs" },
+      {
+        label: "Open Knowledge",
+        href: "/",
+        items: [
+          { label: "Research", href: "/research" },
+          { label: "Dictionary", href: "/languages" },
+          { label: "Culture", href: "/about" },
+          { label: "Data", href: "/knowledge" },
+          { label: "API", href: "/api" },
+        ],
+      },
+      {
+        label: "ForroVivo App",
+        href: APP_STORE_URL,
+        items: [
+          { label: "Free learning", href: APP_ORIGIN },
+          { label: "Dictionary", href: APP_ORIGIN },
+          { label: "Lessons", href: APP_ORIGIN },
+          { label: "Exercises", href: APP_ORIGIN },
+        ],
+      },
+      {
+        label: "ForroConnect",
+        items: [
+          { label: "Paid lessons" },
+          { label: "Real teachers" },
+          { label: "Native speakers" },
+          { label: "Community income" },
+        ],
+      },
     ],
-    data: { label: "Linguistic Knowledge Base", href: "/knowledge" },
-    countries: [
-      { label: "São Tomé and Príncipe", href: "/languages/saotome" },
-      { label: "Cabo Verde", href: "/languages/caboverde" },
-      { label: "Guiné-Bissau", href: "/languages/guinebissau" },
-      { label: "Angola", href: "/languages/angola" },
+    outcomes: [
+      { label: "Language preservation" },
+      { label: "Community empowerment" },
     ],
   },
 } as const;
@@ -523,16 +548,5 @@ export const principle =
   "The ForroVivo Knowledge Base does not treat AI-generated information as linguistic evidence. Every documented linguistic claim should be traceable to a source.";
 
 export const footer = {
-  copyright: "© Henriques Pontes, Livlu Technologies 2026",
-  links: [
-    { label: "Knowledge", href: "/knowledge" },
-    { label: "Languages", href: "/languages" },
-    { label: "Docs", href: "/docs" },
-    { label: "About", href: "/about" },
-    { label: "API", href: "/api" },
-    { label: "Research", href: "/research" },
-    { label: "GitHub", href: GITHUB_URL },
-    { label: "ForroVivo", href: APP_ORIGIN },
-    { label: "App Store", href: APP_STORE_URL },
-  ],
+  copyright: "© LIVLU TECHNOLOGIES LTD. Company number 16799761.",
 } as const;

@@ -34,7 +34,7 @@ yarn-error.log*
 .env*
 
 # waitlist emails
-/Join waitlist/*.csv
+/Join waitlist/*.json
 
 # vercel
 .vercel

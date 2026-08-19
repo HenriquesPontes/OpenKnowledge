@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { Architecture } from "@/components/sections/Architecture";
+import { MethodologyPipeline } from "@/components/sections/Architecture";
 import { principle } from "@/lib/constants";
 import { GITHUB_URL } from "@/lib/catalog";
 
@@ -37,7 +37,7 @@ export default function MethodologyPage() {
       </p>
 
       <div className="-mx-6 sm:mx-0 mt-4">
-        <Architecture />
+        <MethodologyPipeline />
       </div>
 
       <div className="mt-4">
