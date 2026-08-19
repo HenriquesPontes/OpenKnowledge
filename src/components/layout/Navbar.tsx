@@ -1,11 +1,32 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { nav } from "@/lib/constants";
+
+const WORDMARK = "Open Knowledge";
+
+function Wordmark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="wordmark hidden sm:inline-flex font-heading text-[15px] tracking-[-0.02em] text-white"
+    >
+      {WORDMARK.split("").map((char, index) => (
+        <span
+          key={`${char}-${index}`}
+          className="wordmark-char"
+          style={{ "--i": index } as CSSProperties}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 function ExternalArrow() {
   return (
@@ -70,7 +91,7 @@ export function Navbar() {
         <a
           href="/"
           aria-label="Open Knowledge home"
-          className="flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+          className="group flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
         >
           <Image
             src="/images/logo-icon.png"
@@ -82,9 +103,7 @@ export function Navbar() {
             sizes="28px"
             className="h-7 w-7"
           />
-          <span className="hidden sm:inline font-heading text-[15px] tracking-[-0.02em] text-white">
-            Open Knowledge
-          </span>
+          <Wordmark />
         </a>
 
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">

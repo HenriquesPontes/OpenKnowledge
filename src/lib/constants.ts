@@ -13,7 +13,6 @@ export const nav = {
         size: "large",
         items: [
           { label: "Forro Vivo App", href: APP_ORIGIN, external: true },
-          { label: "Open Knowledge", href: "/" },
           { label: "Forro Connect", href: "/connect" },
           { label: "Dictionaries", href: "/dictionaries" },
           { label: "Languages", href: "/languages" },

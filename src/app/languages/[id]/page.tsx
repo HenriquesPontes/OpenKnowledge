@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { AfricaMap } from "@/components/sections/AfricaMap";
 import { VarietyGrid } from "@/components/sections/FeatureGrid";
 import { countries, languages } from "@/lib/constants";
 import {
@@ -67,6 +68,11 @@ export default async function LanguageProfilePage({ params }: Props) {
               folders
             </p>
           ) : null}
+          {countryHub.isoA2 ? (
+            <div className="mt-12">
+              <AfricaMap focusCountryId={countryHub.isoA2} />
+            </div>
+          ) : null}
           <div className="mt-12">
             <VarietyGrid countryId={countryHub.id} catalog={records} />
           </div>
@@ -110,6 +116,15 @@ export default async function LanguageProfilePage({ params }: Props) {
         <p className="mt-6 max-w-[640px] text-muted text-base leading-7 tracking-[-0.01em]">
           {language.isolation}
         </p>
+
+        {country?.isoA2 ? (
+          <div className="mt-10">
+            <AfricaMap
+              focusCountryId={country.isoA2}
+              focusDataset={language.dataset}
+            />
+          </div>
+        ) : null}
 
         <dl className="mt-10 max-w-[480px] divide-y divide-border border-t border-b border-border">
           {language.iso ? (

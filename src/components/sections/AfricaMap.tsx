@@ -1,7 +1,12 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { useRouter } from "next/navigation";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 import type { FeatureCollection, Geometry } from "geojson";
 import africaGeojson from "@/data/africa-countries.json";
 import {
@@ -13,7 +18,9 @@ import {
 import {
   buildFocusLayout,
   buildMapLayout,
+  parseCountrySvgLayout,
   type FeatureIdResolver,
+  type MapLayout,
   type PathData,
 } from "@/lib/map-path";
 
@@ -73,11 +80,51 @@ function nearestPathId(
   return best.id;
 }
 
-function datasetForPath(countryId: string, path: PathData) {
+function foldName(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function nameMatchScore(regionName: string, languageTitle: string) {
+  const region = foldName(regionName);
+  const title = foldName(languageTitle);
+  if (!region || !title) return 0;
+  if (region === title) return 3;
+  if (region.includes(title) || title.includes(region)) return 2;
+  return 0;
+}
+
+function datasetForPath(
+  countryId: string,
+  path: PathData,
+  useSvgNames: boolean,
+) {
   const country = countries.find((item) => item.isoA2 === countryId);
   if (!country) return null;
   const candidates = languages.filter((item) => item.country === country.id);
   if (candidates.length === 0) return null;
+  if (candidates.length === 1) return candidates[0].dataset;
+
+  if (useSvgNames) {
+    let best = candidates[0];
+    let bestScore = 0;
+    for (const language of candidates) {
+      const score = Math.max(
+        nameMatchScore(path.name, language.title),
+        nameMatchScore(path.name, language.aliases),
+      );
+      if (score > bestScore) {
+        best = language;
+        bestScore = score;
+      }
+    }
+    return bestScore > 0 ? best.dataset : null;
+  }
 
   let best = candidates[0];
   let bestDistance = Number.POSITIVE_INFINITY;
@@ -96,6 +143,48 @@ function datasetForPath(countryId: string, path: PathData) {
   return best.dataset;
 }
 
+function countryMeta(id: string) {
+  const catalog = countries.find((item) => item.isoA2 === id);
+  const feature = africa.features.find(
+    (item) => resolver.id(item.properties) === id,
+  );
+  const subregion =
+    typeof feature?.properties?.subregion === "string"
+      ? feature.properties.subregion
+      : "";
+  return {
+    title: catalog?.title ?? String(feature?.properties?.name ?? id),
+    subregion,
+  };
+}
+
+function namedFocusPathId(
+  paths: PathData[],
+  countryId: string,
+  dataset?: string,
+) {
+  if (!dataset) return null;
+  const country = countries.find((item) => item.isoA2 === countryId);
+  const candidates = languages.filter((item) => item.country === country?.id);
+  if (candidates.length <= 1) return null;
+  const language = languages.find((item) => item.dataset === dataset);
+  if (!language) return null;
+
+  let best: PathData | null = null;
+  let bestScore = 0;
+  for (const path of paths) {
+    const score = Math.max(
+      nameMatchScore(path.name, language.title),
+      nameMatchScore(path.name, language.aliases),
+    );
+    if (score > bestScore) {
+      best = path;
+      bestScore = score;
+    }
+  }
+  return bestScore > 0 ? best?.id ?? null : null;
+}
+
 export function AfricaMap({
   focusCountryId,
   focusDataset,
@@ -105,26 +194,74 @@ export function AfricaMap({
   focusDataset?: string;
   onFocusDataset?: (dataset: string) => void;
 } = {}) {
-  const router = useRouter();
-  const focused = Boolean(focusCountryId);
+  const lockedFocus = Boolean(focusCountryId);
+  const [openedCountryId, setOpenedCountryId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-
-  const layout = useMemo(
-    () =>
-      focused && focusCountryId
-        ? buildFocusLayout(africa, resolver, focusCountryId, 720, 560, 28)
-        : buildMapLayout(africa, resolver, 1200, 1280, 24),
-    [focused, focusCountryId],
+  const [svgLayout, setSvgLayout] = useState<MapLayout | null>(null);
+  const [svgState, setSvgState] = useState<"idle" | "loading" | "ready" | "missing">(
+    "idle",
   );
+  const countryId = focusCountryId ?? openedCountryId;
+  const focused = Boolean(countryId);
+  const canLeave = Boolean(openedCountryId) && !lockedFocus;
+
+  useEffect(() => {
+    if (!countryId) {
+      setSvgLayout(null);
+      setSvgState("idle");
+      return;
+    }
+
+    const iso = countryId.toLowerCase();
+    const subregion = countryMeta(countryId).subregion;
+    let cancelled = false;
+    setSvgState("loading");
+    setSvgLayout(null);
+
+    fetch(`/images/maps/africa/${iso}.svg`)
+      .then((response) => {
+        if (!response.ok) throw new Error("missing country svg");
+        return response.text();
+      })
+      .then((text) => {
+        if (cancelled) return;
+        const parsed = parseCountrySvgLayout(text, subregion);
+        setSvgLayout(parsed);
+        setSvgState(parsed ? "ready" : "missing");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setSvgLayout(null);
+        setSvgState("missing");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [countryId]);
+
+  const geoLayout = useMemo(
+    () =>
+      focused && countryId
+        ? buildFocusLayout(africa, resolver, countryId, 720, 560, 28)
+        : buildMapLayout(africa, resolver, 1200, 1280, 24),
+    [focused, countryId],
+  );
+  const layout = focused && svgLayout ? svgLayout : geoLayout;
+  const usingSvg = Boolean(focused && svgLayout);
 
   const focusLocation = focusDataset
     ? lexiconLocations[focusDataset]
     : undefined;
   const focusPathId = focused
-    ? nearestPathId(layout.paths, focusLocation)
+    ? usingSvg
+      ? namedFocusPathId(layout.paths, countryId ?? "", focusDataset)
+      : nearestPathId(layout.paths, focusLocation)
     : null;
-  const activeId = focused ? (hoveredId ?? focusPathId) : (hoveredId ?? selectedId);
+  const activeId = focused
+    ? (hoveredId ?? selectedId ?? focusPathId)
+    : (hoveredId ?? selectedId);
 
   const ordered = useMemo(() => {
     return [...layout.paths].sort((a, b) => {
@@ -138,51 +275,87 @@ export function AfricaMap({
     });
   }, [layout.paths, activeId, hoveredId]);
 
+  function closeCountry() {
+    setOpenedCountryId(null);
+    setSelectedId(null);
+    setHoveredId(null);
+    setSvgLayout(null);
+    setSvgState("idle");
+  }
+
   function selectRegion(id: string) {
-    if (focused && focusCountryId && onFocusDataset) {
+    if (!focused) {
+      setOpenedCountryId(id);
+      setSelectedId(null);
+      setHoveredId(null);
+      return;
+    }
+    if (countryId && onFocusDataset) {
       const path = layout.paths.find((item) => item.id === id);
       if (!path) return;
-      const dataset = datasetForPath(focusCountryId, path);
+      const dataset = datasetForPath(countryId, path, usingSvg);
       if (dataset) onFocusDataset(dataset);
       return;
     }
     setSelectedId(id);
-    const href = knowledgeHrefs[id];
-    if (href) router.push(href);
+  }
+
+  if (lockedFocus && svgState === "loading") {
+    return (
+      <div
+        className="relative w-full max-w-[36rem] aspect-square"
+        aria-hidden="true"
+      />
+    );
   }
 
   if (layout.paths.length === 0) {
     return null;
   }
 
-  const active =
-    layout.paths.find((path) => path.id === hoveredId) ??
-    layout.paths.find((path) => path.id === (focused ? focusPathId : selectedId));
-  const marker = focusLocation ? layout.project(focusLocation.lon, focusLocation.lat) : null;
+  const active = layout.paths.find((path) => path.id === activeId);
+  const marker = usingSvg
+    ? null
+    : focusLocation
+      ? layout.project(focusLocation.lon, focusLocation.lat)
+      : null;
   const language = languages.find((item) => item.dataset === focusDataset);
-  const country = countries.find((item) => item.isoA2 === focusCountryId);
+  const meta = countryId ? countryMeta(countryId) : null;
+  const lexiconHref = countryId ? knowledgeHrefs[countryId] : undefined;
   const namibia = layout.paths.find((path) => path.id === "NA");
+  const cardTitle = focused
+    ? hoveredId
+      ? (active?.name ?? language?.title ?? meta?.title)
+      : (language?.title ?? meta?.title ?? active?.name)
+    : active?.name;
 
-  const countryCard = active ? (
+  const countryCard = active || (focused && cardTitle) ? (
     <div className="max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5">
       <p className="text-white text-sm tracking-[-0.01em]">
-        {focused ? (language?.title ?? active.name) : active.name}
+        {cardTitle}
       </p>
       {focused ? (
         <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
-          {language?.group ?? country?.title}
+          {hoveredId
+            ? (language?.title ?? meta?.title)
+            : (language?.group ?? meta?.subregion ?? meta?.title)}
         </p>
-      ) : active.subregion ? (
+      ) : active?.subregion ? (
         <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
           {active.subregion}
         </p>
       ) : null}
-      {!focused ? (
+      {!focused && active ? (
         <p className="mt-2 text-xs tracking-[-0.01em] text-white/70">
-          {knowledgeHrefs[active.id]
-            ? "Open lexicon"
-            : "Lexicon not published yet"}
+          Open country map
         </p>
+      ) : lexiconHref && canLeave ? (
+        <a
+          href={lexiconHref}
+          className="mt-2 inline-block text-xs tracking-[-0.01em] text-white/70 hover:text-white transition-colors"
+        >
+          Open lexicon
+        </a>
       ) : null}
     </div>
   ) : null;
@@ -190,11 +363,28 @@ export function AfricaMap({
   return (
     <div
       className={
-        focused
+        lockedFocus
           ? "relative w-full max-w-[36rem]"
           : "relative w-full max-w-[72rem] mx-auto"
       }
     >
+      {canLeave ? (
+        <div className="relative mb-5 z-20 w-full sm:w-[min(22rem,78%)]">
+          <button
+            type="button"
+            onClick={closeCountry}
+            className="text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
+          >
+            Africa
+          </button>
+          <h2
+            className="mt-2 font-heading text-white tracking-[-0.03em] leading-[1.08]"
+            style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}
+          >
+            {meta?.title}
+          </h2>
+        </div>
+      ) : null}
       <div className="relative">
         {!focused ? (
           <div className="relative mb-5 sm:mb-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[16%] z-20 w-full sm:w-[min(22rem,78%)] sm:pr-3 lg:bottom-[18%] lg:w-[min(28rem,34%)]">
@@ -215,15 +405,19 @@ export function AfricaMap({
           </div>
         ) : null}
         <svg
-          viewBox={`0 0 ${layout.width} ${layout.height}`}
+          viewBox={
+            usingSvg
+              ? `-6 -4 ${layout.width + 22} ${layout.height + 28}`
+              : `0 0 ${layout.width} ${layout.height}`
+          }
           role="img"
           aria-label={
             focused
-              ? `${language?.title ?? country?.title ?? "Country"} map`
+              ? `${language?.title ?? meta?.title ?? "Country"} map`
               : "Interactive map of Africa"
           }
           shapeRendering="geometricPrecision"
-          className="block w-full h-auto touch-manipulation"
+          className="block w-full h-auto overflow-visible touch-manipulation"
           style={{
             filter:
               "drop-shadow(4px 8px 0 rgba(0,0,0,0.55)) drop-shadow(8px 18px 22px rgba(0,0,0,0.4))",
@@ -264,7 +458,9 @@ export function AfricaMap({
                 role="button"
                 tabIndex={0}
                 aria-label={pathData.name}
-                aria-pressed={pathData.id === (focused ? focusPathId : selectedId)}
+                aria-pressed={
+                  pathData.id === (focused ? (selectedId ?? focusPathId) : selectedId)
+                }
                 onClick={() => selectRegion(pathData.id)}
                 onKeyDown={onKeyDown}
                 onPointerEnter={(event) => {
@@ -335,7 +531,7 @@ export function AfricaMap({
               namibia
                 ? ({
                     "--card-y": `${(namibia.centroid[1] / layout.height) * 100}%`,
-                  } satisfies CSSProperties)
+                  } as CSSProperties)
                 : undefined
             }
           >
