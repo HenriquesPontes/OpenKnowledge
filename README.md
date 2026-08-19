@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Open Knowledge
 
-## Getting Started
+Public linguistic knowledge site for **ForroVivo**, operated by **LIVLU TECHNOLOGIES LTD**.
 
-First, run the development server:
+This repository is the Next.js website at [www.forrovivo.com](https://www.forrovivo.com). The site wordmark and metadata title are Open Knowledge. ForroVivo is the platform.
+
+It catalogs, documents, and looks up attested Creole lexicons of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Lexical data is not stored here. Isolated datasets live in the Linguistic Research API and the research repository.
+
+The Knowledge Base does not treat AI-generated information as linguistic evidence. Every documented linguistic claim should be traceable to a source. Similar spelling is not a reason to merge folders (ST, CV, GW, AO).
+
+## What this repository is
+
+- Isolated lexicon catalog
+- Documentation
+- Waitlist
+- Lookup proxy into the public Linguistic Research API
+
+Dictionary login and register collect email. They are not identity. There is no automated test suite in this repository.
+
+This site is not the Forro Vivo App (App Store), and it does not implement machine translation. Forro Connect is on `/connect`: it connects learners with native speakers. The public CTA is the waitlist.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open the local Next.js origin. Production build: `npm run build` then `npm start`. Lint: `npm run lint`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. |
+| `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
+| `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
 
-## Learn More
+On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored).
 
-To learn more about Next.js, take a look at the following resources:
+## Related products
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Product | Role |
+| --- | --- |
+| Open Knowledge | This website |
+| Linguistic Research API | `https://api.forrovivo.com` |
+| Forro Vivo App | App Store. Product page at `/app` |
+| Forro Connect | Connects learners with native speakers. Waitlist on `/connect`. |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+livlutechnologies.com is the planned company website. It is not ready yet.

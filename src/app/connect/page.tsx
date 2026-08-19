@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
 import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
 import { connectArchitecture } from "@/lib/constants";
-import { APP_ORIGIN } from "@/lib/catalog";
 
 export const metadata = {
   title: "Forro Connect",
@@ -29,8 +28,8 @@ export default function ForroConnectPage() {
             <Button href="/#waitlist" className="w-full sm:w-auto">
               Join waitlist
             </Button>
-            <Button href={APP_ORIGIN} variant="outline" className="w-full sm:w-auto">
-              Try Forro Vivo
+            <Button href="/app" variant="outline" className="w-full sm:w-auto">
+              Forro Vivo App
             </Button>
           </div>
         </Container>

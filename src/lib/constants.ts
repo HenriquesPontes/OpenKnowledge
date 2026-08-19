@@ -12,7 +12,7 @@ export const nav = {
         heading: "Product",
         size: "large",
         items: [
-          { label: "Forro Vivo App", href: APP_ORIGIN, external: true },
+          { label: "Forro Vivo App", href: "/app" },
           { label: "Forro Connect", href: "/connect" },
           { label: "Languages", href: "/languages" },
           { label: "API", href: "/api" },
@@ -42,7 +42,7 @@ export const nav = {
     ],
   },
   cta: "Try Forro Vivo",
-  ctaHref: APP_ORIGIN,
+  ctaHref: APP_STORE_URL,
   login: {
     label: "API Platform",
     href: `${API_ORIGIN}/docs`,
@@ -491,22 +491,20 @@ export const architecture = {
       },
       {
         label: "ForroVivo App",
-        href: APP_STORE_URL,
+        href: "/app",
         items: [
-          { label: "Free learning", href: APP_ORIGIN },
-          { label: "Dictionary", href: APP_ORIGIN },
-          { label: "Lessons", href: APP_ORIGIN },
-          { label: "Exercises", href: APP_ORIGIN },
+          { label: "Free learning", href: APP_STORE_URL },
+          { label: "Dictionary", href: APP_STORE_URL },
+          { label: "Lessons", href: APP_STORE_URL },
+          { label: "Exercises", href: APP_STORE_URL },
         ],
       },
       {
-        label: "ForroConnect",
+        label: "Forro Connect",
         href: "/connect",
         items: [
-          { label: "Paid lessons" },
-          { label: "Real teachers" },
-          { label: "Native speakers" },
-          { label: "Community income" },
+          { label: "Waitlist matching", href: "/connect" },
+          { label: "Learner to native speaker" },
         ],
       },
     ],
@@ -515,6 +513,19 @@ export const architecture = {
       { label: "Community empowerment" },
     ],
   },
+} as const;
+
+export const appArchitecture = {
+  title: "How it works",
+  description:
+    "The Forro Vivo App is the learning product: dictionary, lessons, exercises and language practice. It lives on the App Store. It is not this Open Knowledge website.",
+  steps: [
+    { label: "Dictionary" },
+    { label: "Lessons" },
+    { label: "Exercises" },
+    { label: "Language practice" },
+    { label: "App Store" },
+  ],
 } as const;
 
 export const connectArchitecture = {

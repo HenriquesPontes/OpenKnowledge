@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { nav } from "@/lib/constants";
 
-const WORDMARK = "Open Knowledge";
+const WORDMARK = "Forro Vivo";
 
 function Wordmark() {
   return (
     <span
       aria-hidden="true"
-      className="wordmark hidden sm:inline-flex font-heading text-[15px] tracking-[-0.02em] text-white"
+      className="wordmark hidden sm:inline-flex font-heading font-bold text-[22px] leading-none tracking-[-0.03em] text-white"
     >
       {WORDMARK.split("").map((char, index) => (
         <span
@@ -90,7 +90,7 @@ export function Navbar() {
       <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[64px] pt-[env(safe-area-inset-top)]">
         <a
           href="/"
-          aria-label="Open Knowledge home"
+          aria-label="Forro Vivo home"
           className="group flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
         >
           <Image

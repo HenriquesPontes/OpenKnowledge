@@ -53,9 +53,9 @@ export default function LegalPage() {
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
               If you join the waitlist, we process the email address you submit
               so we can tell you when Open Knowledge and related ForroVivo
-              products are available. That address is sent to Beehiiv, our
-              newsletter provider, using the credentials configured for this
-              site.
+              products are available. Addresses are stored with the project
+              waitlist. When newsletter credentials are configured, the same
+              address is also sent to Beehiiv.
             </p>
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
               We do not sell waitlist addresses. We do not use the public

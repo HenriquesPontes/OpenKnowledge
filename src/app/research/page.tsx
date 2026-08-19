@@ -24,8 +24,7 @@ export default async function ResearchPage() {
         </h1>
         <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
           The Linguistic Research initiative started on 23 March 2023. Founder
-          and idealist: Henriques Pontes. Linguistic Research co-founder: Luis
-          Lima.
+          and idealist: Henriques Pontes. Early collaborator: Luís Lima.
         </p>
         <p className="mt-6 max-w-[640px] text-muted text-base leading-7 tracking-[-0.01em]">
           Linguistic Research is the public evidence layer for Forro, Angolar,

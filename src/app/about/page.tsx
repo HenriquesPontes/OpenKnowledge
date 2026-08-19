@@ -251,7 +251,7 @@ export default function AboutPage() {
 
         <div className="mt-16 sm:mt-20">
           <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-            Founders
+            Team
           </p>
           <h2
             className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
@@ -280,7 +280,7 @@ export default function AboutPage() {
                 Luís Lima
               </h3>
               <p className="mt-2 text-muted text-sm sm:text-base tracking-[-0.01em]">
-                Co-Founder & Research Collaborator
+                Early Collaborator
               </p>
               <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
                 Luís provides early collaboration and ongoing testing and feedback,
