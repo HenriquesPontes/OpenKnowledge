@@ -7,7 +7,7 @@ export default function DocsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="pt-28 pb-20 sm:pt-36">
+    <section className="flex-1 pt-28 pb-20 sm:pt-36">
       <Container className="grid grid-cols-1 gap-12 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
         <aside>
           <p className="text-muted text-sm tracking-[-0.01em] mb-6">

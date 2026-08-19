@@ -3,7 +3,7 @@ import { footer } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="mt-16 sm:mt-24 lg:mt-32">
+    <footer className="mt-auto">
       <Container>
         <div className="border-t border-border pt-8 pb-10 sm:pt-10 sm:pb-14">
           <p className="text-center text-white text-sm sm:text-base tracking-[-0.01em]">

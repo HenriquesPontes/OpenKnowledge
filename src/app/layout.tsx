@@ -32,9 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ovo.variable} antialiased`}>
+      <body className={`${ovo.variable} antialiased min-h-dvh flex flex-col`}>
         <Navbar />
-        <main>{children}</main>
+        <main className="flex flex-1 flex-col">{children}</main>
         <Footer />
       </body>
     </html>

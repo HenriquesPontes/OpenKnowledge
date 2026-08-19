@@ -79,7 +79,7 @@ export function Navbar() {
 
         <nav className="flex min-w-0 items-center gap-2 sm:gap-4">
           {nav.links
-            .filter((link) => !dictionaryAuth || link.href !== "/#how-it-works")
+            .filter((link) => !dictionaryAuth)
             .map((link) => (
             <a
               key={link.label}
@@ -90,7 +90,6 @@ export function Navbar() {
             </a>
           ))}
 
-          {dictionaryAuth ? null : (
           <div ref={menuRef}>
             <button
               type="button"
@@ -162,7 +161,6 @@ export function Navbar() {
               </div>
             ) : null}
           </div>
-          )}
 
           {dictionaryAuth ? (
             <Button

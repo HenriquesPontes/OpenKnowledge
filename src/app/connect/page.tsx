@@ -32,11 +32,12 @@ export default function ForroConnectPage() {
             </Button>
           </div>
         </Container>
-
-        <div className="mt-10 sm:mt-14 w-full">
-          <GlobeWireframe />
-        </div>
       </section>
+
+      <div className="w-full shrink-0" style={{ aspectRatio: "1 / 1" }}>
+        <GlobeWireframe />
+      </div>
+
       <Architecture
         title={connectArchitecture.title}
         description={connectArchitecture.description}

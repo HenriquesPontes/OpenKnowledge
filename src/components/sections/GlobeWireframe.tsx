@@ -19,64 +19,124 @@ const ARCS = [
 
 export function GlobeWireframe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const wrapper = wrapperRef.current;
+    if (!canvas || !wrapper) return;
 
-    let width = 0;
+    let globe: ReturnType<typeof createGlobe> | undefined;
     let phi = 0;
     let frame = 0;
+    let lastCss = 0;
 
-    const onResize = () => {
-      width = canvas.offsetWidth;
-    };
-    window.addEventListener("resize", onResize);
-    onResize();
+    function create(cssSize: number) {
+      if (!canvas || cssSize < 8) return;
+      lastCss = cssSize;
 
-    const globe = createGlobe(canvas, {
-      devicePixelRatio: 2,
-      width: width * 2,
-      height: width * 2,
-      phi: 0,
-      theta: 0.25,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.82, 0.82, 0.82],
-      markerColor: [1, 1, 1],
-      glowColor: [0.18, 0.18, 0.18],
-      markers: MARKERS,
-      arcs: ARCS,
-      arcColor: [0.72, 0.72, 0.72],
-      arcWidth: 0.4,
-      arcHeight: 0.28,
-      scale: 1,
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const buffer = Math.min(Math.floor(cssSize * dpr), 2048);
+
+      globe?.destroy();
+      globe = createGlobe(canvas, {
+        devicePixelRatio: 1,
+        width: buffer,
+        height: buffer,
+        phi,
+        theta: 0.28,
+        dark: 1,
+        diffuse: 1.2,
+        mapSamples: 16000,
+        mapBrightness: 6,
+        baseColor: [0.82, 0.82, 0.82],
+        markerColor: [1, 1, 1],
+        glowColor: [0.45, 0.45, 0.45],
+        markers: MARKERS,
+        arcs: ARCS,
+        arcColor: [0.85, 0.85, 0.85],
+        arcWidth: 0.4,
+        arcHeight: 0.28,
+        scale: 1,
+      });
+      globe.update({ phi });
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      const cssSize = Math.floor(entries[0]?.contentRect.width ?? 0);
+      if (Math.abs(cssSize - lastCss) < 2) return;
+      create(cssSize);
     });
+    observer.observe(wrapper);
 
     const animate = () => {
       phi += 0.003;
-      globe.update({
-        phi,
-        width: width * 2,
-        height: width * 2,
-      });
+      globe?.update({ phi });
       frame = requestAnimationFrame(animate);
     };
     animate();
 
     return () => {
       cancelAnimationFrame(frame);
-      globe.destroy();
-      window.removeEventListener("resize", onResize);
+      observer.disconnect();
+      globe?.destroy();
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="block w-full aspect-square"
-    />
+    <div ref={wrapperRef} className="relative h-full w-full" aria-hidden="true">
+      <GlobeFallback />
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+    </div>
+  );
+}
+
+function GlobeFallback() {
+  return (
+    <svg
+      viewBox="0 0 800 800"
+      className="absolute inset-0 h-full w-full"
+      aria-hidden="true"
+    >
+      <circle
+        cx="400"
+        cy="400"
+        r="280"
+        fill="none"
+        stroke="#454545"
+        strokeWidth="1.2"
+      />
+      {[-60, -30, 0, 30, 60].map((deg) => {
+        const x = 400 + 280 * Math.sin((deg * Math.PI) / 180);
+        return (
+          <ellipse
+            key={deg}
+            cx={x}
+            cy="400"
+            rx={Math.abs(280 * Math.cos((deg * Math.PI) / 180)) * 0.22 + 8}
+            ry="280"
+            fill="none"
+            stroke="#2a2a2a"
+            strokeWidth="1"
+          />
+        );
+      })}
+      {[-50, -25, 0, 25, 50].map((lat) => {
+        const y = 400 - 280 * Math.sin((lat * Math.PI) / 180);
+        const rx = 280 * Math.cos((lat * Math.PI) / 180);
+        return (
+          <ellipse
+            key={lat}
+            cx="400"
+            cy={y}
+            rx={rx}
+            ry={18 + Math.abs(lat) * 0.12}
+            fill="none"
+            stroke="#2a2a2a"
+            strokeWidth="1"
+          />
+        );
+      })}
+    </svg>
   );
 }
