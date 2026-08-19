@@ -36,7 +36,7 @@ export default function ForroConnectPage() {
         </Container>
       </section>
 
-      <div className="mx-auto w-full max-w-[min(100%,40rem)] shrink-0 aspect-square">
+      <div className="w-full shrink-0 aspect-square">
         <GlobeWireframe />
       </div>
 

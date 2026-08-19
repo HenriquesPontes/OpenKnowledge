@@ -14,7 +14,6 @@ export const nav = {
         items: [
           { label: "Forro Vivo App", href: APP_ORIGIN, external: true },
           { label: "Forro Connect", href: "/connect" },
-          { label: "Dictionaries", href: "/dictionaries" },
           { label: "Languages", href: "/languages" },
           { label: "API", href: "/api" },
         ],
