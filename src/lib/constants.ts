@@ -1,36 +1,61 @@
 import { API_ORIGIN, APP_ORIGIN, APP_STORE_URL, GITHUB_URL } from "./catalog";
 
 export const nav = {
-  links: [{ label: "How it works", href: "/#how-it-works" }],
+  links: [
+    { label: "How it works", href: "/#how-it-works" },
+    { label: "Foundation", href: "/foundation" },
+  ],
   menu: {
     label: "Forro Vivo",
     columns: [
       {
-        heading: "Explore Forro Vivo",
+        heading: "Products",
         size: "large",
         items: [
-          { label: "Open Knowledge", href: "/" },
-          { label: "ForroVivo App", href: APP_STORE_URL },
-          { label: "ForroConnect" },
+          { label: "Forro Vivo", href: APP_ORIGIN, external: true },
+          { label: "Open knowledge", href: "/" },
+          { label: "Forro Connect" },
+          { label: "Creole", href: "/languages" },
+          { label: "Explore Forro Vivo", href: "/#how-it-works" },
+          { label: "Release Notes", href: `${GITHUB_URL}/releases`, external: true },
+        ],
+      },
+      {
+        heading: "Business",
+        size: "medium",
+        items: [
+          { label: "Overview", href: "/" },
+          { label: "Solutions", href: "/#how-it-works" },
+          { label: "Resources", href: "/docs" },
+          { label: "Customer Stories", href: "/about" },
+          { label: "Partner Network", href: "/developers" },
+          { label: "Contact Sales", href: "/#waitlist" },
         ],
       },
       {
         heading: "Resources",
         size: "medium",
         items: [
-          { label: "Knowledge", href: "/knowledge" },
-          { label: "Languages", href: "/languages" },
-          { label: "Docs", href: "/docs" },
-          { label: "About", href: "/about" },
-          { label: "API", href: "/api" },
+          { label: "Research Overview", href: "/docs/methodology" },
+          { label: "API Platform", href: "/api" },
+          { label: "Doc", href: "/docs" },
           { label: "Research", href: "/research" },
           { label: "Developers", href: "/developers" },
+          { label: "About Us", href: "/about" },
         ],
       },
     ],
   },
-  cta: "Try the API",
-  ctaHref: "/api",
+  cta: "Try Forro Vivo",
+  ctaHref: APP_ORIGIN,
+  login: {
+    label: "Log in",
+    items: [
+      { label: "Forro Vivo", href: APP_ORIGIN, external: true },
+      { label: "API Platform", href: `${API_ORIGIN}/docs`, external: true },
+      { label: "Open knowledge", href: "/" },
+    ],
+  },
 } as const;
 
 export const hero = {
@@ -548,5 +573,14 @@ export const principle =
   "The ForroVivo Knowledge Base does not treat AI-generated information as linguistic evidence. Every documented linguistic claim should be traceable to a source.";
 
 export const footer = {
-  copyright: "© LIVLU TECHNOLOGIES LTD. Company number 16799761.",
+  companyName: "LIVLU TECHNOLOGIES LTD",
+  companyNumber: "16799761",
+  registration: "Registered in England and Wales",
+  companiesHouseHref:
+    "https://find-and-update.company-information.service.gov.uk/company/16799761",
+  links: [
+    { label: "Legal", href: "/legal" },
+    { label: "Privacy", href: "/legal#privacy" },
+    { label: "EULA", href: "/legal#eula" },
+  ],
 } as const;

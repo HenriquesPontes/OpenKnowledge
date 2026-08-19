@@ -62,11 +62,11 @@ export function Architecture() {
             {architecture.title}
           </h2>
           <p className="max-w-[640px] mx-auto text-center text-muted text-base leading-[22px] tracking-[-0.01em] mb-10 sm:mb-14">
-            Language preservation and community empowerment across Open
-            Knowledge, the ForroVivo app, and ForroConnect.
+            Evidence before generation. Missing data is preferable to incorrect
+            data.
           </p>
 
-          <ProductTree />
+          <MethodologyPipeline />
         </motion.div>
       </Container>
     </section>
