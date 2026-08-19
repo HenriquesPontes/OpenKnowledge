@@ -29,7 +29,7 @@ export function ProductShowcase() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="flex w-full max-w-[720px] items-center gap-2 sm:gap-3 rounded-full border border-[#454545] bg-[#252525] px-3 sm:px-5 h-12">
+          <div className="flex w-full max-w-[720px] items-center gap-2 sm:gap-3 rounded-full border border-[#3f3f3f] bg-[#1f1f1f] px-3 sm:px-5 h-12">
             <span className="text-muted text-base tracking-[-0.01em] shrink-0">
               $
             </span>
@@ -39,7 +39,7 @@ export function ProductShowcase() {
             <button
               type="button"
               onClick={copyCommand}
-              className="shrink-0 text-muted hover:text-white transition-colors text-sm tracking-[-0.01em]"
+              className="shrink-0 cursor-pointer text-muted hover:text-white transition-colors duration-150 text-sm tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm"
             >
               {copied ? "Copied" : "Copy"}
             </button>

@@ -25,11 +25,11 @@ function Card({
   return (
     <motion.a
       href={href}
-      className="block rounded-xl border border-border bg-surface px-5 py-6 transition-colors hover:border-[#454545] hover:bg-surface-alt"
+      className="block rounded-xl border border-border bg-surface px-5 py-6 transition-[border-color,background-color] duration-150 hover:border-white/12 hover:bg-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: "easeOut", delay }}
+      transition={{ duration: 0.4, ease: "easeOut", delay: delay * 0.4 }}
     >
       <h3 className="text-white text-lg sm:text-[21px] font-normal tracking-[-0.01em]">
         {title}

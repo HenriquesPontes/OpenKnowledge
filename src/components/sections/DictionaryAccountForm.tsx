@@ -47,31 +47,32 @@ export function DictionaryAccountForm({ mode }: { mode: Mode }) {
   return (
     <>
       {status === "success" ? (
-        <p className="mt-6 text-green-400 text-base tracking-[-0.01em]">
+        <p className="mt-6 text-white/80 text-base tracking-[-0.01em]">
           {message}
         </p>
       ) : (
-        <form onSubmit={onSubmit} className="mt-6">
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
+        <form onSubmit={onSubmit} className="mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
             <input
               type="email"
-              placeholder="Enter email"
+              placeholder="Email"
               required
+              autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               disabled={status === "loading"}
-              className="h-10 w-full sm:w-[285px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white placeholder-[#6e6e6e] tracking-[-0.01em] outline-none focus:border-[#666] disabled:opacity-50"
+              className="field w-full sm:w-[280px]"
             />
             <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
               {status === "loading"
                 ? "Sending…"
                 : mode === "register"
-                  ? "Create an account — It's free"
+                  ? "Create an account"
                   : "Log in"}
             </Button>
           </div>
           {status === "error" ? (
-            <p className="mt-3 text-red-400 text-sm tracking-[-0.01em]">
+            <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
               {message}
             </p>
           ) : null}

@@ -163,6 +163,30 @@ export function AfricaMap({
   const country = countries.find((item) => item.isoA2 === focusCountryId);
   const namibia = layout.paths.find((path) => path.id === "NA");
 
+  const countryCard = active ? (
+    <div className="max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5">
+      <p className="text-white text-sm tracking-[-0.01em]">
+        {focused ? (language?.title ?? active.name) : active.name}
+      </p>
+      {focused ? (
+        <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
+          {language?.group ?? country?.title}
+        </p>
+      ) : active.subregion ? (
+        <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
+          {active.subregion}
+        </p>
+      ) : null}
+      {!focused ? (
+        <p className="mt-2 text-xs tracking-[-0.01em] text-white/70">
+          {knowledgeHrefs[active.id]
+            ? "Open lexicon"
+            : "Lexicon not published yet"}
+        </p>
+      ) : null}
+    </div>
+  ) : null;
+
   return (
     <div
       className={
@@ -173,7 +197,7 @@ export function AfricaMap({
     >
       <div className="relative">
         {!focused ? (
-          <div className="mb-5 sm:mb-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[16%] z-20 w-full sm:w-[min(22rem,78%)] sm:pr-3 lg:bottom-[18%] lg:w-[min(28rem,34%)]">
+          <div className="relative mb-5 sm:mb-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[16%] z-20 w-full sm:w-[min(22rem,78%)] sm:pr-3 lg:bottom-[18%] lg:w-[min(28rem,34%)]">
             <h2
               className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
               style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}
@@ -183,6 +207,11 @@ export function AfricaMap({
             <p className="mt-2 text-muted text-xs sm:text-sm lg:text-base leading-[1.45] tracking-[-0.01em]">
               {africaMap.subtitle}
             </p>
+            {countryCard ? (
+              <div className="pointer-events-none absolute left-0 top-full mt-4 hidden sm:block">
+                {countryCard}
+              </div>
+            ) : null}
           </div>
         ) : null}
         <svg
@@ -299,40 +328,23 @@ export function AfricaMap({
                 />
               ))
           : null}
-        {active ? (
+        {!focused && countryCard ? (
           <div
-            className={
-              focused
-                ? "absolute left-0 right-auto top-2 z-20 max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4"
-                : "absolute left-0 top-[var(--card-y,64%)] z-20 max-w-[min(15rem,calc(100%-0.75rem))] -translate-y-1/2 rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4 sm:translate-y-0"
-            }
+            className="absolute left-0 top-[var(--card-y,64%)] z-20 -translate-y-1/2 sm:hidden"
             style={
-              focused || !namibia
-                ? undefined
-                : ({
+              namibia
+                ? ({
                     "--card-y": `${(namibia.centroid[1] / layout.height) * 100}%`,
                   } satisfies CSSProperties)
+                : undefined
             }
           >
-            <p className="text-white text-sm tracking-[-0.01em]">
-              {focused ? (language?.title ?? active.name) : active.name}
-            </p>
-            {focused ? (
-              <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
-                {language?.group ?? country?.title}
-              </p>
-            ) : active.subregion ? (
-              <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
-                {active.subregion}
-              </p>
-            ) : null}
-            {!focused ? (
-              <p className="mt-2 text-xs tracking-[-0.01em] text-white/70">
-                {knowledgeHrefs[active.id]
-                  ? "Open lexicon"
-                  : "Lexicon not published yet"}
-              </p>
-            ) : null}
+            {countryCard}
+          </div>
+        ) : null}
+        {focused && countryCard ? (
+          <div className="absolute left-0 top-2 z-20 sm:left-auto sm:right-0 sm:top-4">
+            {countryCard}
           </div>
         ) : null}
       </div>

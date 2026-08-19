@@ -60,17 +60,21 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-200 ${
         scrolled || open
-          ? "bg-[#141414]/80 backdrop-blur-md"
-          : "bg-transparent"
+          ? "border-white/8 bg-[#141414]/72 backdrop-blur-xl"
+          : "border-transparent bg-transparent"
       }`}
     >
-      <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[68px] pt-[env(safe-area-inset-top)]">
-        <a href="/" aria-label="ForroVivo home" className="shrink-0">
+      <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[64px] pt-[env(safe-area-inset-top)]">
+        <a
+          href="/"
+          aria-label="Open Knowledge home"
+          className="flex shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+        >
           <Image
             src="/images/logo-icon.png"
-            alt="ForroVivo"
+            alt=""
             width={512}
             height={512}
             priority
@@ -78,6 +82,9 @@ export function Navbar() {
             sizes="28px"
             className="h-7 w-7"
           />
+          <span className="hidden sm:inline font-heading text-[15px] tracking-[-0.02em] text-white">
+            Open Knowledge
+          </span>
         </a>
 
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
@@ -87,7 +94,7 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="hidden sm:inline text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em] whitespace-nowrap"
+              className="hidden sm:inline text-muted hover:text-white transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
             >
               {link.label}
             </a>
@@ -101,7 +108,7 @@ export function Navbar() {
               onClick={() => {
                 setOpen((value) => !value);
               }}
-              className={`inline-flex shrink-0 items-center h-[29px] px-1.5 sm:px-0 transition-colors text-sm sm:text-base tracking-[-0.01em] ${
+              className={`inline-flex shrink-0 items-center h-8 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
                 open ? "text-white" : "text-muted hover:text-white"
               }`}
             >
@@ -110,12 +117,12 @@ export function Navbar() {
             {open ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-xl border border-border bg-[#141414] px-4 py-4 sm:px-5 sm:py-5 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)] max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
+                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-2xl border border-white/10 bg-[#141414]/95 px-4 py-4 sm:px-5 sm:py-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.7)] backdrop-blur-xl max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (
                     <div key={column.heading}>
-                      <p className="text-muted text-xs tracking-[-0.01em] mb-2">
+                      <p className="text-muted text-[11px] tracking-[0.08em] uppercase mb-2.5">
                         {column.heading}
                       </p>
                       <ul className="space-y-1">
@@ -137,8 +144,8 @@ export function Navbar() {
                               onClick={() => setOpen(false)}
                               className={
                                 column.size === "large"
-                                  ? "block py-1 text-white text-base leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors"
-                                  : "block py-1 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors"
+                                  ? "block py-1.5 text-white text-[15px] leading-snug tracking-[-0.02em] hover:text-white/70 transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                                  : "block py-1.5 text-white text-sm tracking-[-0.01em] hover:text-white/70 transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                               }
                             >
                               {item.label}

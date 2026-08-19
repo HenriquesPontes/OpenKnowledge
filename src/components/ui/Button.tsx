@@ -19,14 +19,16 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center rounded-full font-normal transition-colors touch-manipulation",
+    "inline-flex items-center justify-center rounded-full font-normal cursor-pointer select-none",
+    "transition-[color,background-color,border-color,opacity,box-shadow] duration-150 ease-out",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]",
+    "active:opacity-90 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
     variant === "primary" && "bg-white text-[#141414] hover:bg-white/90",
     variant === "ghost" && "text-muted hover:text-white",
     variant === "outline" &&
-      "border border-[#454545] bg-transparent text-white hover:border-[#666] hover:bg-[#252525]",
-    size === "default" && "h-10 w-full px-5 sm:w-auto sm:px-8 text-base",
-    size === "sm" && "h-[29px] px-3 sm:px-4 text-sm",
-    "disabled:opacity-50 disabled:cursor-not-allowed",
+      "border border-[#3f3f3f] bg-transparent text-white hover:border-[#666] hover:bg-[#1f1f1f]",
+    size === "default" && "h-10 w-full px-5 sm:w-auto sm:px-8 text-[15px]",
+    size === "sm" && "h-8 px-3.5 sm:px-4 text-[13px]",
     className,
   );
 

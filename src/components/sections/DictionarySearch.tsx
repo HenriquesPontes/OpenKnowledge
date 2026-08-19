@@ -117,7 +117,7 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
             aria-label="Isolated lexicon"
-            className="h-10 w-full max-w-full sm:max-w-[280px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white tracking-[-0.01em] outline-none focus:border-[#666]"
+            className="field w-full max-w-full sm:max-w-[280px]"
           >
             {datasets.map((item) => (
               <option key={item.dataset} value={item.dataset}>
@@ -132,7 +132,7 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
               onChange={(event) => setHeadword(event.target.value)}
               placeholder="Look up a headword"
               required
-              className="h-10 min-w-0 flex-1 sm:w-[285px] sm:flex-none rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white placeholder-[#6e6e6e] tracking-[-0.01em] outline-none focus:border-[#666]"
+              className="field min-w-0 flex-1 sm:w-[280px] sm:flex-none"
             />
             <Button
               type="submit"

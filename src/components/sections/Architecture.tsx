@@ -13,10 +13,10 @@ function Node({
   href?: string;
   featured?: boolean;
 }) {
-  const className = `block rounded-xl border px-4 py-3 sm:px-5 text-center transition-colors ${
+  const className = `block rounded-xl border px-4 py-3 sm:px-5 text-center transition-[border-color,background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
     featured
-      ? "border-white/25 bg-surface-alt hover:border-white/40"
-      : "border-border bg-surface hover:border-[#454545] hover:bg-surface-alt"
+      ? "border-white/20 bg-surface-alt hover:border-white/35"
+      : "border-border bg-surface hover:border-white/12 hover:bg-surface-alt"
   }`;
   const labelEl = (
     <span className="text-white text-sm sm:text-base tracking-[-0.01em]">

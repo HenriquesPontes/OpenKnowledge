@@ -24,7 +24,7 @@ export default function DocsLayout({
                     <li key={link.href + link.label}>
                       <a
                         href={link.href}
-                        className="whitespace-nowrap text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
+                        className="whitespace-nowrap text-muted hover:text-white transition-colors duration-150 text-sm tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm"
                       >
                         {link.label}
                       </a>

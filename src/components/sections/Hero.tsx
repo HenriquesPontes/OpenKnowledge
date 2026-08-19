@@ -61,32 +61,33 @@ export function Hero() {
           >
             {hero.headline}
           </h1>
-          <p className="mt-2 text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
+          <p className="mt-4 text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-relaxed">
             {hero.subheadline}
           </p>
 
           {status === "success" ? (
-            <p className="mt-6 text-green-400 text-base tracking-[-0.01em]">
+            <p className="mt-6 text-white/80 text-base tracking-[-0.01em]">
               {message}
             </p>
           ) : (
-            <form onSubmit={handleWaitlist} className="mt-6">
-              <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
+            <form onSubmit={handleWaitlist} className="mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-3 sm:items-center">
                 <input
                   type="email"
                   placeholder={hero.waitlistPlaceholder}
                   required
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={status === "loading"}
-                  className="h-10 w-full sm:w-[285px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white placeholder-[#6e6e6e] tracking-[-0.01em] outline-none focus:border-[#666] disabled:opacity-50"
+                  className="field w-full sm:w-[280px]"
                 />
                 <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
-                  {status === "loading" ? "Joining..." : hero.waitlistCta}
+                  {status === "loading" ? "Joining…" : hero.waitlistCta}
                 </Button>
               </div>
               {status === "error" && (
-                <p className="mt-3 text-red-400 text-sm tracking-[-0.01em]">
+                <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
                   {message}
                 </p>
               )}
