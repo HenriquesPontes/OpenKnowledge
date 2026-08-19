@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { nav } from "@/lib/constants";
@@ -27,11 +28,11 @@ function ExternalArrow() {
 }
 
 export function Navbar() {
+  const pathname = usePathname();
+  const dictionaryAuth = pathname.startsWith("/dictionaries");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const loginRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -43,14 +44,10 @@ export function Navbar() {
     function onPointerDown(event: PointerEvent) {
       const target = event.target as Node;
       if (!menuRef.current?.contains(target)) setOpen(false);
-      if (!loginRef.current?.contains(target)) setLoginOpen(false);
     }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setOpen(false);
-        setLoginOpen(false);
-      }
+      if (event.key === "Escape") setOpen(false);
     }
 
     document.addEventListener("pointerdown", onPointerDown);
@@ -64,12 +61,12 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        scrolled || open || loginOpen
+        scrolled || open
           ? "bg-[#141414]/80 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
-      <Container className="flex items-center justify-between gap-3 h-[60px] sm:h-[68px]">
+      <Container className="relative flex items-center justify-between gap-3 h-[60px] sm:h-[68px]">
         <a href="/" aria-label="ForroVivo home" className="shrink-0">
           <Image
             src="/images/logo-icon.png"
@@ -80,8 +77,10 @@ export function Navbar() {
           />
         </a>
 
-        <nav className="relative flex min-w-0 items-center gap-2 sm:gap-4">
-          {nav.links.map((link) => (
+        <nav className="flex min-w-0 items-center gap-2 sm:gap-4">
+          {nav.links
+            .filter((link) => !dictionaryAuth || link.href !== "/#how-it-works")
+            .map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -91,6 +90,7 @@ export function Navbar() {
             </a>
           ))}
 
+          {dictionaryAuth ? null : (
           <div ref={menuRef}>
             <button
               type="button"
@@ -98,9 +98,8 @@ export function Navbar() {
               aria-haspopup="menu"
               onClick={() => {
                 setOpen((value) => !value);
-                setLoginOpen(false);
               }}
-              className={`transition-colors text-sm sm:text-base tracking-[-0.01em] ${
+              className={`inline-flex items-center h-[29px] transition-colors text-sm sm:text-base tracking-[-0.01em] ${
                 open ? "text-white" : "text-muted hover:text-white"
               }`}
             >
@@ -109,7 +108,7 @@ export function Navbar() {
             {open ? (
               <div
                 role="menu"
-                className="absolute right-0 mt-2 w-[min(40rem,calc(100vw-2rem))] rounded-xl border border-border bg-[#141414] px-4 py-4 sm:px-5 sm:py-5 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)] max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[3.75rem] max-sm:mt-0 max-sm:w-auto"
+                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-xl border border-border bg-[#141414] px-4 py-4 sm:px-5 sm:py-5 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)] max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[3.75rem] max-sm:mt-0 max-sm:w-auto"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (
@@ -163,69 +162,42 @@ export function Navbar() {
               </div>
             ) : null}
           </div>
+          )}
 
-          <div ref={loginRef} className="relative">
+          {dictionaryAuth ? (
             <Button
-              type="button"
+              href={nav.dictionaryAuth.loginHref}
               variant="outline"
               size="sm"
-              aria-expanded={loginOpen}
-              aria-haspopup="menu"
-              onClick={() => {
-                setLoginOpen((value) => !value);
-                setOpen(false);
-              }}
-              className="shrink-0 gap-1.5"
+              className="shrink-0"
+            >
+              {nav.dictionaryAuth.loginLabel}
+            </Button>
+          ) : (
+            <Button
+              href={nav.login.href}
+              variant="outline"
+              size="sm"
+              className="shrink-0"
             >
               {nav.login.label}
-              <svg
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
-                fill="none"
-                aria-hidden="true"
-                className={`transition-transform ${loginOpen ? "rotate-180" : ""}`}
-              >
-                <path
-                  d="M1 1l4 4 4-4"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
             </Button>
-            {loginOpen ? (
-              <div
-                role="menu"
-                className="absolute right-0 mt-2 min-w-[11rem] rounded-xl border border-border bg-[#1a1a1a] px-3 py-2 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)]"
-              >
-                <ul className="space-y-0.5">
-                  {nav.login.items.map((item) => (
-                    <li key={item.label}>
-                      <a
-                        href={item.href}
-                        role="menuitem"
-                        target={item.external ? "_blank" : undefined}
-                        rel={
-                          item.external ? "noopener noreferrer" : undefined
-                        }
-                        onClick={() => setLoginOpen(false)}
-                        className="block rounded-lg px-2 py-1.5 text-white text-sm tracking-[-0.01em] hover:bg-white/5"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
+          )}
 
-          <Button href={nav.ctaHref} size="sm" className="shrink-0 gap-1.5">
-            {nav.cta}
-            <ExternalArrow />
-          </Button>
+          {dictionaryAuth ? (
+            <Button
+              href={nav.dictionaryAuth.ctaHref}
+              size="sm"
+              className="shrink-0 max-sm:px-3"
+            >
+              {nav.dictionaryAuth.cta}
+            </Button>
+          ) : (
+            <Button href={nav.ctaHref} size="sm" className="shrink-0 gap-1.5">
+              {nav.cta}
+              <ExternalArrow />
+            </Button>
+          )}
         </nav>
       </Container>
     </header>

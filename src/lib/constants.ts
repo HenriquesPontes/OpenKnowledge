@@ -3,7 +3,7 @@ import { API_ORIGIN, APP_ORIGIN, APP_STORE_URL, GITHUB_URL } from "./catalog";
 export const nav = {
   links: [
     { label: "How it works", href: "/#how-it-works" },
-    { label: "Foundation", href: "/foundation" },
+    { label: "Dictionaries", href: "/dictionaries" },
   ],
   menu: {
     label: "Forro Vivo",
@@ -14,7 +14,7 @@ export const nav = {
         items: [
           { label: "Forro Vivo", href: APP_ORIGIN, external: true },
           { label: "Open knowledge", href: "/" },
-          { label: "Forro Connect" },
+          { label: "Forro Connect", href: "/connect" },
           { label: "Creole", href: "/languages" },
           { label: "Explore Forro Vivo", href: "/#how-it-works" },
           { label: "Release Notes", href: `${GITHUB_URL}/releases`, external: true },
@@ -49,12 +49,14 @@ export const nav = {
   cta: "Try Forro Vivo",
   ctaHref: APP_ORIGIN,
   login: {
-    label: "Log in",
-    items: [
-      { label: "Forro Vivo", href: APP_ORIGIN, external: true },
-      { label: "API Platform", href: `${API_ORIGIN}/docs`, external: true },
-      { label: "Open knowledge", href: "/" },
-    ],
+    label: "API Platform",
+    href: `${API_ORIGIN}/docs`,
+  },
+  dictionaryAuth: {
+    loginLabel: "Log in",
+    loginHref: "/dictionaries/login",
+    cta: "Create an account — It's free",
+    ctaHref: "/dictionaries/register",
   },
 } as const;
 
@@ -78,6 +80,7 @@ export const countries = [
     number: "1",
     title: "São Tomé and Príncipe",
     aliases: "Forro, Angolar, Lung’Ie",
+    isoA2: "ST",
     href: "/languages/saotome",
     datasetPrefix: "saotome",
     isolation:
@@ -88,6 +91,7 @@ export const countries = [
     number: "2",
     title: "Cabo Verde",
     aliases: "Kabuverdianu island varieties",
+    isoA2: "CV",
     href: "/languages/caboverde",
     datasetPrefix: "caboverde",
     isolation:
@@ -98,6 +102,7 @@ export const countries = [
     number: "3",
     title: "Guiné-Bissau",
     aliases: "Kriol regional varieties",
+    isoA2: "GW",
     href: "/languages/guinebissau",
     datasetPrefix: "guinebissau",
     isolation:
@@ -108,6 +113,7 @@ export const countries = [
     number: "4",
     title: "Angola",
     aliases: "Angola Contruy",
+    isoA2: "AO",
     href: "/languages/angola",
     datasetPrefix: "angola",
     isolation:
@@ -425,6 +431,31 @@ export const languages = [
   },
 ] as const;
 
+export const lexiconLocations: Record<string, { lat: number; lon: number }> = {
+  "saotome/forro": { lat: 0.3365, lon: 6.7273 },
+  "saotome/angolar": { lat: 0.1333, lon: 6.65 },
+  "saotome/lungie": { lat: 1.6136, lon: 7.4058 },
+  "caboverde/santiago": { lat: 14.933, lon: -23.513 },
+  "caboverde/fogo": { lat: 14.896, lon: -24.498 },
+  "caboverde/maio": { lat: 15.138, lon: -23.208 },
+  "caboverde/brava": { lat: 14.871, lon: -24.696 },
+  "caboverde/saovicente": { lat: 16.89, lon: -24.988 },
+  "caboverde/santoantao": { lat: 17.019, lon: -25.065 },
+  "caboverde/saonicolau": { lat: 16.615, lon: -24.298 },
+  "caboverde/sal": { lat: 16.755, lon: -22.945 },
+  "caboverde/boavista": { lat: 16.176, lon: -22.917 },
+  "guinebissau/bissau": { lat: 11.863, lon: -15.598 },
+  "guinebissau/biombo": { lat: 11.887, lon: -15.851 },
+  "guinebissau/cacheu": { lat: 12.271, lon: -16.165 },
+  "guinebissau/oio": { lat: 12.483, lon: -15.217 },
+  "guinebissau/bafata": { lat: 12.167, lon: -14.658 },
+  "guinebissau/gabu": { lat: 12.28, lon: -14.222 },
+  "guinebissau/quinara": { lat: 11.583, lon: -15 },
+  "guinebissau/tombali": { lat: 11.283, lon: -15.25 },
+  "guinebissau/bolama": { lat: 11.583, lon: -15.483 },
+  angola: { lat: -8.838, lon: 13.234 },
+};
+
 export const apiSection = {
   title: "Build with attested linguistic knowledge",
   command: `curl ${API_ORIGIN}/v1/languages`,
@@ -475,6 +506,7 @@ export const architecture = {
       },
       {
         label: "ForroConnect",
+        href: "/connect",
         items: [
           { label: "Paid lessons" },
           { label: "Real teachers" },
@@ -488,6 +520,20 @@ export const architecture = {
       { label: "Community empowerment" },
     ],
   },
+} as const;
+
+export const connectArchitecture = {
+  title: "How it works",
+  description:
+    "Forro Connect connects learners directly with real Forro speakers and cultural knowledge holders.",
+  steps: [
+    { label: "Learner" },
+    { label: "Native speaker" },
+    { label: "Direct match" },
+    { label: "Live lesson" },
+    { label: "Cultural knowledge" },
+    { label: "Community income" },
+  ],
 } as const;
 
 export const docsNav = [

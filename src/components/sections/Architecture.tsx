@@ -45,7 +45,20 @@ function Stem() {
   return <div className="mx-auto h-8 w-px bg-border" aria-hidden="true" />;
 }
 
-export function Architecture() {
+type PipelineStep = {
+  label: string;
+  href?: string;
+};
+
+export function Architecture({
+  title = architecture.title,
+  description = "Evidence before generation. Missing data is preferable to incorrect data.",
+  steps = architecture.steps,
+}: {
+  title?: string;
+  description?: string;
+  steps?: readonly PipelineStep[];
+}) {
   return (
     <section id="how-it-works" className="pt-12 pb-16 sm:pt-20 sm:pb-28">
       <Container>
@@ -59,31 +72,34 @@ export function Architecture() {
             className="font-heading text-white tracking-[-0.03em] leading-[1.05] mb-4 text-center"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
-            {architecture.title}
+            {title}
           </h2>
           <p className="max-w-[640px] mx-auto text-center text-muted text-base leading-[22px] tracking-[-0.01em] mb-10 sm:mb-14">
-            Evidence before generation. Missing data is preferable to incorrect
-            data.
+            {description}
           </p>
 
-          <MethodologyPipeline />
+          <MethodologyPipeline steps={steps} />
         </motion.div>
       </Container>
     </section>
   );
 }
 
-export function MethodologyPipeline() {
+export function MethodologyPipeline({
+  steps = architecture.steps,
+}: {
+  steps?: readonly PipelineStep[];
+}) {
   return (
     <div className="flex flex-col items-center">
-      {architecture.steps.map((step, index) => (
+      {steps.map((step, index) => (
         <div key={step.label} className="flex flex-col items-center w-full">
           {index > 0 ? <Stem /> : null}
           <div className="w-full max-w-[240px]">
             <Node
               label={step.label}
               href={step.href}
-              featured={index === 0 || index === architecture.steps.length - 1}
+              featured={index === 0 || index === steps.length - 1}
             />
           </div>
         </div>
