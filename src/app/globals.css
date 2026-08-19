@@ -106,6 +106,17 @@ textarea {
   opacity: 0.5;
 }
 
+.forro-app {
+  --background: #121c17;
+  --muted: #a6b0bd;
+  --border: #598c6b;
+  --surface: #202a25;
+  --surface-alt: #243829;
+  --surface-elevated: #174729;
+  --ring: rgba(88, 204, 2, 0.35);
+  background-color: var(--background);
+}
+
 .wordmark {
   overflow: hidden;
   line-height: 1.2;

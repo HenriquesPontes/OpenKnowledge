@@ -5,7 +5,7 @@ import { apiPaths, apiSection } from "@/lib/constants";
 import { API_ORIGIN, fetchLanguagesCatalog, sampleByCountry } from "@/lib/catalog";
 
 export const metadata = {
-  title: "API",
+  title: "API Platform",
 };
 
 export default async function ApiPage() {
@@ -33,17 +33,18 @@ export default async function ApiPage() {
     <section className="pt-28 pb-20 sm:pt-36">
       <Container>
         <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-          API
+          Product
         </p>
         <h1
           className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
           style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
         >
-          Public, read-only linguistic API
+          API Platform
         </h1>
         <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          Hosted at api.forrovivo.com. GET only. Loads the published JSON. Does
-          not invent translations, merge languages, or write lexicon data.
+          Public, read-only linguistic API. Hosted at api.forrovivo.com. GET
+          only. Loads the published JSON. Does not invent translations, merge
+          languages, or write lexicon data.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <Button href="/docs/quickstart" className="w-full sm:w-auto">

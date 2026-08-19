@@ -1,54 +1,160 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
-import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
-import { appArchitecture } from "@/lib/constants";
-import { APP_STORE_URL } from "@/lib/catalog";
+import { appLanding, appRoadmap, appWhy, nav } from "@/lib/constants";
+import { APP_STORE_URL, PLAY_STORE_URL } from "@/lib/catalog";
 
 export const metadata = {
   title: "Forro Vivo App",
+  description: appLanding.description,
 };
+
+function ExternalArrow() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3.5 8.5L8.5 3.5M8.5 3.5H4.5M8.5 3.5V7.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export default function ForroVivoAppPage() {
   return (
-    <>
-      <section className="pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
-        <Container>
-          <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-            Product
-          </p>
-          <h1
-            className="mt-2 font-heading text-white tracking-[-0.03em] leading-[1.05]"
-            style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
-          >
-            Forro Vivo App
-          </h1>
-          <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
-            The learning product for Forro and related Creole languages:
-            dictionary, lessons, exercises and language practice. It is on the
-            App Store. This Open Knowledge site is the public knowledge front
-            door, not the app.
-          </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
-            <Button href={APP_STORE_URL} className="w-full sm:w-auto">
-              Download on the App Store
-            </Button>
-            <Button href="/connect" variant="outline" className="w-full sm:w-auto">
-              Forro Connect
-            </Button>
+    <div className="forro-app flex flex-1 flex-col bg-background">
+      <style>{`
+        html, body {
+          background-color: #121c17;
+          --background: #121c17;
+          --muted: #a6b0bd;
+          --border: #598c6b;
+          --surface: #202a25;
+          --surface-alt: #243829;
+          --surface-elevated: #174729;
+        }
+      `}</style>
+      <section className="relative overflow-hidden pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
+        <Container className="relative">
+          <div className="grid items-center gap-12 md:grid-cols-2">
+            <div>
+              <p className="text-[#4CAF50] text-sm sm:text-base tracking-[-0.01em]">
+                {appLanding.eyebrow}
+              </p>
+              <h1
+                className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
+                style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
+              >
+                Aprenda Forro.
+                <br />
+                Preserve a Cultura.
+              </h1>
+              <p className="mt-4 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
+                {appLanding.description}
+              </p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
+                <Button
+                  href={APP_STORE_URL}
+                  className="w-full sm:w-auto gap-1.5 bg-[#58CC02] text-[#121C17] hover:bg-[#4CAF50] focus-visible:ring-offset-[#121C17]"
+                >
+                  {nav.cta}
+                  <ExternalArrow />
+                </Button>
+                <Button
+                  href={PLAY_STORE_URL}
+                  variant="outline"
+                  className="w-full sm:w-auto gap-1.5 border-[#4CAF50] hover:border-[#58CC02] hover:bg-[#243829] focus-visible:ring-offset-[#121C17]"
+                >
+                  Play Store
+                  <ExternalArrow />
+                </Button>
+              </div>
+            </div>
+
+            <div className="relative flex items-center justify-center">
+              <div
+                className="relative mx-auto w-full max-w-[280px] drop-shadow-2xl md:max-w-[350px]"
+                style={{ aspectRatio: "9 / 19.5" }}
+              >
+                <div className="absolute inset-[-2.63%_-5.97%]">
+                  <Image
+                    src="/images/app/phone-frame.png"
+                    alt=""
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(min-width: 768px) 350px, 280px"
+                  />
+                </div>
+                <div className="absolute inset-[-5.84%_-19.79%_-0.01%_0] overflow-hidden rounded-[85px]">
+                  <Image
+                    src="/images/app/phone-hero.png"
+                    alt="Forro Vivo no iPhone"
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(min-width: 768px) 350px, 280px"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
 
-      <div className="w-full shrink-0 aspect-square">
-        <GlobeWireframe />
-      </div>
+      <section className="pt-10 pb-14 sm:pt-16 sm:pb-20">
+        <Container>
+          <h2
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05] text-center"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          >
+            {appWhy.title}
+          </h2>
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3">
+            {appWhy.cards.map((card) => (
+              <div
+                key={card.title}
+                className="overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-[#58CC02]"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={card.image}
+                    alt={card.imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-white font-heading text-lg tracking-[-0.02em]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 text-muted text-base leading-7 tracking-[-0.01em]">
+                    {card.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
 
       <Architecture
-        title={appArchitecture.title}
-        description={appArchitecture.description}
-        steps={appArchitecture.steps}
+        id="roadmap"
+        title={appRoadmap.title}
+        description={appRoadmap.description}
+        steps={appRoadmap.steps}
       />
-    </>
+    </div>
   );
 }

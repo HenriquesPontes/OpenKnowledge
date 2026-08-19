@@ -7,10 +7,14 @@ import { architecture } from "@/lib/constants";
 function Node({
   label,
   href,
+  date,
+  description,
   featured = false,
 }: {
   label: string;
   href?: string;
+  date?: string;
+  description?: string;
   featured?: boolean;
 }) {
   const className = `block rounded-xl border px-4 py-3 sm:px-5 text-center transition-[border-color,background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
@@ -18,14 +22,26 @@ function Node({
       ? "border-white/20 bg-surface-alt hover:border-white/35"
       : "border-border bg-surface hover:border-white/12 hover:bg-surface-alt"
   }`;
-  const labelEl = (
-    <span className="text-white text-sm sm:text-base tracking-[-0.01em]">
-      {label}
-    </span>
+  const body = (
+    <>
+      <span className="block text-white text-sm sm:text-base tracking-[-0.01em]">
+        {label}
+      </span>
+      {date ? (
+        <span className="mt-1 block text-muted text-[11px] sm:text-xs tracking-[0.04em] uppercase">
+          {date}
+        </span>
+      ) : null}
+      {description ? (
+        <span className="mt-1.5 block text-muted text-xs sm:text-sm leading-5 tracking-[-0.01em]">
+          {description}
+        </span>
+      ) : null}
+    </>
   );
 
   if (!href) {
-    return <div className={className}>{labelEl}</div>;
+    return <div className={className}>{body}</div>;
   }
 
   const external = href.startsWith("http");
@@ -36,7 +52,7 @@ function Node({
       rel={external ? "noopener noreferrer" : undefined}
       className={className}
     >
-      {labelEl}
+      {body}
     </a>
   );
 }
@@ -48,19 +64,23 @@ function Stem() {
 type PipelineStep = {
   label: string;
   href?: string;
+  date?: string;
+  description?: string;
 };
 
 export function Architecture({
   title = architecture.title,
   description = "Evidence before generation. Missing data is preferable to incorrect data.",
   steps = architecture.steps,
+  id = "how-it-works",
 }: {
   title?: string;
   description?: string;
   steps?: readonly PipelineStep[];
+  id?: string;
 }) {
   return (
-    <section id="how-it-works" className="pt-10 pb-14 sm:pt-20 sm:pb-28 [content-visibility:auto] [contain-intrinsic-size:auto_40rem]">
+    <section id={id} className="pt-10 pb-14 sm:pt-20 sm:pb-28 [content-visibility:auto] [contain-intrinsic-size:auto_40rem]">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -95,10 +115,12 @@ export function MethodologyPipeline({
       {steps.map((step, index) => (
         <div key={step.label} className="flex flex-col items-center w-full">
           {index > 0 ? <Stem /> : null}
-          <div className="w-full max-w-[240px]">
+          <div className="w-full max-w-[320px]">
             <Node
               label={step.label}
               href={step.href}
+              date={step.date}
+              description={step.description}
               featured={index === 0 || index === steps.length - 1}
             />
           </div>

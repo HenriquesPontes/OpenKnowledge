@@ -334,13 +334,15 @@ This repository is catalog, docs, waitlist, and lookup proxy.
 - There is no test suite.
 - Lexical data lives elsewhere: the Linguistic Research API and the research datasets, isolated in ST, CV, GW, and AO folders.
 
-Open Knowledge is the public front door to that knowledge. It is not the Learning Engine, it is not the mobile learning app, and it does not implement machine translation. Machine translation is a ForroVivo capability in the product family. It is not a feature of this site.
+Open Knowledge is the public front door to that knowledge. It is not the Learning Engine, it is not the mobile learning app, and it does not implement machine translation. Machine translation is a ForroVivo capability, not a product. It is not a feature of this site.
 
 ## Product family
 
 The Forro Vivo App is the learning product on the App Store.
 
 Forro Connect connects learners with native speakers. The public surface is `/connect`, with a waitlist.
+
+Machine translation is a ForroVivo capability, not a product. The public surface is `/translation`. This Open Knowledge site does not implement translation.
 
 Domain architecture is forrovivo.com.
 

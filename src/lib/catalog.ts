@@ -3,6 +3,8 @@ export const GITHUB_URL =
   "https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-";
 export const APP_ORIGIN = "https://www.forrovivo.com";
 export const APP_STORE_URL = "https://apps.apple.com/app/id6751409176";
+export const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.telanon.forrovivo";
 
 export type LanguageRecord = {
   dataset: string;

@@ -6,16 +6,17 @@ export const nav = {
     { label: "Dictionaries", href: "/dictionaries" },
   ],
   menu: {
-    label: "Forro Vivo",
+    label: "Products",
     columns: [
       {
-        heading: "Product",
+        heading: "Explore products",
         size: "large",
         items: [
+          { label: "Overview", href: "/overview" },
           { label: "Forro Vivo App", href: "/app" },
           { label: "Forro Connect", href: "/connect" },
           { label: "Languages", href: "/languages" },
-          { label: "API", href: "/api" },
+          { label: "API Platform", href: "/api" },
         ],
       },
       {
@@ -27,6 +28,7 @@ export const nav = {
           { label: "Methodology", href: "/docs/methodology" },
           { label: "Research", href: "/research" },
           { label: "Knowledge Base", href: "/knowledge" },
+          { label: "Machine translation", href: "/translation" },
         ],
       },
       {
@@ -528,6 +530,88 @@ export const appArchitecture = {
   ],
 } as const;
 
+export const appLanding = {
+  eyebrow: "Plataforma de aprendizagem",
+  title: "Aprenda Forro. Preserve a Cultura.",
+  description:
+    "O primeiro aplicativo completo dedicado à língua Forro de São Tomé e Príncipe. Vocabulário, lições e contexto cultural na ponta dos seus dedos.",
+} as const;
+
+export const appWhy = {
+  title: "Why Choose Forro Vivo?",
+  cards: [
+    {
+      title: "Stronger Family Connections",
+      body: "Communicate with family and friends, deepening your bond through shared language.",
+      image: "/images/app/why-family.png",
+      imageAlt: "A family weaving together at home",
+    },
+    {
+      title: "New Global Opportunities",
+      body: "Language proficiency unlocks unique business and personal growth opportunities across the continent.",
+      image: "/images/app/why-opportunities.png",
+      imageAlt: "A family exploring connections across Africa on a tablet",
+    },
+    {
+      title: "Richer Travel Experiences",
+      body: "Enhance your African adventures with deeper immersion and genuine connections with communities. All of our greatest memories always start with a simple Olá, bom dia, boa tarde, boa noite.",
+      image: "/images/app/why-travel.png",
+      imageAlt: "A Forro language lesson outdoors with the community",
+    },
+  ],
+} as const;
+
+export const appRoadmap = {
+  title: "Roadmap",
+  description:
+    "From Linguistic Research to a public learning app. Early betas built the dictionary and the academy. Version 4 went public. Voice and audio arrive in 5.0.0, now a reliable beta on track for release.",
+  steps: [
+    {
+      label: "Foundation",
+      date: "23 March 2023",
+      description:
+        "Linguistic Research begins. There is no app yet, only the question of how to preserve Forro. Founder: Henriques Pontes. Early collaborator: Luís Lima.",
+      href: "/research",
+    },
+    {
+      label: "1.0.0",
+      date: "Beta",
+      description:
+        "First TestFlight. The dictionary and lexicon go into people’s hands: look up Forro, Portuguese, and English.",
+    },
+    {
+      label: "2.0.2",
+      date: "Beta",
+      description:
+        "Early TestFlight continues. The lexicon grows. There is still no voice and no audio in the app.",
+    },
+    {
+      label: "3.5.0",
+      date: "Beta",
+      description:
+        "Academy and lessons. Forro becomes a path to walk, not only a list of words. Still without voice or audio.",
+    },
+    {
+      label: "4.0.0",
+      date: "January 2026",
+      description:
+        "The jump to public. Forro Vivo leaves TestFlight and ships on the App Store dictionary and academy, not voice.",
+    },
+    {
+      label: "4.0.5",
+      date: "March 2026",
+      description:
+        "A total redesign: modern, clean aesthetic and functionality. This is the current public release. Voice and audio are not in 4.",
+    },
+    {
+      label: "5.0.0",
+      date: "Beta",
+      description:
+        "Voice capability and audio arrive here. Reliable beta, on track for public release.",
+    },
+  ],
+} as const;
+
 export const connectArchitecture = {
   title: "How it works",
   description:
@@ -539,6 +623,52 @@ export const connectArchitecture = {
     { label: "Live lesson" },
     { label: "Cultural knowledge" },
     { label: "Community income" },
+  ],
+} as const;
+
+export const productOverview = {
+  eyebrow: "Products",
+  title: "Overview",
+  description:
+    "ForroVivo products for learning, community, languages, and public linguistic data. Open Knowledge is this site. Machine translation is a capability, not a product.",
+  products: [
+    {
+      label: "Forro Vivo App",
+      href: "/app",
+      description:
+        "The learning product for Forro and related Creole languages: dictionary, lessons, exercises and language practice. On the App Store.",
+    },
+    {
+      label: "Forro Connect",
+      href: "/connect",
+      description:
+        "Connects learners directly with real Forro speakers and cultural knowledge holders.",
+    },
+    {
+      label: "Languages",
+      href: "/languages",
+      description:
+        "Isolated lexicons by country. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each folder is its own lexicon.",
+    },
+    {
+      label: "API Platform",
+      href: "/api",
+      description:
+        "Public, read-only linguistic API at api.forrovivo.com. GET only. Does not invent translations, merge languages, or write lexicon data.",
+    },
+  ],
+} as const;
+
+export const translationArchitecture = {
+  title: "How it works",
+  description:
+    "Translation is only as reliable as the evidence under it. Isolated datasets, verified entries, then grounded models. Missing data is preferable to incorrect data.",
+  steps: [
+    { label: "Isolated lexicon" },
+    { label: "Attested sources" },
+    { label: "Structured pairs" },
+    { label: "Grounded model" },
+    { label: "Human review" },
   ],
 } as const;
 

@@ -195,12 +195,14 @@ Next.js App Router. Root layout wraps every page with skip-link, Navbar, `<main 
 | `/docs/api-reference` | `src/app/docs/api-reference/page.tsx` | Documented GET paths |
 | `/docs/methodology` | `src/app/docs/methodology/page.tsx` | Evidence pipeline |
 | `/knowledge` | `src/app/knowledge/page.tsx` | Knowledge Base overview + product tree |
+| `/overview` | `src/app/overview/page.tsx` | Product family overview |
 | `/research` | `src/app/research/page.tsx` | Live lexicon atlas (flow + isolation network) |
 | `/about` | `src/app/about/page.tsx` | Mission, pipeline, founders |
 | `/api` | `src/app/api/page.tsx` | Public API marketing page (not a route handler) |
 | `/developers` | `src/app/developers/page.tsx` | Auth/rate-limit posture |
 | `/connect` | `src/app/connect/page.tsx` | Forro Connect |
-| `/app` | `src/app/app/page.tsx` | Forro Vivo App |
+| `/app` | `src/app/app/page.tsx` | Forro Vivo App product page (app dark-green tokens) |
+| `/translation` | `src/app/translation/page.tsx` | Machine translation capability (not a product) |
 | `/legal` | `src/app/legal/page.tsx` | Company, privacy, EULA |
 | `/foundation` | `src/app/foundation/page.tsx` | Redirects to `/dictionaries` |
 
