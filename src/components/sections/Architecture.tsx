@@ -13,7 +13,7 @@ function Node({
   href?: string;
   featured?: boolean;
 }) {
-  const className = `block rounded-xl border px-5 py-3 text-center transition-colors ${
+  const className = `block rounded-xl border px-4 py-3 sm:px-5 text-center transition-colors ${
     featured
       ? "border-white/25 bg-surface-alt hover:border-white/40"
       : "border-border bg-surface hover:border-[#454545] hover:bg-surface-alt"
@@ -60,7 +60,7 @@ export function Architecture({
   steps?: readonly PipelineStep[];
 }) {
   return (
-    <section id="how-it-works" className="pt-12 pb-16 sm:pt-20 sm:pb-28">
+    <section id="how-it-works" className="pt-10 pb-14 sm:pt-20 sm:pb-28 [content-visibility:auto] [contain-intrinsic-size:auto_40rem]">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,7 +74,7 @@ export function Architecture({
           >
             {title}
           </h2>
-          <p className="max-w-[640px] mx-auto text-center text-muted text-base leading-[22px] tracking-[-0.01em] mb-10 sm:mb-14">
+          <p className="max-w-[640px] mx-auto text-center text-muted text-sm sm:text-base leading-6 sm:leading-[22px] tracking-[-0.01em] mb-8 sm:mb-14 px-1">
             {description}
           </p>
 

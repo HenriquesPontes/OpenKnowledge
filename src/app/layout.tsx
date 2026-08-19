@@ -9,11 +9,15 @@ const ovo = Ovo({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "dark",
+  themeColor: "#141414",
 };
 
 export const metadata: Metadata = {
@@ -23,6 +27,10 @@ export const metadata: Metadata = {
   },
   description:
     "Open knowledge for the Creole languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. A structured, evidence-based linguistic knowledge base with an open API.",
+  icons: {
+    icon: "/images/logo-icon.png",
+    apple: "/images/logo-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${ovo.variable} antialiased min-h-dvh flex flex-col`}>
         <Navbar />
         <main className="flex flex-1 flex-col">{children}</main>

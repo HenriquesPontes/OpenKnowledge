@@ -19,13 +19,13 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center rounded-full font-normal transition-colors",
+    "inline-flex items-center justify-center rounded-full font-normal transition-colors touch-manipulation",
     variant === "primary" && "bg-white text-[#141414] hover:bg-white/90",
     variant === "ghost" && "text-muted hover:text-white",
     variant === "outline" &&
       "border border-[#454545] bg-transparent text-white hover:border-[#666] hover:bg-[#252525]",
-    size === "default" && "h-10 px-8 text-base",
-    size === "sm" && "h-[29px] px-4 text-sm",
+    size === "default" && "h-10 w-full px-5 sm:w-auto sm:px-8 text-base",
+    size === "sm" && "h-[29px] px-3 sm:px-4 text-sm",
     "disabled:opacity-50 disabled:cursor-not-allowed",
     className,
   );

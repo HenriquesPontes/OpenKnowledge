@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(
       `${API_ORIGIN}/v1/${dataset}/lookup?headword=${encodeURIComponent(headword)}`,
-      { cache: "no-store" },
+      { next: { revalidate: 120 } },
     );
     const body = await response.text();
     let json: unknown = { error: body || GENERIC_ERROR };

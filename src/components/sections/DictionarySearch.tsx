@@ -1,9 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
-import { AfricaMap } from "@/components/sections/AfricaMap";
 import { countries, languages } from "@/lib/constants";
+
+const AfricaMap = dynamic(
+  () =>
+    import("@/components/sections/AfricaMap").then((mod) => mod.AfricaMap),
+  {
+    ssr: false,
+    loading: () => <div className="w-full max-w-[36rem] aspect-[720/560]" />,
+  },
+);
 
 type DatasetOption = {
   dataset: string;
@@ -108,7 +117,7 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
             aria-label="Isolated lexicon"
-            className="h-10 w-full max-w-[280px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white tracking-[-0.01em] outline-none focus:border-[#666]"
+            className="h-10 w-full max-w-full sm:max-w-[280px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white tracking-[-0.01em] outline-none focus:border-[#666]"
           >
             {datasets.map((item) => (
               <option key={item.dataset} value={item.dataset}>
@@ -151,7 +160,7 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
       ) : null}
 
       {result ? (
-        <div className="mt-10 max-w-[720px] rounded-2xl border border-border bg-surface px-6 py-6">
+        <div className="mt-10 max-w-[720px] rounded-2xl border border-border bg-surface px-4 py-5 sm:px-6 sm:py-6 overflow-x-auto">
           <ResultFields value={result} />
         </div>
       ) : null}

@@ -31,7 +31,7 @@ const SAMPLE_DATASETS = [
 export async function fetchLanguagesCatalog(): Promise<LanguagesResponse | null> {
   try {
     const response = await fetch(`${API_ORIGIN}/v1/languages`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 21600 },
     });
     if (!response.ok) return null;
     return (await response.json()) as LanguagesResponse;

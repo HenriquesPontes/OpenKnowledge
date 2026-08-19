@@ -66,18 +66,21 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <Container className="relative flex items-center justify-between gap-3 h-[60px] sm:h-[68px]">
+      <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[68px] pt-[env(safe-area-inset-top)]">
         <a href="/" aria-label="ForroVivo home" className="shrink-0">
           <Image
             src="/images/logo-icon.png"
             alt="ForroVivo"
-            width={28}
-            height={28}
-            className="w-7 h-7"
+            width={512}
+            height={512}
+            priority
+            quality={100}
+            sizes="28px"
+            className="h-7 w-7"
           />
         </a>
 
-        <nav className="flex min-w-0 items-center gap-2 sm:gap-4">
+        <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
           {nav.links
             .filter((link) => !dictionaryAuth)
             .map((link) => (
@@ -98,7 +101,7 @@ export function Navbar() {
               onClick={() => {
                 setOpen((value) => !value);
               }}
-              className={`inline-flex items-center h-[29px] transition-colors text-sm sm:text-base tracking-[-0.01em] ${
+              className={`inline-flex shrink-0 items-center h-[29px] px-1.5 sm:px-0 transition-colors text-sm sm:text-base tracking-[-0.01em] ${
                 open ? "text-white" : "text-muted hover:text-white"
               }`}
             >
@@ -107,7 +110,7 @@ export function Navbar() {
             {open ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-xl border border-border bg-[#141414] px-4 py-4 sm:px-5 sm:py-5 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)] max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[3.75rem] max-sm:mt-0 max-sm:w-auto"
+                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-xl border border-border bg-[#141414] px-4 py-4 sm:px-5 sm:py-5 shadow-[0px_16px_32px_-12px_rgba(0,0,0,0.45)] max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (
@@ -166,7 +169,8 @@ export function Navbar() {
               size="sm"
               className="shrink-0"
             >
-              {nav.login.label}
+              <span className="sm:hidden">API</span>
+              <span className="hidden sm:inline">{nav.login.label}</span>
             </Button>
           )}
 
@@ -176,10 +180,11 @@ export function Navbar() {
               size="sm"
               className="shrink-0 max-sm:px-3"
             >
-              {nav.dictionaryAuth.cta}
+              <span className="sm:hidden">It&apos;s free</span>
+              <span className="hidden sm:inline">{nav.dictionaryAuth.cta}</span>
             </Button>
           ) : (
-            <Button href={nav.ctaHref} size="sm" className="shrink-0 gap-1.5">
+            <Button href={nav.ctaHref} size="sm" className="shrink-0 gap-1.5 whitespace-nowrap">
               {nav.cta}
               <ExternalArrow />
             </Button>

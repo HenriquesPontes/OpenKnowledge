@@ -16,25 +16,27 @@ export default function ForroConnectPage() {
         <Container>
           <h1
             className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
-            style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
+            style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
           >
             Forro Connect
           </h1>
-          <p className="mt-2 max-w-[593px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+          <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
             While ForroVivo uses technology to help people discover and learn
             Forro, Forro Connect connects learners directly with real Forro
             speakers and cultural knowledge holders.
           </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:items-center">
-            <Button href="/#waitlist">Join waitlist</Button>
-            <Button href={APP_ORIGIN} variant="outline">
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
+            <Button href="/#waitlist" className="w-full sm:w-auto">
+              Join waitlist
+            </Button>
+            <Button href={APP_ORIGIN} variant="outline" className="w-full sm:w-auto">
               Try Forro Vivo
             </Button>
           </div>
         </Container>
       </section>
 
-      <div className="w-full shrink-0" style={{ aspectRatio: "1 / 1" }}>
+      <div className="mx-auto w-full max-w-[min(100%,40rem)] shrink-0 aspect-square">
         <GlobeWireframe />
       </div>
 

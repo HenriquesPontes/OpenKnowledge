@@ -29,7 +29,7 @@ export function ProductShowcase() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="flex w-full max-w-[720px] items-center gap-3 rounded-full border border-[#454545] bg-[#252525] px-5 h-12">
+          <div className="flex w-full max-w-[720px] items-center gap-2 sm:gap-3 rounded-full border border-[#454545] bg-[#252525] px-3 sm:px-5 h-12">
             <span className="text-muted text-base tracking-[-0.01em] shrink-0">
               $
             </span>

@@ -57,11 +57,11 @@ export function Hero() {
         >
           <h1
             className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
-            style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
+            style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
           >
             {hero.headline}
           </h1>
-          <p className="mt-2 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+          <p className="mt-2 text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
             {hero.subheadline}
           </p>
 

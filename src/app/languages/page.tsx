@@ -75,7 +75,9 @@ export default async function LanguagesPage({ searchParams }: Props) {
               placeholder="Search a country or variety"
               className="h-10 w-full sm:w-[285px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white placeholder-[#6e6e6e] tracking-[-0.01em] outline-none focus:border-[#666]"
             />
-            <Button type="submit">Search</Button>
+            <Button type="submit" className="w-full sm:w-auto">
+              Search
+            </Button>
           </div>
         </form>
 

@@ -15,11 +15,11 @@ export default function DictionaryRegisterPage() {
         </p>
         <h1
           className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
-          style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
+          style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
         >
           Create an account
         </h1>
-        <p className="mt-2 max-w-[593px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+        <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
           It&apos;s free. Use your email to request access to the online
           dictionaries.
         </p>

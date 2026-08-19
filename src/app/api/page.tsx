@@ -46,8 +46,14 @@ export default async function ApiPage() {
           not invent translations, merge languages, or write lexicon data.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button href="/docs/quickstart">Quickstart</Button>
-          <Button href={apiSection.playground} variant="outline">
+          <Button href="/docs/quickstart" className="w-full sm:w-auto">
+            Quickstart
+          </Button>
+          <Button
+            href={apiSection.playground}
+            variant="outline"
+            className="w-full sm:w-auto"
+          >
             Try the API
           </Button>
         </div>
@@ -59,7 +65,7 @@ export default async function ApiPage() {
         <ul className="mt-12 divide-y divide-border border-t border-b border-border max-w-[720px]">
           {apiPaths.map((item) => (
             <li key={item.path} className="py-4">
-              <p className="text-white text-base tracking-[-0.01em]">
+              <p className="text-white text-sm sm:text-base tracking-[-0.01em] break-all">
                 {item.method} {item.path}
               </p>
               <p className="mt-1 text-muted text-base tracking-[-0.01em]">

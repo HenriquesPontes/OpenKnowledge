@@ -50,7 +50,7 @@ export function FeatureGrid({
   catalog?: LanguageRecord[];
 }) {
   return (
-    <section id="countries" className="pt-2 pb-12 sm:pb-16 md:pb-20">
+    <section id="countries" className="pt-2 pb-12 sm:pb-16 md:pb-20 [content-visibility:auto] [contain-intrinsic-size:auto_24rem]">
       <Container>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {countries.map((country, i) => {

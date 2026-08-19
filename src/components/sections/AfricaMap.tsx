@@ -179,6 +179,7 @@ export function AfricaMap({
               ? `${language?.title ?? country?.title ?? "Country"} map`
               : "Interactive map of Africa"
           }
+          shapeRendering="geometricPrecision"
           className="block w-full h-auto touch-manipulation"
           style={{
             filter:
@@ -285,7 +286,7 @@ export function AfricaMap({
               ))
           : null}
         {active ? (
-          <div className="absolute right-0 top-2 z-20 max-w-[15rem] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:top-4">
+          <div className="absolute left-0 right-auto top-2 z-20 max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5 sm:left-auto sm:right-0 sm:top-4">
             <p className="text-white text-sm tracking-[-0.01em]">
               {focused ? (language?.title ?? active.name) : active.name}
             </p>
@@ -308,7 +309,7 @@ export function AfricaMap({
           </div>
         ) : null}
         {!focused ? (
-          <div className="pointer-events-none absolute left-0 bottom-[12%] z-20 w-[min(22rem,78%)] pr-3 sm:bottom-[16%] sm:w-[min(26rem,42%)] lg:bottom-[18%] lg:w-[min(28rem,34%)]">
+          <div className="mt-5 sm:mt-0 sm:pointer-events-none sm:absolute sm:left-0 sm:bottom-[12%] z-20 w-full sm:w-[min(22rem,78%)] pr-0 sm:pr-3 sm:bottom-[16%] lg:bottom-[18%] lg:w-[min(28rem,34%)]">
             <h2
               className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
               style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}

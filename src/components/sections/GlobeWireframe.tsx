@@ -26,10 +26,16 @@ export function GlobeWireframe() {
     const wrapper = wrapperRef.current;
     if (!canvas || !wrapper) return;
 
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
     let globe: ReturnType<typeof createGlobe> | undefined;
     let phi = 0;
     let frame = 0;
     let lastCss = 0;
+    let visible = true;
+    let resizeTimer = 0;
 
     function create(cssSize: number) {
       if (!canvas || cssSize < 8) return;
@@ -37,6 +43,7 @@ export function GlobeWireframe() {
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const buffer = Math.min(Math.floor(cssSize * dpr), 2048);
+      const mapSamples = cssSize >= 640 ? 20000 : 10000;
 
       globe?.destroy();
       globe = createGlobe(canvas, {
@@ -47,7 +54,7 @@ export function GlobeWireframe() {
         theta: 0.28,
         dark: 1,
         diffuse: 1.2,
-        mapSamples: 16000,
+        mapSamples,
         mapBrightness: 6,
         baseColor: [0.82, 0.82, 0.82],
         markerColor: [1, 1, 1],
@@ -62,23 +69,43 @@ export function GlobeWireframe() {
       globe.update({ phi });
     }
 
+    function tick() {
+      if (!visible) return;
+      if (!reducedMotion) phi += 0.003;
+      globe?.update({ phi });
+      frame = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(tick);
+    }
+
     const observer = new ResizeObserver((entries) => {
       const cssSize = Math.floor(entries[0]?.contentRect.width ?? 0);
-      if (Math.abs(cssSize - lastCss) < 2) return;
-      create(cssSize);
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        if (Math.abs(cssSize - lastCss) < 2) return;
+        create(cssSize);
+      }, 120);
     });
     observer.observe(wrapper);
 
-    const animate = () => {
-      phi += 0.003;
-      globe?.update({ phi });
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
+    const visibility = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) start();
+        else cancelAnimationFrame(frame);
+      },
+      { rootMargin: "80px" },
+    );
+    visibility.observe(wrapper);
 
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(resizeTimer);
       observer.disconnect();
+      visibility.disconnect();
       globe?.destroy();
     };
   }, []);

@@ -7,24 +7,24 @@ export default function DocsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex-1 pt-28 pb-20 sm:pt-36">
-      <Container className="grid grid-cols-1 gap-12 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
+    <section className="flex-1 pt-24 pb-20 sm:pt-28 lg:pt-36">
+      <Container className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
         <aside>
-          <p className="text-muted text-sm tracking-[-0.01em] mb-6">
+          <p className="text-muted text-sm tracking-[-0.01em] mb-3 lg:mb-6">
             Documentation
           </p>
-          <nav className="space-y-8">
+          <nav className="flex gap-x-5 gap-y-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:block lg:space-y-8 lg:overflow-visible lg:pb-0">
             {docsNav.map((group) => (
-              <div key={group.heading}>
-                <p className="text-white text-sm tracking-[0.08em] uppercase mb-3">
+              <div key={group.heading} className="shrink-0 lg:shrink">
+                <p className="text-white text-xs sm:text-sm tracking-[0.08em] uppercase mb-2 lg:mb-3">
                   {group.heading}
                 </p>
-                <ul className="space-y-2">
+                <ul className="flex gap-x-4 lg:block lg:space-y-2">
                   {group.links.map((link) => (
                     <li key={link.href + link.label}>
                       <a
                         href={link.href}
-                        className="text-muted hover:text-white transition-colors text-base tracking-[-0.01em]"
+                        className="whitespace-nowrap text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
                       >
                         {link.label}
                       </a>
@@ -35,7 +35,7 @@ export default function DocsLayout({
             ))}
           </nav>
         </aside>
-        <div>{children}</div>
+        <div className="min-w-0">{children}</div>
       </Container>
     </section>
   );

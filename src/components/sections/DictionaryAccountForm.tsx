@@ -52,7 +52,7 @@ export function DictionaryAccountForm({ mode }: { mode: Mode }) {
         </p>
       ) : (
         <form onSubmit={onSubmit} className="mt-6">
-          <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
             <input
               type="email"
               placeholder="Enter email"
@@ -62,7 +62,7 @@ export function DictionaryAccountForm({ mode }: { mode: Mode }) {
               disabled={status === "loading"}
               className="h-10 w-full sm:w-[285px] rounded-full border border-[#454545] bg-[#252525] px-4 text-base text-white placeholder-[#6e6e6e] tracking-[-0.01em] outline-none focus:border-[#666] disabled:opacity-50"
             />
-            <Button type="submit" disabled={status === "loading"}>
+            <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
               {status === "loading"
                 ? "Sending…"
                 : mode === "register"
