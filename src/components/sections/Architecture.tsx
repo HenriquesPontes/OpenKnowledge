@@ -153,7 +153,7 @@ export function ProductTree() {
               <ul className="mt-4 w-full space-y-1.5 text-center">
                 {product.items.map((item) => (
                   <li key={item.label}>
-                    {"href" in item && item.href ? (
+                    {item.href ? (
                       <a
                         href={item.href}
                         className="text-muted hover:text-white transition-colors text-sm tracking-[-0.01em]"

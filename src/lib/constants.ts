@@ -494,6 +494,50 @@ export const cloneSection = {
   cta: "View on GitHub",
 } as const;
 
+export type ArchitectureProductItem = {
+  label: string;
+  href?: string;
+};
+
+export type ArchitectureProduct = {
+  label: string;
+  href: string;
+  items: readonly ArchitectureProductItem[];
+};
+
+const architectureProducts: readonly ArchitectureProduct[] = [
+  {
+    label: "Open Knowledge",
+    href: "/",
+    items: [
+      { label: "Research", href: "/research" },
+      { label: "Dictionary", href: "/languages" },
+      { label: "Culture", href: "/about" },
+      { label: "Data", href: "/languages" },
+      { label: "API", href: "/api" },
+    ],
+  },
+  {
+    label: "ForroVivo App",
+    href: "/app",
+    items: [
+      { label: "Free learning", href: APP_STORE_URL },
+      { label: "Dictionary", href: APP_STORE_URL },
+      { label: "Lessons", href: APP_STORE_URL },
+      { label: "Exercises", href: APP_STORE_URL },
+    ],
+  },
+  {
+    label: "Forro Connect",
+    href: "/connect",
+    items: [
+      { label: "Waitlist matching", href: "/connect" },
+      { label: "Learner to native speaker", href: "/connect" },
+      { label: "Community income", href: "/connect/income" },
+    ],
+  },
+];
+
 export const architecture = {
   title: "How it works",
   steps: [
@@ -507,38 +551,7 @@ export const architecture = {
   ],
   tree: {
     root: { label: "ForroVivo", href: APP_ORIGIN },
-    products: [
-      {
-        label: "Open Knowledge",
-        href: "/",
-        items: [
-          { label: "Research", href: "/research" },
-          { label: "Dictionary", href: "/languages" },
-          { label: "Culture", href: "/about" },
-          { label: "Data", href: "/languages" },
-          { label: "API", href: "/api" },
-        ],
-      },
-      {
-        label: "ForroVivo App",
-        href: "/app",
-        items: [
-          { label: "Free learning", href: APP_STORE_URL },
-          { label: "Dictionary", href: APP_STORE_URL },
-          { label: "Lessons", href: APP_STORE_URL },
-          { label: "Exercises", href: APP_STORE_URL },
-        ],
-      },
-      {
-        label: "Forro Connect",
-        href: "/connect",
-        items: [
-          { label: "Waitlist matching", href: "/connect" },
-          { label: "Learner to native speaker", href: "/connect" },
-          { label: "Community income", href: "/connect/income" },
-        ],
-      },
-    ],
+    products: architectureProducts,
     outcomes: [
       { label: "Language preservation" },
       { label: "Community empowerment" },
