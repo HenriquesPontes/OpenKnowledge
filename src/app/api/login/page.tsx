@@ -4,6 +4,7 @@ import { nav } from "@/lib/constants";
 
 export const metadata = {
   title: "Log in",
+  robots: { index: false, follow: true },
 };
 
 export default function ApiLoginPage() {
@@ -20,10 +21,9 @@ export default function ApiLoginPage() {
           Log in to the API Platform
         </h1>
         <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
-          Access the Linguistic Research API with the email you use for Open
-          Knowledge.
+          Access the Linguistic Research API with your email.
         </p>
-        <DictionaryAccountForm mode="login" surface="api" />
+        <DictionaryAccountForm mode="login" surface="api" redirectTo="/api" />
         <p className="mt-6 text-muted text-sm tracking-[-0.01em]">
           New here?{" "}
           <a

@@ -6,6 +6,9 @@ import { fetchLanguagesCatalog } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Dictionaries",
+  description:
+    "Look up a headword in one isolated lexicon. Forro, Angolar, Lung’Ie, Cabo Verdean islands, Guinea-Bissau regions, and Angola Contruy stay separate.",
+  alternates: { canonical: "/dictionaries" },
 };
 
 export default async function DictionariesPage() {

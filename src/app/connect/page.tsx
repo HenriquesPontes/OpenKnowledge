@@ -2,11 +2,13 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
 import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
+import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountForm";
 import { connectArchitecture, connectIncome } from "@/lib/constants";
 
 export const metadata = {
-  title: "Forro Connect",
+  title: "Forro Connect — Live Forro lessons",
   description: connectArchitecture.description,
+  alternates: { canonical: "/connect" },
 };
 
 export default function ForroConnectPage() {
@@ -25,10 +27,10 @@ export default function ForroConnectPage() {
             Forro, Forro Connect connects learners directly with real Forro
             speakers and cultural knowledge holders.
           </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
-            <Button href="/#waitlist" className="w-full sm:w-auto">
-              Join waitlist
-            </Button>
+          <div id="waitlist" className="mt-6 max-w-[593px]">
+            <DictionaryAccountForm surface="connect" />
+          </div>
+          <div className="mt-4">
             <Button href="/app" variant="outline" className="w-full sm:w-auto">
               Forro Vivo App
             </Button>

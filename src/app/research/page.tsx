@@ -5,6 +5,9 @@ import { fetchLanguagesCatalog, GITHUB_URL } from "@/lib/catalog";
 
 export const metadata = {
   title: "Research",
+  description:
+    "Sources, isolation, and provenance for Forro, Angolar, Lung’Ie, Kabuverdianu, Guinea-Bissau Kriol, and Angola Contruy. Every lexical field should name a source.",
+  alternates: { canonical: "/research" },
 };
 
 export default async function ResearchPage() {

@@ -24,7 +24,7 @@ export function Hero() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), source: "home" }),
       });
 
       const data = await res.json();

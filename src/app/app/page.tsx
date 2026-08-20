@@ -1,13 +1,71 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
-import { appFaq, appLanding, appRoadmap, appVision, appWhy, nav } from "@/lib/constants";
-import { APP_STORE_URL, PLAY_STORE_URL } from "@/lib/catalog";
+import { appFaq, appLanding, appRoadmap, appVision, appWhy, footer, nav } from "@/lib/constants";
+import { APP_ORIGIN, APP_STORE_URL, jsonLdScript } from "@/lib/catalog";
 
-export const metadata = {
-  title: "Forro Vivo App",
-  description: appLanding.description,
+export const metadata: Metadata = {
+  title: { absolute: appLanding.seoTitle },
+  description: appLanding.seoDescription,
+  alternates: { canonical: "/app" },
+  openGraph: {
+    type: "website",
+    url: `${APP_ORIGIN}/app`,
+    title: appLanding.seoTitle,
+    description: appLanding.seoDescription,
+    images: [
+      {
+        url: "/images/app/phone-hero.png",
+        alt: "Forro Vivo on iPhone",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: appLanding.seoTitle,
+    description: appLanding.seoDescription,
+    images: ["/images/app/phone-hero.png"],
+  },
+};
+
+const appJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "Forro Vivo",
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "iOS",
+      description: appLanding.seoDescription,
+      url: `${APP_ORIGIN}/app`,
+      downloadUrl: APP_STORE_URL,
+      image: `${APP_ORIGIN}/images/app/phone-hero.png`,
+      inLanguage: ["en", "cri"],
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      author: {
+        "@type": "Organization",
+        name: footer.companyName,
+        url: APP_ORIGIN,
+      },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: appFaq.items.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
 };
 
 function ExternalArrow() {
@@ -33,6 +91,10 @@ function ExternalArrow() {
 export default function ForroVivoAppPage() {
   return (
     <div className="forro-app flex flex-1 flex-col bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(appJsonLd) }}
+      />
       <section className="relative overflow-hidden pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
         <Container className="relative">
           <div className="grid items-center gap-12 md:grid-cols-2">
@@ -57,12 +119,11 @@ export default function ForroVivoAppPage() {
                   <ExternalArrow />
                 </Button>
                 <Button
-                  href={PLAY_STORE_URL}
                   variant="outline"
-                  className="w-full sm:w-auto gap-1.5 border-[#4CAF50] hover:border-[#58CC02] hover:bg-[#243829] focus-visible:ring-offset-[#121C17]"
+                  disabled
+                  className="w-full sm:w-auto border-[#4CAF50] focus-visible:ring-offset-[#121C17]"
                 >
-                  Play Store
-                  <ExternalArrow />
+                  Google Play — Coming soon
                 </Button>
               </div>
             </div>

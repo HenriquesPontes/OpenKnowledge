@@ -6,6 +6,10 @@ export const APP_STORE_URL = "https://apps.apple.com/app/id6751409176";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.telanon.forrovivo";
 
+export function jsonLdScript(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
 export type LanguageRecord = {
   dataset: string;
   language: string;

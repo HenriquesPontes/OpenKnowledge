@@ -5,6 +5,7 @@ import { productOverview } from "@/lib/constants";
 export const metadata = {
   title: "Overview",
   description: productOverview.description,
+  alternates: { canonical: "/overview" },
 };
 
 function Collage() {

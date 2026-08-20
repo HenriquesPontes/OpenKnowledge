@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/Button";
 import { translationPage } from "@/lib/constants";
 
 export const metadata = {
-  title: "Machine translation",
+  title: "Translation capability",
   description: translationPage.description,
+  alternates: { canonical: "/translation" },
 };
 
 function Arrow() {
@@ -15,12 +16,15 @@ function Arrow() {
   );
 }
 
-export default function MachineTranslationPage() {
+export default function TranslationCapabilityPage() {
   return (
     <div className="flex flex-1 flex-col bg-background text-foreground">
       <section className="pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-40">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
+          <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
+            {translationPage.eyebrow}
+          </p>
+          <div className="mt-4 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
             <h1
               className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
               style={{ fontSize: "clamp(2.25rem, 6vw, 4.25rem)" }}
@@ -60,7 +64,7 @@ export default function MachineTranslationPage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="pb-16 sm:pb-24">
+      <section id="evidence" className="pb-16 sm:pb-24">
         <Container>
           <h2 className="font-heading text-white tracking-[-0.03em] text-2xl sm:text-3xl">
             {translationPage.releasesTitle}

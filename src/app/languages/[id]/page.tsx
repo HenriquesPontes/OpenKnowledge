@@ -26,8 +26,15 @@ export async function generateMetadata({ params }: Props) {
   const country = countries.find((item) => item.id === id && item.id !== "angola");
   const language = languages.find((item) => item.id === id);
   const title = country?.title ?? language?.title;
+  const description = country
+    ? `Isolated lexicons of ${country.title}. ${country.aliases}. Each variety stays in its own folder.`
+    : language
+      ? `${language.title} (${language.aliases}). Isolated African Creole lexicon in Open Knowledge.`
+      : undefined;
   return {
     title: title ?? { absolute: "Open Knowledge" },
+    description,
+    alternates: title ? { canonical: `/languages/${id}` } : undefined,
   };
 }
 

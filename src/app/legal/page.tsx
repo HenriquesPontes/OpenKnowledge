@@ -3,6 +3,9 @@ import { footer } from "@/lib/constants";
 
 export const metadata = {
   title: "Legal",
+  description:
+    "Company information, privacy, and EULA for Open Knowledge, a ForroVivo product operated by LIVLU TECHNOLOGIES LTD.",
+  alternates: { canonical: "/legal" },
 };
 
 export default function LegalPage() {
@@ -51,11 +54,12 @@ export default function LegalPage() {
               Privacy
             </h2>
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              If you join the waitlist, we process the email address you submit
-              so we can tell you when Open Knowledge and related ForroVivo
-              products are available. Addresses are stored with the project
-              waitlist. When newsletter credentials are configured, the same
-              address is also sent to Beehiiv.
+              If you join a waitlist, we process the email address you submit
+              so we can tell you when that product is available: Open Knowledge,
+              Forro Connect, the dictionaries, or the API Platform. Addresses
+              are stored with the project waitlist and tagged by product. When
+              newsletter credentials are configured, the same address is also
+              sent to Beehiiv.
             </p>
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
               We do not sell waitlist addresses. We do not use the public

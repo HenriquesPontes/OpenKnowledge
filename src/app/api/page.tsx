@@ -6,6 +6,9 @@ import { API_ORIGIN, fetchLanguagesCatalog, sampleByCountry } from "@/lib/catalo
 
 export const metadata = {
   title: "API Platform",
+  description:
+    "Public, read-only linguistic API at api.forrovivo.com. GET only. Does not invent translations, merge languages, or write lexicon data.",
+  alternates: { canonical: "/api" },
 };
 
 export default async function ApiPage() {

@@ -2,11 +2,13 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
+import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountForm";
 import { connectIncome, productOverview } from "@/lib/constants";
 
 export const metadata = {
   title: "Community income",
   description: connectIncome.description,
+  alternates: { canonical: "/connect/income" },
 };
 
 export default function CommunityIncomePage() {
@@ -32,8 +34,10 @@ export default function CommunityIncomePage() {
           <p className="mt-6 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
             {connectIncome.body}
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
-            <Button href="/#waitlist">Join waitlist</Button>
+          <div id="waitlist" className="mt-8 max-w-[593px]">
+            <DictionaryAccountForm surface="connect" />
+          </div>
+          <div className="mt-4">
             <Button href="/connect" variant="outline">
               Forro Connect
             </Button>
@@ -230,8 +234,8 @@ export default function CommunityIncomePage() {
               </div>
             ))}
           </div>
-          <div className="mt-10">
-            <Button href="/#waitlist">Join waitlist</Button>
+          <div id="waitlist-end" className="mt-10 max-w-[593px]">
+            <DictionaryAccountForm surface="connect" />
           </div>
         </Container>
       </section>

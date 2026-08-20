@@ -4,6 +4,7 @@ import { nav } from "@/lib/constants";
 
 export const metadata = {
   title: "Create an account",
+  robots: { index: false, follow: true },
 };
 
 export default function ApiRegisterPage() {
@@ -20,9 +21,13 @@ export default function ApiRegisterPage() {
           Create an account
         </h1>
         <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
-          It&apos;s free. Use your email to request access to the API Platform.
+          It&apos;s free. Use your email to open the API Platform.
         </p>
-        <DictionaryAccountForm mode="register" surface="api" />
+        <DictionaryAccountForm
+          mode="register"
+          surface="api"
+          redirectTo="/api"
+        />
         <p className="mt-6 text-muted text-sm tracking-[-0.01em]">
           Already have access?{" "}
           <a

@@ -202,7 +202,7 @@ Next.js App Router. Root layout wraps every page with skip-link, Navbar, `<main 
 | `/developers` | `src/app/developers/page.tsx` | Auth/rate-limit posture |
 | `/connect` | `src/app/connect/page.tsx` | Forro Connect |
 | `/app` | `src/app/app/page.tsx` | Forro Vivo App product page (app dark-green tokens) |
-| `/translation` | `src/app/translation/page.tsx` | Machine translation capability (not a product) |
+| `/translation` | `src/app/translation/page.tsx` | Translation capability explainer (this site does not run a translator) |
 | `/legal` | `src/app/legal/page.tsx` | Company, privacy, EULA |
 | `/foundation` | `src/app/foundation/page.tsx` | Redirects to `/dictionaries` |
 

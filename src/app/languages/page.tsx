@@ -6,6 +6,9 @@ import { fetchLanguagesCatalog } from "@/lib/catalog";
 
 export const metadata = {
   title: "Languages",
+  description:
+    "Isolated lexicons by country. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each folder is its own lexicon.",
+  alternates: { canonical: "/languages" },
 };
 
 type Props = {

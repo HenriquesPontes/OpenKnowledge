@@ -3,7 +3,7 @@ import { API_ORIGIN, APP_ORIGIN, APP_STORE_URL, GITHUB_URL } from "./catalog";
 export const howItWorks = {
   hash: "#how-it-works",
   home: "/#how-it-works",
-  paths: ["/", "/connect", "/translation", "/docs/methodology"],
+  paths: ["/", "/connect", "/docs/methodology"],
 } as const;
 
 export function howItWorksHref(pathname: string) {
@@ -51,7 +51,7 @@ export const nav = {
           { label: "API Platform", href: "/api" },
           { label: "Methodology", href: "/docs/methodology" },
           { label: "Research", href: "/research" },
-          { label: "Machine translation", href: "/translation" },
+          { label: "Translation capability", href: "/translation" },
         ],
       },
       {
@@ -547,10 +547,13 @@ export const architecture = {
 } as const;
 
 export const appLanding = {
-  title: "Aprenda Forro. Preserve a Cultura.",
-  titleLines: ["Aprenda Forro.", "Preserve a Cultura."],
+  title: "Learn Forro. Preserve the culture.",
+  titleLines: ["Learn Forro.", "Preserve the culture."],
   description:
-    "O primeiro aplicativo completo dedicado à língua Forro de São Tomé e Príncipe. Vocabulário, lições e contexto cultural na ponta dos seus dedos.",
+    "The first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
+  seoTitle: "Forro Vivo — Learn Forro, the first African Creole learning app",
+  seoDescription:
+    "The first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe. Dictionary, lessons, and exercises. On the App Store.",
 } as const;
 
 export const appWhy = {
@@ -598,16 +601,22 @@ export const appFaq = {
     {
       question: "What is Forro Vivo?",
       answer:
-        "Forro Vivo is a learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
+        "Forro Vivo is the first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
+    },
+    {
+      question: "How do I learn Forro?",
+      answer:
+        "Download Forro Vivo on the App Store. It is the first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
     },
     {
       question: "What does the app include?",
       answer:
-        "A dictionary, lessons, exercises, translation, and pronunciation. Forro Connect (Coming soon).",
+        "A dictionary, lessons, exercises, translation, and pronunciation.",
     },
     {
       question: "Where can I download it?",
-      answer: "On the App Store and Google Play (Coming soon).",
+      answer:
+        "On the App Store. Google Play is coming soon.",
     },
     {
       question: "Does the app have voice and audio?",
@@ -974,7 +983,7 @@ export const productOverview = {
       label: "Forro Vivo App",
       href: "/app",
       description:
-        "A learning app for African Creole languages, starting with Forro of São Tomé and Príncipe. Dictionary, lessons, and exercises. On the App Store.",
+        "The first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe. Dictionary, lessons, and exercises. On the App Store.",
     },
     {
       label: "Forro Connect",
@@ -998,9 +1007,9 @@ export const productOverview = {
 } as const;
 
 export const translationArchitecture = {
-  title: "How it works",
+  title: "What a translator would need",
   description:
-    "Translation is only as reliable as the evidence under it. Isolated datasets, verified entries, then grounded models. Missing data is preferable to incorrect data.",
+    "Translation is only as reliable as the evidence under it. Isolated datasets, verified entries, then grounded models. Missing data is preferable to incorrect data. This site does not run a translator.",
   steps: [
     { label: "Isolated lexicon" },
     { label: "Attested sources" },
@@ -1011,19 +1020,20 @@ export const translationArchitecture = {
 } as const;
 
 export const translationPage = {
+  eyebrow: "Capability",
   description:
-    "Machine translation for African Creole languages, grounded in isolated lexicons and attested sources. Low-resource languages are especially vulnerable to fabricated vocabulary.",
-  heroLead: "Grounded",
-  heroEmphasisA: "translation",
-  heroMid: " for African Creole ",
-  heroEmphasisB: "languages",
-  heroTail: " that puts evidence first",
+    "Open Knowledge does not run a translator. Translation is a ForroVivo capability. This page is the evidence it would need: isolated lexicons, attested sources, and human review.",
+  heroLead: "Not a",
+  heroEmphasisA: "translator",
+  heroMid: " on this site. ",
+  heroEmphasisB: "Evidence",
+  heroTail: " comes first",
   questionsTitle: "Translation is only as reliable as the evidence under it.",
   questionsBody:
-    "See how isolated lexicons, attested sources, and human review come before any model.",
-  questionsCta: "Learn more",
+    "See how isolated lexicons, attested sources, and human review come before any model. There is no translate box here.",
+  questionsCta: "Read methodology",
   questionsHref: "/docs/methodology",
-  releasesTitle: "How it works",
+  releasesTitle: "What a translator would need",
   releases: [
     {
       title: "Isolated lexicon",
@@ -1056,7 +1066,6 @@ export const translationPage = {
     { heading: "Languages", label: "Isolated lexicons", href: "/languages" },
     { heading: "Research", label: "Linguistic Research", href: "/research" },
     { heading: "Methodology", label: "Evidence-first pipeline", href: "/docs/methodology" },
-    { heading: "Knowledge", label: "Isolated lexicons", href: "/languages" },
     { heading: "API", label: "API Platform", href: "/api" },
   ],
 } as const;
@@ -1067,15 +1076,14 @@ export const docsNav = [
     links: [
       { label: "Introduction", href: "/docs" },
       { label: "Quickstart", href: "/docs/quickstart" },
-      { label: "Authentication", href: "/developers" },
-      { label: "Rate limits", href: "/developers" },
+      { label: "Authentication", href: "/docs" },
+      { label: "Rate limits", href: "/docs" },
     ],
   },
   {
     heading: "Knowledge",
     links: [
       { label: "Languages", href: "/languages" },
-      { label: "Lexical entries", href: "/languages" },
       { label: "Sources", href: "/research" },
     ],
   },

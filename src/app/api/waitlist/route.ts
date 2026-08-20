@@ -12,9 +12,26 @@ const GENERIC_ERROR = "Something went wrong. Please try again.";
 const UNAVAILABLE =
   "The waitlist is temporarily unavailable. Please try again later.";
 
+type WaitlistSource = "home" | "connect" | "dictionary" | "api";
+
 type WaitlistEntry = {
   email: string;
   joined_at: string;
+  source?: WaitlistSource;
+};
+
+const WAITLIST_SOURCES: readonly WaitlistSource[] = [
+  "home",
+  "connect",
+  "dictionary",
+  "api",
+];
+
+const BEEHIIV_SOURCE: Record<WaitlistSource, string> = {
+  home: "waitlist-forrovivo",
+  connect: "waitlist-forro-connect",
+  dictionary: "waitlist-dictionary",
+  api: "waitlist-api",
 };
 
 type StoreResult = "added" | "exists";
@@ -22,7 +39,12 @@ type StoreResult = "added" | "exists";
 function isEntry(value: unknown): value is WaitlistEntry {
   if (!value || typeof value !== "object") return false;
   const entry = value as Partial<WaitlistEntry>;
-  return typeof entry.email === "string" && typeof entry.joined_at === "string";
+  return (
+    typeof entry.email === "string" &&
+    typeof entry.joined_at === "string" &&
+    (entry.source === undefined ||
+      WAITLIST_SOURCES.includes(entry.source as WaitlistSource))
+  );
 }
 
 async function readEntries(): Promise<WaitlistEntry[]> {
@@ -37,16 +59,24 @@ async function readEntries(): Promise<WaitlistEntry[]> {
   }
 }
 
-async function saveEmail(email: string): Promise<StoreResult> {
+async function saveEmail(
+  email: string,
+  source: WaitlistSource,
+): Promise<StoreResult> {
   await mkdir(WAITLIST_DIR, { recursive: true });
   const entries = await readEntries();
-  if (entries.some((entry) => entry.email === email)) {
+  if (
+    entries.some(
+      (entry) =>
+        entry.email === email && (entry.source ?? "home") === source,
+    )
+  ) {
     return "exists";
   }
 
   const next: WaitlistEntry[] = [
     ...entries,
-    { email, joined_at: new Date().toISOString() },
+    { email, joined_at: new Date().toISOString(), source },
   ];
   const tmp = `${WAITLIST_JSON}.${randomBytes(6).toString("hex")}.tmp`;
   await writeFile(tmp, `${JSON.stringify(next, null, 2)}\n`, "utf8");
@@ -54,7 +84,10 @@ async function saveEmail(email: string): Promise<StoreResult> {
   return "added";
 }
 
-async function subscribeToBeehiiv(email: string): Promise<boolean> {
+async function subscribeToBeehiiv(
+  email: string,
+  source: WaitlistSource,
+): Promise<boolean> {
   const apiKey = process.env.BEEHIIV_API_KEY;
   const publicationId = process.env.BEEHIIV_PUBLICATION_ID;
   if (!apiKey || !publicationId) {
@@ -76,7 +109,7 @@ async function subscribeToBeehiiv(email: string): Promise<boolean> {
       },
       body: JSON.stringify({
         email,
-        utm_source: "waitlist-forrovivo",
+        utm_source: BEEHIIV_SOURCE[source],
       }),
     },
   );
@@ -89,9 +122,17 @@ async function subscribeToBeehiiv(email: string): Promise<boolean> {
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const body: unknown = await request.json();
+    const payload =
+      body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+    const email = payload.email;
     const normalized =
       typeof email === "string" ? email.trim().toLowerCase() : "";
+    const source: WaitlistSource = WAITLIST_SOURCES.includes(
+      payload.source as WaitlistSource,
+    )
+      ? (payload.source as WaitlistSource)
+      : "home";
 
     if (!normalized || !EMAIL_PATTERN.test(normalized)) {
       return NextResponse.json({ error: INVALID_EMAIL }, { status: 400 });
@@ -102,7 +143,7 @@ export async function POST(request: NextRequest) {
 
     if (!hosted) {
       try {
-        await saveEmail(normalized);
+        await saveEmail(normalized, source);
         stored = true;
       } catch (error) {
         console.error("Waitlist file persist failed:", error);
@@ -111,7 +152,7 @@ export async function POST(request: NextRequest) {
 
     let published = false;
     try {
-      published = await subscribeToBeehiiv(normalized);
+      published = await subscribeToBeehiiv(normalized, source);
     } catch (error) {
       console.error("Beehiiv subscription failed:", error);
     }

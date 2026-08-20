@@ -2,6 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Ovo } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import {
+  APP_ORIGIN,
+  APP_STORE_URL,
+  GITHUB_URL,
+  jsonLdScript,
+} from "@/lib/catalog";
+import { footer } from "@/lib/constants";
 import "./globals.css";
 
 const ovo = Ovo({
@@ -25,14 +32,26 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.forrovivo.com",
+    process.env.NEXT_PUBLIC_SITE_URL ?? APP_ORIGIN,
   ),
   title: {
-    default: "Open Knowledge",
+    default:
+      "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
     template: "%s | Open Knowledge",
   },
   description,
   applicationName: "Open Knowledge",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: "/images/logo-icon.png",
     apple: "/images/logo-icon.png",
@@ -41,14 +60,46 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "Open Knowledge",
-    title: "Open Knowledge",
+    title:
+      "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
     description,
+    images: [
+      {
+        url: "/images/logo-icon.png",
+        alt: "Open Knowledge",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Open Knowledge",
+    card: "summary_large_image",
+    title:
+      "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
     description,
+    images: ["/images/logo-icon.png"],
   },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${APP_ORIGIN}/#organization`,
+      name: footer.companyName,
+      url: APP_ORIGIN,
+      logo: `${APP_ORIGIN}/images/logo-icon.png`,
+      sameAs: [GITHUB_URL, APP_STORE_URL],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${APP_ORIGIN}/#website`,
+      name: "Open Knowledge",
+      alternateName: ["ForroVivo", "Forro Vivo"],
+      url: APP_ORIGIN,
+      inLanguage: "en-GB",
+      publisher: { "@id": `${APP_ORIGIN}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -70,6 +121,10 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}
+        />
       </body>
     </html>
   );

@@ -4,6 +4,9 @@ import { API_ORIGIN, GITHUB_URL } from "@/lib/catalog";
 
 export const metadata = {
   title: "Introduction",
+  description:
+    "ForroVivo is the platform. This site is the front door to the Linguistic Knowledge Base: attested lexicons, sources, and a public API.",
+  alternates: { canonical: "/docs" },
 };
 
 export default function DocsIndexPage() {

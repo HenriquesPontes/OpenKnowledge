@@ -1,29 +1,40 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 type Mode = "login" | "register";
-type Surface = "dictionary" | "api";
+type Surface = "dictionary" | "api" | "connect";
 
-const SUCCESS: Record<Surface, Record<Mode, string>> = {
+const SUCCESS: Record<Surface, Record<Mode | "waitlist", string>> = {
   dictionary: {
     login: "You're on the dictionary list. We'll be in touch.",
     register: "Your dictionary account request is in. We'll be in touch.",
+    waitlist: "You're on the dictionary list. We'll be in touch.",
   },
   api: {
     login: "You're on the API Platform list. We'll be in touch.",
     register: "Your API Platform account request is in. We'll be in touch.",
+    waitlist: "You're on the API Platform list. We'll be in touch.",
+  },
+  connect: {
+    login: "You're on the Forro Connect waitlist. We'll be in touch.",
+    register: "You're on the Forro Connect waitlist. We'll be in touch.",
+    waitlist: "You're on the Forro Connect waitlist. We'll be in touch.",
   },
 };
 
 export function DictionaryAccountForm({
-  mode,
+  mode = "login",
   surface = "dictionary",
+  redirectTo,
 }: {
-  mode: Mode;
+  mode?: Mode;
   surface?: Surface;
+  redirectTo?: string;
 }) {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
@@ -41,12 +52,18 @@ export function DictionaryAccountForm({
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), source: surface }),
       });
-      const data = await response.json();
+      const data: { error?: string } = await response.json().catch(() => ({}));
       if (response.ok) {
+        if (redirectTo) {
+          router.push(redirectTo);
+          return;
+        }
         setStatus("success");
-        setMessage(SUCCESS[surface][mode]);
+        setMessage(
+          SUCCESS[surface][surface === "connect" ? "waitlist" : mode],
+        );
         setEmail("");
         return;
       }
@@ -79,10 +96,14 @@ export function DictionaryAccountForm({
             />
             <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
               {status === "loading"
-                ? "Sending…"
-                : mode === "register"
-                  ? "Create an account"
-                  : "Log in"}
+                ? surface === "connect"
+                  ? "Joining…"
+                  : "Sending…"
+                : surface === "connect"
+                  ? "Join waitlist"
+                  : mode === "register"
+                    ? "Create an account"
+                    : "Log in"}
             </Button>
           </div>
           {status === "error" ? (
