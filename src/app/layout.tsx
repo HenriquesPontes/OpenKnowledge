@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   ),
   title: {
     default:
-      "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
+      "Open Knowledge | Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
     template: "%s | Open Knowledge",
   },
   description,
