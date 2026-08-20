@@ -647,18 +647,22 @@ export const appCredits = {
       body: "Luís has been involved since the earliest conceptual stage in 2023. He helped shape the idea, tested builds, and kept the product grounded in real use.",
     },
     {
-      name: "Emanuel Silva Morgan",
-      role: "Photographer",
-      body: "Photographs on this site are by Emanuel Silva Morgan, photographer in São Tomé and Príncipe.",
+      name: "Clara Armand-Delille",
+      role: "Mentor · Early tester",
+      body: "Clara mentored this project and tested early builds. She is founder of ThirdEyeMedia, a startup mentor, and a speaker on entrepreneurship and growth.",
     },
   ],
   groups: [
     {
       title: "Early testers",
-      body: "Early testers used unfinished builds, reported what broke, and said what the product needed before the dictionary and academy were public. Luís Lima is named here because he has been part of that work from the start. The same thanks go to everyone else who tested those builds and sent feedback.",
+      body: "Early testers used unfinished builds, reported what broke, and said what the product needed before the dictionary and academy were public. Luís Lima has been part of that work from the start. Clara Armand-Delille tested early builds while mentoring the project. The same thanks go to everyone else who tested those builds and sent feedback.",
       people: [
         {
           name: "Luís Lima",
+          role: "Early tester",
+        },
+        {
+          name: "Clara Armand-Delille",
           role: "Early tester",
         },
       ],

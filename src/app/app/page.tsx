@@ -78,8 +78,10 @@ export default function ForroVivoAppPage() {
                     alt=""
                     fill
                     priority
-                    className="object-cover"
-                    sizes="(min-width: 768px) 350px, 280px"
+                    quality={100}
+                    unoptimized
+                    className="object-contain"
+                    sizes="(min-width: 768px) 400px, 320px"
                   />
                 </div>
                 <div className="absolute inset-[-5.84%_-19.79%_-0.01%_0] overflow-hidden rounded-[85px]">
@@ -88,8 +90,9 @@ export default function ForroVivoAppPage() {
                     alt="Forro Vivo no iPhone"
                     fill
                     priority
+                    quality={100}
                     className="object-cover"
-                    sizes="(min-width: 768px) 350px, 280px"
+                    sizes="(min-width: 768px) 400px, 320px"
                   />
                 </div>
               </div>
