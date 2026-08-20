@@ -14,22 +14,20 @@ import {
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-  const countryIds = countries
-    .filter((country) => country.id !== "angola")
-    .map((country) => ({ id: country.id }));
+  const countryIds = countries.map((country) => ({ id: country.id }));
   const languageIds = languages.map((language) => ({ id: language.id }));
   return [...countryIds, ...languageIds];
 }
 
 export async function generateMetadata({ params }: Props) {
   const { id } = await params;
-  const country = countries.find((item) => item.id === id && item.id !== "angola");
+  const country = countries.find((item) => item.id === id);
   const language = languages.find((item) => item.id === id);
   const title = country?.title ?? language?.title;
   const description = country
     ? `Isolated lexicons of ${country.title}. ${country.aliases}. Each variety stays in its own folder.`
     : language
-      ? `${language.title} (${language.aliases}). Isolated African Creole lexicon in Open Knowledge.`
+      ? `${language.title} (${language.aliases}). Isolated lexicon in Open Knowledge.`
       : undefined;
   return {
     title: title ?? { absolute: "Open Knowledge" },
@@ -43,9 +41,7 @@ export default async function LanguageProfilePage({ params }: Props) {
   const catalog = await fetchLanguagesCatalog();
   const records = catalog?.languages ?? [];
 
-  const countryHub = countries.find(
-    (item) => item.id === id && item.id !== "angola",
-  );
+  const countryHub = countries.find((item) => item.id === id);
   if (countryHub) {
     const total = countryEntryTotal(records, countryHub.datasetPrefix);
     return (
@@ -97,10 +93,7 @@ export default async function LanguageProfilePage({ params }: Props) {
     ([, count]) => typeof count === "number" && count > 0,
   );
   const country = countries.find((item) => item.id === language.country);
-  const countryHref =
-    language.country === "angola"
-      ? "/languages#angola"
-      : `/languages/${language.country}`;
+  const countryHref = `/languages/${language.country}`;
 
   return (
     <section className="pt-28 pb-20 sm:pt-36">

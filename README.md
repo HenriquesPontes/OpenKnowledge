@@ -2,7 +2,7 @@
 
 Public linguistic knowledge site for **ForroVivo**, operated by **LIVLU TECHNOLOGIES LTD**.
 
-This repository is the Next.js website at [www.forrovivo.com](https://www.forrovivo.com). The site wordmark and metadata title are Open Knowledge. ForroVivo is the platform.
+This repository is the Next.js website at [forrovivo.com](https://forrovivo.com). `www.forrovivo.com` redirects there. The site wordmark and metadata title are Open Knowledge. ForroVivo is the platform.
 
 It catalogs, documents, and looks up attested Creole lexicons of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Lexical data is not stored here. Isolated datasets live in the Linguistic Research API and the research repository.
 
@@ -13,7 +13,9 @@ The Knowledge Base does not treat AI-generated information as linguistic evidenc
 - Isolated lexicon catalog
 - Documentation
 - Waitlist
-- Lookup proxy into the public Linguistic Research API
+- Dictionary lookup UI
+- API playground on `/api`
+- Lookup proxy (`/api/lookup`) and `/v1` proxy (`/api/v1/...`) into the public Linguistic Research API
 
 Dictionary login and register collect email. They are not identity. There is no automated test suite in this repository.
 
@@ -32,7 +34,7 @@ Then open the local Next.js origin. Production build: `npm run build` then `npm 
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. Production is served at `https://forrovivo.com`. |
 | `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
 | `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
 | `CLOUDFLARE_ACCOUNT_ID` | Server. Cloudflare account. |
@@ -47,7 +49,7 @@ On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials
 
 | Product | Role |
 | --- | --- |
-| Open Knowledge | This website |
+| Open Knowledge | This website (`https://forrovivo.com`). API playground at `/api`. |
 | Linguistic Research API | `https://api.forrovivo.com` |
 | Forro Vivo App | App Store. Product page at `/app` |
 | Forro Connect | Connects learners with native speakers. Waitlist on `/connect`. |

@@ -6,9 +6,9 @@
 **Company website:** livlutechnologies.com (not ready yet)  
 **Repository:** [HenriquesPontes/OpenKnowledge](https://github.com/HenriquesPontes/OpenKnowledge)  
 **Package name:** `open-knowledge`  
-**Report date:** 19 August 2026
+**Report date:** 20 August 2026
 
-This document is the technical report for the Open Knowledge website as implemented in this repository: this Next.js site at `https://www.forrovivo.com`. It records full route and stack detail, and waitlist, Beehiiv, and lookup-proxy implementation.
+This document is the technical report for the Open Knowledge website as implemented in this repository: this Next.js site at `https://forrovivo.com` (`www.forrovivo.com` redirects there). It records full route and stack detail, waitlist, Beehiiv, dictionary lookup, and the `/v1` API playground and proxies.
 
 It is the public front door to ForroVivo’s Linguistic Knowledge Base: attested Creole lexicons, sources, documentation, and a public API. Lexical data is not stored here. This app catalogs, explains, and routes to isolated datasets hosted elsewhere.
 
@@ -21,6 +21,7 @@ Open Knowledge documents Creole languages of São Tomé and Príncipe, Cabo Verd
 - Explain the evidence-first methodology (no AI-generated linguistic claims as evidence).
 - Present isolated lexicons by country and variety, without merging them.
 - Proxy headword lookup into the public Linguistic Research API.
+- Host a same-origin API playground on `/api` for developers.
 - Document GET-only API usage for researchers and developers.
 - Collect waitlist and dictionary-access interest.
 - Situate Open Knowledge inside the ForroVivo product family (learning app and Forro Connect).
@@ -35,11 +36,11 @@ Governing principle, as published on the site:
 
 ForroVivo is the platform. Open Knowledge is one product in that platform.
 
-Domain architecture is `https://www.forrovivo.com`.
+Domain architecture is `forrovivo.com`. Production is served at `https://forrovivo.com`. `https://www.forrovivo.com` redirects there.
 
 | Product | Role | Host |
 | --- | --- | --- |
-| Open Knowledge | Public linguistic knowledge site, documentation, dictionary lookup UI | This Next.js site at `https://www.forrovivo.com` |
+| Open Knowledge | Public linguistic knowledge site, documentation, dictionary lookup UI, API playground | This Next.js site at `https://forrovivo.com` |
 | Linguistic Research API | Read-only JSON API over published datasets | `https://api.forrovivo.com` |
 | Linguistic Research repository | Isolated JSON datasets, methodology, bibliography | [Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-](https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-) |
 | Forro Vivo App | Learning product: dictionary, lessons, exercises | App Store. Product page at `/app` |
@@ -62,9 +63,9 @@ Isolation is the primary data invariant. Similar spelling is not a reason to cop
 | `saotome` | São Tomé and Príncipe | `saotome` | ST | Forro, Angolar, Lung’Ie |
 | `caboverde` | Cabo Verde | `caboverde` | CV | Nine inhabited-island Kabuverdianu varieties |
 | `guinebissau` | Guiné-Bissau | `guinebissau` | GW | Nine regional Kriol varieties |
-| `angola` | Angola | `angola` | AO | Angola Contruy (country dataset) |
+| `angola` | Angola | `angola` | AO | Umbundu, Kimbundu, Kikongo (site catalog). The API also publishes Contruy. |
 
-Country routes under `/v1/saotome`, `/v1/caboverde`, and `/v1/guinebissau` are indexes, not merged dictionaries. `/v1/angola` is Angola Contruy, not Angolar / Ngola of São Tomé.
+Country routes under `/v1/saotome`, `/v1/caboverde`, `/v1/guinebissau`, and `/v1/angola` are indexes, not merged dictionaries. `/v1/angola` is the Angola country index, not Angolar / Ngola of São Tomé. Look up Angola Contruy at `/v1/angola/contruy`, not at `/v1/angola`.
 
 ### 3.2 Isolated lexicons
 
@@ -89,7 +90,15 @@ Bissau, Biombo, Cacheu, Oio, Bafatá, Gabú, Quinara, Tombali, Bolama.
 
 **Angola**
 
-Angola Contruy has no ISO 639-3 in this catalog. It must not be confused with Angolar.
+| ID | Title | ISO 639-3 | Dataset |
+| --- | --- | --- | --- |
+| `umbundu` | Umbundu | umb | `angola/umbundu` |
+| `kimbundu` | Kimbundu | kmb | `angola/kimbundu` |
+| `kikongo` | Kikongo | kng | `angola/kikongo` |
+
+The Linguistic Research API also publishes `angola/contruy` (Angola Contruy). That path is not Angolar of São Tomé and is not a merged Angola dictionary.
+
+The Angola country index has no ISO 639-3. It must not be confused with Angolar.
 
 Static catalog, isolation copy, GitHub folder URLs, and geographic anchors live in `src/lib/constants.ts`. Live entry counts and knowledge-field tallies come from `GET https://api.forrovivo.com/v1/languages`.
 
@@ -103,9 +112,10 @@ Browser
   ├─ Next.js App Router (this repo)
   │    ├─ Static/SSR pages (docs, about, legal, connect)
   │    ├─ Server pages that fetch the languages catalog
-  │    ├─ Client UI (maps, waitlist, dictionary search, globe)
+  │    ├─ Client UI (maps, waitlist, dictionary search, API playground, globe)
   │    ├─ POST /api/waitlist  → local JSON (non-Vercel) and/or Beehiiv
-  │    └─ GET  /api/lookup    → proxy to api.forrovivo.com
+  │    ├─ GET  /api/lookup    → proxy to the Linguistic Research API
+  │    └─ GET  /api/v1/...    → same-origin playground proxy to /v1
   │
   ├─ Linguistic Research API  (api.forrovivo.com)
   │    └─ published JSON per isolated dataset
@@ -198,8 +208,8 @@ Next.js App Router. Root layout wraps every page with skip-link, Navbar, `<main 
 | `/overview` | `src/app/overview/page.tsx` | Product family overview |
 | `/research` | `src/app/research/page.tsx` | Live lexicon atlas (flow + isolation network) |
 | `/about` | `src/app/about/page.tsx` | Mission, pipeline, founders |
-| `/api` | `src/app/api/page.tsx` | Public API marketing page (not a route handler) |
-| `/developers` | `src/app/developers/page.tsx` | Auth/rate-limit posture |
+| `/api` | `src/app/api/page.tsx` | API playground (`#try`) and documented GET paths |
+| `/developers` | `src/app/developers/page.tsx` | Redirects to `/docs` |
 | `/connect` | `src/app/connect/page.tsx` | Forro Connect |
 | `/app` | `src/app/app/page.tsx` | Forro Vivo App product page (app dark-green tokens) |
 | `/translation` | `src/app/translation/page.tsx` | Translation capability explainer (this site does not run a translator) |
@@ -216,6 +226,7 @@ Docs pages share `src/app/docs/layout.tsx` (sidebar from `docsNav`).
 | --- | --- | --- |
 | `POST` | `/api/waitlist` | `src/app/api/waitlist/route.ts` |
 | `GET` | `/api/lookup` | `src/app/api/lookup/route.ts` |
+| `GET` | `/api/v1/*` | `src/app/api/v1/[[...path]]/route.ts` |
 
 ---
 
@@ -233,7 +244,6 @@ Documented in `apiPaths` (`src/lib/constants.ts`) and rendered on `/api` and `/d
 | GET | `/v1/languages` | Isolated lexicons (not a merged word list) |
 | GET | `/v1/datasets` | Published dataset index |
 | GET | `/v1/{family}/{variety}/lookup?headword=` | One headword in that folder |
-| GET | `/v1/angola/contruy/lookup?headword=` | Angola Contruy (not Angolar) |
 | GET | `/v1/search?dataset=…&q=` | Search inside one named dataset only |
 | GET | `/v1/{family}/{variety}/entries` | Lexical entries from that folder |
 | GET | `/v1/{family}/{variety}/sources` | Bibliography for that folder |
@@ -246,9 +256,9 @@ Rules the site documents:
 - Search requires `dataset=` and never crosses folders.
 - Lookup envelopes include `attribution`. Responses send `API-Version` and `Link` (`rel=source`, `rel=license`).
 
-OpenAPI playground: `https://api.forrovivo.com/docs`.
+Catalog fetch (`fetchLanguagesCatalog`) uses `fetchResearchApi`, which tries `API_ORIGIN` and then the Workers fallback origin. Catalog responses are revalidated. Failures return `null` (catalog) or a generic 502 (lookup), so pages still render from the static constants catalog.
 
-Catalog fetch (`fetchLanguagesCatalog`) uses Next.js ISR-style revalidation of six hours. Lookup proxy revalidates for two minutes. Failures return `null` (catalog) or a generic 502 (lookup), so pages still render from the static constants catalog.
+The developer web UI is this site at `/api` (`https://forrovivo.com/api`). Curl and other clients call `https://api.forrovivo.com` directly. The Worker also serves HTML at `/docs`. The OpenAPI contract is at `https://api.forrovivo.com/v1/openapi.yaml`.
 
 ---
 
@@ -279,15 +289,21 @@ Query: `dataset`, `headword`.
 
 `dataset` must match `^[a-z0-9]+(?:\/[a-z0-9]+)?$` (for example `saotome/forro` or `angola`). Invalid input returns 400.
 
-The handler forwards to:
+The handler forwards via `fetchResearchApi` to:
 
 ```
-GET {API_ORIGIN}/v1/{dataset}/lookup?headword={encoded}
+GET {origin}/v1/{dataset}/lookup?headword={encoded}
 ```
 
-It relays status and JSON (or a generic error body). Upstream failure surfaces as 502.
+It relays status and JSON (or a generic error body). Upstream failure surfaces as 502. Lookup responses are revalidated.
 
-Client: `DictionarySearch` on `/dictionaries`.
+Client: `DictionarySearch` on `/dictionaries`. Results render as dictionary cards: a summary (lexicon, language, sense count, match type) and a card per sense (headword, IPA, part of speech, Portuguese and English glosses, example, recordings, source). Errors use the API `message` (including `TERM_NOT_FOUND`).
+
+### 9.3 API playground proxy — `GET /api/v1/*`
+
+Same-origin GET proxy for the playground on `/api`. Safe path segments only. Query keys are limited to `headword`, `q`, `dataset`, `offset`, and `limit`. The explorer shows curl against `api.forrovivo.com` and runs requests through this proxy.
+
+`robots.ts` disallows `/api/waitlist`, `/api/lookup`, and `/api/v1`.
 
 ---
 
@@ -404,7 +420,7 @@ Heading sizes use `clamp()` rather than fixed marketing type scales.
 
 Root `src/app/layout.tsx`:
 
-- `metadataBase` from `NEXT_PUBLIC_SITE_URL`, defaulting to `https://www.forrovivo.com`
+- `metadataBase` from `NEXT_PUBLIC_SITE_URL`, defaulting to `https://www.forrovivo.com` (production is served at `https://forrovivo.com`)
 - Title template: `%s | Open Knowledge`
 - Icons: `/images/logo-icon.png`
 - Open Graph / Twitter summary cards
@@ -452,7 +468,8 @@ Other tactics in components:
 - Waitlist emails: processed to notify product availability; not sold. On Vercel they go to Beehiiv when credentials exist. Locally they are written under `Join waitlist/` (gitignored).
 - Legal page states that the public Linguistic Research API is not used to collect personal data; server logs may include IP for operations.
 - `BEEHIIV_API_KEY` and `BEEHIIV_PUBLICATION_ID` are server-only. `.env*` is gitignored.
-- Lookup dataset is constrained by regex to avoid open path construction.
+- Lookup dataset is constrained by regex to avoid open path construction. The `/api/v1` playground proxy allows only safe path segments and an allowlisted query set.
+- `robots.ts` disallows crawling of `/api/waitlist`, `/api/lookup`, and `/api/v1`.
 - Waitlist write uses a unique temp file then rename.
 - `poweredByHeader` is disabled.
 - No session cookies, CSRF tokens, or user database in this repo.
@@ -475,7 +492,7 @@ Dictionary “log in” / “create an account” do not authenticate. They enqu
 
 ## 18. Deployment
 
-- Framework: Next.js on Vercel (`vercel.json`: `buildCommand` `next build`, `installCommand` `npm install`).
+- Framework: Next.js on Vercel (`vercel.json`: `buildCommand` `next build`, `installCommand` `npm install`). Production is aliased to `https://forrovivo.com`. `www.forrovivo.com` redirects there.
 - Scripts: `dev`, `build`, `start`, `lint`.
 - `allowScripts` in `package.json` permits native installs used by the Next toolchain (`sharp`, `unrs-resolver`).
 - Git remote: `origin` → `https://github.com/HenriquesPontes/OpenKnowledge.git`, branch `main`.
@@ -524,14 +541,14 @@ For waitlist on Vercel, set Beehiiv credentials. For local waitlist without Beeh
 | Area | Files |
 | --- | --- |
 | App shell | `src/app/layout.tsx`, `src/app/globals.css`, `src/app/page.tsx` |
-| Route handlers | `src/app/api/waitlist/route.ts`, `src/app/api/lookup/route.ts` |
+| Route handlers | `src/app/api/waitlist/route.ts`, `src/app/api/lookup/route.ts`, `src/app/api/v1/[[...path]]/route.ts` |
 | Catalog | `src/lib/catalog.ts`, `src/lib/constants.ts` |
 | Maps | `src/lib/map-path.ts`, `src/lib/rewind-geo.ts`, `src/data/africa-countries.json`, `src/components/sections/AfricaMap.tsx` |
 | Layout UI | `src/components/layout/Navbar.tsx`, `src/components/layout/Footer.tsx` |
-| Sections | `Hero`, `Architecture`, `FeatureGrid`, `DictionarySearch`, `DictionaryAccountForm`, `GlobeWireframe`, `BrowserMockup`, `ProductShowcase` |
+| Sections | `Hero`, `Architecture`, `FeatureGrid`, `DictionarySearch`, `ApiExplorer`, `DictionaryAccountForm`, `GlobeWireframe`, `BrowserMockup`, `ProductShowcase` |
 | Primitives | `src/components/ui/Button.tsx`, `src/components/ui/Container.tsx`, `src/lib/cn.ts` |
 | Config | `next.config.ts`, `tsconfig.json`, `vercel.json`, `eslint.config.mjs`, `postcss.config.mjs`, `package.json` |
 
 ---
 
-*End of technical report. This document reflects the repository as of 19 August 2026.*
+*End of technical report. This document reflects the repository as of 20 August 2026.*

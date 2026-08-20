@@ -14,6 +14,7 @@ import {
   africaMap,
   countries,
   languages,
+  languageForDataset,
   lexiconLocations,
   lexiconMapRegions,
 } from "@/lib/constants";
@@ -311,24 +312,26 @@ export function AfricaMap({
     : focusLocation
       ? layout.project(focusLocation.lon, focusLocation.lat)
       : null;
-  const language = languages.find((item) => item.dataset === focusDataset);
+  const language = languageForDataset(focusDataset ?? "");
   const hoveredDataset =
     hoveredId && countryId && active
       ? datasetForPath(countryId, active, usingSvg)
       : null;
   const hoveredLanguage = hoveredDataset
-    ? languages.find((item) => item.dataset === hoveredDataset)
+    ? languageForDataset(hoveredDataset)
     : undefined;
   const meta = countryId ? countryMeta(countryId) : null;
   const lexiconHref = countryId ? knowledgeHrefs[countryId] : undefined;
   const namibia = layout.paths.find((path) => path.id === "NA");
   const cardLanguage = hoveredId ? hoveredLanguage : language;
+  const cardCountryName = countries.find(
+    (item) => item.id === cardLanguage?.country,
+  )?.title;
   const cardTitle = focused
     ? (cardLanguage?.title ?? meta?.title ?? active?.name)
     : active?.name;
-  const cardCountry = focused
-    ? (countries.find((item) => item.id === cardLanguage?.country)?.title ??
-      meta?.title)
+  const cardRegion = focused
+    ? (cardCountryName ?? meta?.title)
     : active?.subregion;
 
   const countryCard = active || (focused && cardTitle) ? (
@@ -336,9 +339,9 @@ export function AfricaMap({
       <p className="whitespace-nowrap text-white text-sm tracking-[-0.01em]">
         {cardTitle}
       </p>
-      {cardCountry ? (
+      {cardRegion ? (
         <p className="mt-0.5 whitespace-nowrap text-muted text-xs tracking-[-0.01em]">
-          {cardCountry}
+          {cardRegion}
         </p>
       ) : null}
       {!focused && active ? (
@@ -551,7 +554,7 @@ export function AfricaMap({
           </div>
         ) : null}
         {focused && countryCard ? (
-          <div className="pointer-events-none absolute left-0 top-2 z-20 max-w-[calc(100%-1rem)] sm:left-auto sm:right-0 sm:top-4">
+          <div className="mt-4">
             {countryCard}
           </div>
         ) : null}

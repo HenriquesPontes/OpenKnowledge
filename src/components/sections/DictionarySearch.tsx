@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
-import { API_ORIGIN } from "@/lib/catalog";
+import { API_ORIGIN, isCountryDataset } from "@/lib/catalog";
 import { countries, languages } from "@/lib/constants";
 
 const AfricaMap = dynamic(
@@ -61,6 +61,13 @@ function countryIsoForDataset(dataset: string) {
 }
 
 function optionForDataset(datasets: DatasetOption[], next: string) {
+  if (isCountryDataset(next)) {
+    const prefix = next.includes("/") ? next.split("/")[0] : next;
+    return (
+      datasets.find((item) => item.dataset.startsWith(`${prefix}/`))?.dataset ??
+      next
+    );
+  }
   const exact = datasets.find((item) => item.dataset === next);
   if (exact) return exact.dataset;
   const slug = next.split("/").pop() ?? next;

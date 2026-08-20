@@ -30,7 +30,8 @@ export default function MethodologyPage() {
       <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
         Forro, Angolar and Lung’Ie are documented as independent systems. Cabo
         Verde is one island, one folder. Guinea-Bissau is one region, one
-        folder. Angola Contruy is the Angola country dataset; it is not Angolar.
+        folder. Angola is Umbundu, Kimbundu, and Kikongo, each in its own
+        folder; the Angola country index is not Angolar.
         Official Portuguese of these countries is not a creole lexicon in this
         knowledge base.
       </p>

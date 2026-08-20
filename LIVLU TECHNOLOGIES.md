@@ -245,9 +245,9 @@ Open Knowledge catalogs isolated lexicons in four country folders:
 | `saotome` | ST | São Tomé and Príncipe | Forro, Angolar, Lung’Ie |
 | `caboverde` | CV | Cabo Verde | Kabuverdianu island varieties |
 | `guinebissau` | GW | Guiné-Bissau | Regional Kriol varieties |
-| `angola` | AO | Angola | Angola Contruy |
+| `angola` | AO | Angola | Umbundu, Kimbundu, Kikongo |
 
-Country indexes are not merged dictionaries. `/v1/angola` is Angola Contruy. It is not Angolar / Ngola of São Tomé.
+Country indexes are not merged dictionaries. `/v1/angola` is the Angola country index. It is not Angolar / Ngola of São Tomé. Look up Angola Contruy at `/v1/angola/contruy`.
 
 Official Portuguese of these countries is not treated as a creole lexicon.
 
@@ -259,7 +259,7 @@ Each variety is its own folder. Lookup and search stay inside one named dataset.
 
 Domain architecture is **forrovivo.com**.
 
-ForroVivo is a product family operated by LIVLU TECHNOLOGIES LTD. The public product domain is `https://www.forrovivo.com`. Other properties are not the domain architecture.
+ForroVivo is a product family operated by LIVLU TECHNOLOGIES LTD. The public product domain is `forrovivo.com`. Production is served at `https://forrovivo.com`. `https://www.forrovivo.com` redirects there. Other properties are not the domain architecture.
 
 ```text
 FORROVIVO.COM
@@ -283,11 +283,11 @@ This is the company layer: who operates the products, legal identity, and corpor
 
 ## FORROVIVO.COM
 
-Domain architecture: `https://www.forrovivo.com`.
+Domain architecture: `forrovivo.com` (`https://forrovivo.com`; `www` redirects there).
 
 ### Open Knowledge
 
-Open Knowledge is this Next.js site at `https://www.forrovivo.com`.
+Open Knowledge is this Next.js site at `https://forrovivo.com`.
 
 The site wordmark and metadata title are Open Knowledge.
 
@@ -296,7 +296,9 @@ This repository is:
 - Catalog of isolated lexicons
 - Documentation
 - Waitlist
-- Lookup proxy into the public Linguistic Research API
+- Dictionary lookup UI
+- API playground on `/api`
+- Lookup proxy and `/v1` proxy into the public Linguistic Research API
 
 It catalogs, explains, and routes to isolated datasets hosted elsewhere. Lexical data is not stored here.
 
@@ -304,7 +306,7 @@ Dictionary login and register collect email through the waitlist. They are not i
 
 There is no automated test suite in this repository.
 
-The site `metadataBase` defaults to `https://www.forrovivo.com`.
+The site `metadataBase` defaults to `https://www.forrovivo.com`. Production is served at `https://forrovivo.com`.
 
 Linguistic claims remain evidence-first. AI-generated text is not treated as linguistic evidence.
 
@@ -326,9 +328,9 @@ The Forro Vivo App is the learning product on the App Store: dictionary, lessons
 
 ## Open Knowledge (this repository)
 
-Open Knowledge is this Next.js site at `https://www.forrovivo.com`.
+Open Knowledge is this Next.js site at `https://forrovivo.com`.
 
-This repository is catalog, docs, waitlist, and lookup proxy.
+This repository is catalog, docs, waitlist, dictionary lookup, API playground, and lookup proxy.
 
 - Login is not identity.
 - There is no test suite.

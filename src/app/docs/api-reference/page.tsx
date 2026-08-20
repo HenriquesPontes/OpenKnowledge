@@ -63,10 +63,12 @@ export default function ApiReferencePage() {
           Lexicons use{" "}
           <code className="text-white">/v1/{"{family}/{variety}/{collection}"}</code>
           . Country indexes are <code className="text-white">/v1/{"{family}"}</code>{" "}
-          and are not merged dictionaries. Look up Angola Contruy at{" "}
-          <code className="text-white">/v1/angola/contruy/lookup</code>, not{" "}
-          <code className="text-white">/v1/angola/lookup</code>. Angolar of São
-          Tomé is <code className="text-white">/v1/saotome/angolar</code>.
+          and are not merged dictionaries. Look up Umbundu at{" "}
+          <code className="text-white">/v1/angola/umbundu/lookup</code> or Angola
+          Contruy at <code className="text-white">/v1/angola/contruy/lookup</code>.
+          Do not look up at <code className="text-white">/v1/angola/lookup</code>.
+          Angolar of São Tomé is{" "}
+          <code className="text-white">/v1/saotome/angolar</code>.
         </p>
       </Section>
 
@@ -107,6 +109,16 @@ export default function ApiReferencePage() {
           project license (<code className="text-white">rel=license</code>).
           Project materials are CC BY 4.0. Source extracts keep their original
           terms.
+        </p>
+      </Section>
+
+      <Section id="web-ui" title="Web UI">
+        <p>
+          The playground on this site is{" "}
+          <code className="text-white">/api</code>. Requests from that page go
+          through <code className="text-white">/api/v1</code> on this origin,
+          then to the Linguistic Research API. Curl and other clients should
+          call {host} directly.
         </p>
       </Section>
 

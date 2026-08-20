@@ -1,4 +1,12 @@
-import { API_ORIGIN, APP_ORIGIN, APP_STORE_URL, GITHUB_URL } from "./catalog";
+import {
+  API_ORIGIN,
+  APP_ORIGIN,
+  APP_STORE_URL,
+  GITHUB_URL,
+  isCountryDataset,
+} from "./catalog";
+
+export { isCountryDataset };
 
 export const howItWorks = {
   hash: "#how-it-works",
@@ -137,12 +145,12 @@ export const countries = [
     id: "angola",
     number: "4",
     title: "Angola",
-    aliases: "Angola Contruy",
+    aliases: "Umbundu, Kimbundu, Kikongo",
     isoA2: "AO",
     href: "/languages/angola",
     datasetPrefix: "angola",
     isolation:
-      "Angola Contruy is the Angola country dataset. It is not Angolar / Ngola of São Tomé.",
+      "Country index only. Umbundu, Kimbundu, and Kikongo are separate language datasets. Do not copy between them. This is not Angolar / Ngola of São Tomé.",
   },
 ] as const;
 
@@ -173,7 +181,7 @@ export const languages = [
     href: "/languages/angolar",
     github: `${GITHUB_URL}/tree/main/data/saotome_dataset/angolar`,
     isolation:
-      "Angolar / Ngola only. This is not Angola Contruy and not data/angola_dataset/.",
+      "Angolar / Ngola only. This is not Angola and not data/angola_dataset/.",
   },
   {
     id: "lungie",
@@ -441,20 +449,68 @@ export const languages = [
       "Kriol of Bolama only. Do not insert other regions, Cabo Verdean island creoles, Casamance Kriyol, or a São Tomé creole.",
   },
   {
-    id: "angola",
+    id: "umbundu",
     country: "angola",
-    title: "Angola Contruy",
-    aliases: "Angola (country)",
-    autonym: "Angola Contruy",
+    title: "Umbundu",
+    aliases: "Umbundu of the central plateau",
+    autonym: "Umbundu",
     group: "Angola",
-    iso: null,
-    dataset: "angola",
-    href: "/languages/angola",
-    github: `${GITHUB_URL}/tree/main/data/angola_dataset`,
+    iso: "umb",
+    dataset: "angola/umbundu",
+    href: "/languages/umbundu",
+    github: `${GITHUB_URL}/tree/main/data/angola_dataset/umbundu`,
     isolation:
-      "Angola Contruy is the Angola country dataset. It is not Angolar / Ngola of São Tomé. Do not copy data/saotome_dataset/angolar/ into this folder.",
+      "Umbundu only. Do not insert Kimbundu, Kikongo, or Angolar / Ngola of São Tomé.",
+  },
+  {
+    id: "kimbundu",
+    country: "angola",
+    title: "Kimbundu",
+    aliases: "Kimbundu of Luanda",
+    autonym: "Kimbundu",
+    group: "Angola",
+    iso: "kmb",
+    dataset: "angola/kimbundu",
+    href: "/languages/kimbundu",
+    github: `${GITHUB_URL}/tree/main/data/angola_dataset/kimbundu`,
+    isolation:
+      "Kimbundu only. Do not insert Umbundu, Kikongo, or Angolar / Ngola of São Tomé.",
+  },
+  {
+    id: "kikongo",
+    country: "angola",
+    title: "Kikongo",
+    aliases: "Kikongo of the north",
+    autonym: "Kikongo",
+    group: "Angola",
+    iso: "kng",
+    dataset: "angola/kikongo",
+    href: "/languages/kikongo",
+    github: `${GITHUB_URL}/tree/main/data/angola_dataset/kikongo`,
+    isolation:
+      "Kikongo only. Do not insert Umbundu, Kimbundu, or Angolar / Ngola of São Tomé.",
   },
 ] as const;
+
+export function languageForDataset(dataset: string) {
+  if (isCountryDataset(dataset)) return undefined;
+  const exact = languages.find((item) => item.dataset === dataset);
+  if (exact) return exact;
+  const [prefix, slug] = dataset.includes("/")
+    ? (dataset.split("/") as [string, string])
+    : [dataset, dataset];
+  return (
+    languages.find((item) => item.dataset === prefix) ??
+    languages.find((item) => item.country === prefix && item.id === slug)
+  );
+}
+
+export function lexiconSelectLabel(dataset: string, fallback?: string) {
+  const language = languageForDataset(dataset);
+  if (!language) return fallback || dataset;
+  const country = countries.find((item) => item.id === language.country);
+  return `${language.title} · ${country?.title ?? language.group}`;
+}
 
 export const lexiconLocations: Record<string, { lat: number; lon: number }> = {
   "saotome/forro": { lat: 0.3365, lon: 6.7273 },
@@ -478,7 +534,9 @@ export const lexiconLocations: Record<string, { lat: number; lon: number }> = {
   "guinebissau/quinara": { lat: 11.583, lon: -15 },
   "guinebissau/tombali": { lat: 11.283, lon: -15.25 },
   "guinebissau/bolama": { lat: 11.583, lon: -15.483 },
-  angola: { lat: -8.838, lon: 13.234 },
+  "angola/umbundu": { lat: -12.776, lon: 15.739 },
+  "angola/kimbundu": { lat: -8.838, lon: 13.234 },
+  "angola/kikongo": { lat: -7.608, lon: 15.061 },
 };
 
 /** SVG admin1 path ids from public/images/maps/africa/{st,cv,gw}.svg → isolated lexicon. */
@@ -521,6 +579,18 @@ export const lexiconMapRegions: Record<string, string> = {
   GWBS: "guinebissau/bissau",
   GWQU: "guinebissau/quinara",
   GWBL: "guinebissau/bolama",
+  AOHUA: "angola/umbundu",
+  AOBIE: "angola/umbundu",
+  AOBGU: "angola/umbundu",
+  AOHUI: "angola/umbundu",
+  AOCUS: "angola/umbundu",
+  AOLUA: "angola/kimbundu",
+  AOBGO: "angola/kimbundu",
+  AOCNO: "angola/kimbundu",
+  AOMAL: "angola/kimbundu",
+  AOCAB: "angola/kikongo",
+  AOZAI: "angola/kikongo",
+  AOUIG: "angola/kikongo",
 };
 
 export const apiSection = {
@@ -1131,6 +1201,7 @@ export const docsNav = [
     links: [
       { label: "Introduction", href: "/docs" },
       { label: "Quickstart", href: "/docs/quickstart" },
+      { label: "Try the API", href: "/api#try" },
       { label: "Authentication", href: "/docs/api-reference#authentication" },
       { label: "Rate limits", href: "/docs/api-reference#rate-limits" },
     ],
@@ -1147,6 +1218,7 @@ export const docsNav = [
     links: [
       { label: "Versioning", href: "/docs/api-reference#versioning" },
       { label: "CORS", href: "/docs/api-reference#cors" },
+      { label: "Web UI", href: "/docs/api-reference#web-ui" },
       { label: "Attribution", href: "/docs/api-reference#attribution" },
       { label: "GET /v1/languages", href: "/docs/api-reference#routes" },
       { label: "GET /v1/lookup", href: "/docs/api-reference#routes" },
@@ -1173,12 +1245,8 @@ export const apiPaths = [
   {
     method: "GET",
     path: "/v1/{family}/{variety}/lookup?headword=",
-    detail: "Look up one headword in that folder only. Example: /v1/saotome/forro/lookup?headword=kume.",
-  },
-  {
-    method: "GET",
-    path: "/v1/angola/contruy/lookup?headword=",
-    detail: "Look up Angola Contruy. This is not Angolar of São Tomé.",
+    detail:
+      "Look up one headword in that folder only. Example: /v1/saotome/forro/lookup?headword=kume, /v1/angola/umbundu/lookup, or /v1/angola/contruy/lookup.",
   },
   {
     method: "GET",

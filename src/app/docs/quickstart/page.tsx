@@ -38,7 +38,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={lookup}
-          body="Exact matches from that folder only, for example saotome/forro, caboverde/santiago, guinebissau/bissau, or angola/contruy. Missing terms return TERM_NOT_FOUND."
+          body="Exact matches from that folder only, for example saotome/forro, caboverde/santiago, guinebissau/bissau, or angola/umbundu. Angola Contruy is angola/contruy. Parent indexes such as angola are not merged lexicons. Missing terms return TERM_NOT_FOUND."
         />
       </div>
 

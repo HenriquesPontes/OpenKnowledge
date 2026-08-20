@@ -16,6 +16,8 @@ export type LanguageRecord = {
   dataset: string;
   language: string;
   language_name?: string;
+  type?: string;
+  kind?: string;
   iso_639_3?: string;
   entry_count?: number;
   knowledge?: Record<string, number>;
@@ -33,7 +35,7 @@ const SAMPLE_DATASETS = [
   "saotome/forro",
   "caboverde/santiago",
   "guinebissau/bissau",
-  "angola/contruy",
+  "angola/umbundu",
 ] as const;
 
 const RESEARCH_ORIGINS = [API_ORIGIN, API_FALLBACK_ORIGIN] as const;
@@ -82,6 +84,17 @@ export async function fetchLanguagesCatalog(): Promise<LanguagesResponse | null>
   }
 }
 
+export function isCountryDataset(
+  dataset: string,
+  meta?: { type?: string; kind?: string },
+) {
+  if (meta?.type === "country" || meta?.kind === "index" || meta?.kind === "country") {
+    return true;
+  }
+  if (!dataset.includes("/")) return true;
+  return dataset.split("/")[1] === "country";
+}
+
 export function recordForDataset(
   languages: LanguageRecord[],
   dataset: string,
@@ -100,10 +113,12 @@ export function countryEntryTotal(
   datasetPrefix: string,
 ) {
   return languages
-    .filter(
-      (item) =>
+    .filter((item) => {
+      if (!item.dataset || isCountryDataset(item.dataset, item)) return false;
+      return (
         item.dataset === datasetPrefix ||
-        item.dataset.startsWith(`${datasetPrefix}/`),
-    )
+        item.dataset.startsWith(`${datasetPrefix}/`)
+      );
+    })
     .reduce((sum, item) => sum + (item.entry_count ?? 0), 0);
 }

@@ -25,9 +25,7 @@ const staticPaths = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   const languagePaths = [
-    ...countries
-      .filter((country) => country.id !== "angola")
-      .map((country) => `/languages/${country.id}`),
+    ...countries.map((country) => `/languages/${country.id}`),
     ...languages.map((language) => language.href),
   ];
 

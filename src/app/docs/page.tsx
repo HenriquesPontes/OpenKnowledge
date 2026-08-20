@@ -29,11 +29,15 @@ export default function DocsIndexPage() {
         The API is GET-only. Routes live under /v1. Each path serves one dataset.
         Parent indexes are not merged dictionaries. If a term is not attested,
         the service returns TERM_NOT_FOUND. There is no API key. Browser clients
-        may call from any origin. Responses name their sources.
+        may call from any origin. Responses name their sources. Try it on this
+        site at /api; curl uses api.forrovivo.com.
       </p>
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Button href="/docs/quickstart">Quickstart</Button>
-        <Button href="/docs/api-reference" variant="outline">
+        <Button href="/api#try" variant="outline">
+          Try the API
+        </Button>
+        <Button href="/docs/api-reference" variant="ghost">
           API reference
         </Button>
         <Button href={GITHUB_URL} variant="ghost">

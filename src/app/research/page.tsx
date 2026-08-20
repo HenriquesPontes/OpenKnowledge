@@ -6,7 +6,7 @@ import { fetchLanguagesCatalog, GITHUB_URL } from "@/lib/catalog";
 export const metadata = {
   title: "Research",
   description:
-    "Sources, isolation, and provenance for Forro, Angolar, Lung’Ie, Kabuverdianu, Guinea-Bissau Kriol, and Angola Contruy. Every lexical field should name a source.",
+    "Sources, isolation, and provenance for Forro, Angolar, Lung’Ie, Kabuverdianu, Guinea-Bissau Kriol, and Angola Umbundu, Kimbundu, and Kikongo. Every lexical field should name a source.",
   alternates: { canonical: "/research" },
 };
 
@@ -32,7 +32,8 @@ export default async function ResearchPage() {
         <p className="mt-6 max-w-[640px] text-muted text-base leading-7 tracking-[-0.01em]">
           Linguistic Research is the public evidence layer for Forro, Angolar,
           Lung’Ie, Kabuverdianu island varieties, Guinea-Bissau Kriol regions,
-          and Angola Contruy. Every lexical field should name a source.
+          and Angola Umbundu, Kimbundu, and Kikongo. Every lexical field should
+          name a source.
           Third-party dictionaries and papers keep their original licenses.
           Project-original material is CC BY 4.0.
         </p>
