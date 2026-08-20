@@ -1,5 +1,27 @@
 import { API_ORIGIN, APP_ORIGIN, APP_STORE_URL, GITHUB_URL } from "./catalog";
 
+export const howItWorks = {
+  hash: "#how-it-works",
+  home: "/#how-it-works",
+  paths: ["/", "/connect", "/translation", "/docs/methodology"],
+} as const;
+
+export function howItWorksHref(pathname: string) {
+  return (howItWorks.paths as readonly string[]).includes(pathname)
+    ? howItWorks.hash
+    : howItWorks.home;
+}
+
+export function sectionNavLink(pathname: string) {
+  if (pathname === "/app" || pathname.startsWith("/app/")) {
+    return {
+      label: "Roadmap",
+      href: pathname === "/app" ? "#roadmap" : "/app#roadmap",
+    };
+  }
+  return { label: "How it works", href: howItWorksHref(pathname) };
+}
+
 export const nav = {
   links: [
     { label: "How it works", href: "/#how-it-works" },
@@ -523,19 +545,6 @@ export const architecture = {
   },
 } as const;
 
-export const appArchitecture = {
-  title: "How it works",
-  description:
-    "The Forro Vivo App is the learning product: dictionary, lessons, exercises and language practice. It lives on the App Store. It is not this Open Knowledge website.",
-  steps: [
-    { label: "Dictionary" },
-    { label: "Lessons" },
-    { label: "Exercises" },
-    { label: "Language practice" },
-    { label: "App Store" },
-  ],
-} as const;
-
 export const appLanding = {
   title: "Aprenda Forro. Preserve a Cultura.",
   description:
@@ -544,24 +553,141 @@ export const appLanding = {
 
 export const appWhy = {
   title: "Why Choose Forro Vivo?",
+  photoCredit: {
+    label: "Photography",
+    name: "Emanuel Silva Morgan",
+    href: "https://www.instagram.com/silva_photography_stp/",
+  },
   cards: [
     {
       title: "Stronger Family Connections",
       body: "Communicate with family and friends, deepening your bond through shared language.",
-      image: "/images/app/why-family.png",
-      imageAlt: "A family weaving together at home",
+      image: "/images/photography/emanuel-silva-morgan/children.jpg",
+      imageAlt:
+        "Children looking through a wooden doorway in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
     },
     {
       title: "New Global Opportunities",
       body: "Language proficiency unlocks unique business and personal growth opportunities across the continent.",
-      image: "/images/app/why-opportunities.png",
-      imageAlt: "A family exploring connections across Africa on a tablet",
+      image: "/images/photography/emanuel-silva-morgan/school.jpg",
+      imageAlt:
+        "Schoolchildren gathered on a street in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
     },
     {
       title: "Richer Travel Experiences",
       body: "Enhance your African adventures with deeper immersion and genuine connections with communities. All of our greatest memories always start with a simple Olá, bom dia, boa tarde, boa noite.",
-      image: "/images/app/why-travel.png",
-      imageAlt: "A Forro language lesson outdoors with the community",
+      image: "/images/photography/emanuel-silva-morgan/sunset.jpg",
+      imageAlt:
+        "Looking out over the sea at dusk in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
+    },
+  ],
+} as const;
+
+export const appVision = {
+  title: "Our broader vision",
+  about:
+    "ForroVivo is an AI-powered language learning platform dedicated to preserving and teaching Forro, the African Creole language of São Tomé and Príncipe. It combines a digital dictionary, translation, pronunciation, interactive learning, and AI-powered exercises.",
+  body: "Our broader vision is to use AI and technology to preserve African Creole languages, making them accessible to new generations while protecting the cultures and identities connected to them.",
+} as const;
+
+export const appFaq = {
+  title: "FAQ",
+  items: [
+    {
+      question: "What is Forro Vivo?",
+      answer:
+        "Forro Vivo is the learning app for Forro (Santome / Santomense). It is dedicated to preserving and teaching the language with a digital dictionary, translation, pronunciation, interactive lessons, and AI-powered exercises.",
+    },
+    {
+      question: "What does the app include?",
+      answer:
+        "Dictionary, lessons, exercises, and language practice. Translation and pronunciation sit in that learning product. Forro Connect is separate: it matches learners with native speakers.",
+    },
+    {
+      question: "Where can I download it?",
+      answer:
+        "On the App Store and on Google Play. The public CTA on this page opens those stores.",
+    },
+    {
+      question: "Does the app have voice and audio?",
+      answer:
+        "Voice capability and audio arrive in version 5, now a reliable beta on track for public release. The current public release is the dictionary and academy, without voice.",
+    },
+    {
+      question: "Is this the same as Open Knowledge?",
+      answer:
+        "No. This page is the Forro Vivo App. Open Knowledge is the public linguistic knowledge site: attested lexicons, sources, and the read-only API. The Knowledge Base does not treat AI-generated information as linguistic evidence.",
+    },
+    {
+      question: "How is AI used?",
+      answer:
+        "The app uses AI for learning and exercises. Where AI supports learning, the underlying language knowledge remains source-traceable and evidence-first.",
+    },
+    {
+      question: "What about other African Creole languages?",
+      answer:
+        "The broader vision is to preserve African Creole languages and protect the cultures connected to them. Isolated lexicons for São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola are documented on Open Knowledge. They stay in separate folders.",
+    },
+  ],
+} as const;
+
+export const appCredits = {
+  title: "Credits",
+  description:
+    "People and organisations behind the Forro Vivo App. The app is a ForroVivo product operated by LIVLU TECHNOLOGIES LTD.",
+  people: [
+    {
+      name: "Henriques Pontes",
+      role: "Founder & Project Lead · Product & Technology",
+      body: "Henriques leads the Forro Vivo App and the ForroVivo African Creole Knowledge Project—evidence-first research, structured datasets, and the learning product.",
+    },
+    {
+      name: "Luís Lima",
+      role: "Early Collaborator · Early tester",
+      body: "Luís has been involved since the earliest conceptual stage in 2023. He helped shape the idea, tested builds, and kept the product grounded in real use.",
+    },
+    {
+      name: "Emanuel Silva Morgan",
+      role: "Photographer",
+      body: "Photographs on this site are by Emanuel Silva Morgan, photographer in São Tomé and Príncipe.",
+    },
+  ],
+  groups: [
+    {
+      title: "Early testers",
+      body: "Early testers used unfinished builds, reported what broke, and said what the product needed before the dictionary and academy were public. Luís Lima is named here because he has been part of that work from the start. The same thanks go to everyone else who tested those builds and sent feedback.",
+      people: [
+        {
+          name: "Luís Lima",
+          role: "Early tester",
+        },
+      ],
+    },
+    {
+      title: "Photography",
+      body: "All photographs on this site are by Emanuel Silva Morgan. The images show São Tomé and Príncipe: daily life, markets, sea, forest, and cultural performance.",
+      people: [
+        {
+          name: "Emanuel Silva Morgan",
+          role: "Photographer",
+        },
+      ],
+      href: "https://www.instagram.com/silva_photography_stp/",
+      linkLabel: "Instagram",
+    },
+  ],
+  sections: [
+    {
+      title: "Linguistic Research",
+      body: "The app is built on the Linguistic Research initiative that started on 23 March 2023. Isolated lexicons and sources are published through Open Knowledge and the Linguistic Research API.",
+      href: "/research",
+      linkLabel: "Open research",
+    },
+    {
+      title: "Licences",
+      body: "Third-party dictionaries and papers keep their original licences. Project-original material is published under CC BY 4.0 unless a source page says otherwise. The ForroVivo name and related marks are used by LIVLU TECHNOLOGIES LTD.",
+      href: "/legal",
+      linkLabel: "Legal",
     },
   ],
 } as const;
@@ -643,46 +769,51 @@ export const productOverview = {
     accessible: "accessible",
     after: " to new generations.",
   },
+  photoCredit: {
+    label: "Photography",
+    name: "Emanuel Silva Morgan",
+    href: "https://www.instagram.com/silva_photography_stp/",
+  },
   collage: [
     {
-      src: "/images/overview/coconut.png",
-      alt: "Opening a coconut",
-      grow: 1.15,
-    },
-    {
-      src: "/images/overview/palm.png",
-      alt: "Climbing a palm tree",
-      grow: 0.9,
-    },
-    {
-      src: "/images/overview/rest.png",
-      alt: "Resting in the shade",
-      grow: 1.2,
-    },
-    {
-      src: "/images/overview/bao.png",
-      alt: "Playing Bao",
+      src: "/images/photography/emanuel-silva-morgan/water-carriers.jpg",
+      alt: "Children carrying water. Photograph by Emanuel Silva Morgan.",
       grow: 1,
     },
     {
-      src: "/images/overview/path.png",
-      alt: "Walking at dusk",
-      grow: 1.05,
-    },
-    {
-      src: "/images/overview/market.png",
-      alt: "A street market",
-      grow: 1.3,
-    },
-    {
-      src: "/images/overview/bicycle.png",
-      alt: "A child riding a bicycle",
-      grow: 0.85,
-    },
-    {
-      src: "/images/overview/baskets.png",
-      alt: "Baskets of coconuts",
+      src: "/images/photography/emanuel-silva-morgan/jackfruit.jpg",
+      alt: "A woman carrying jackfruit at market. Photograph by Emanuel Silva Morgan.",
       grow: 1.2,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/tchiloli.jpg",
+      alt: "Tchiloli procession in São Tomé. Photograph by Emanuel Silva Morgan.",
+      grow: 1.25,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/canoe.jpg",
+      alt: "An outrigger canoe under sail. Photograph by Emanuel Silva Morgan.",
+      grow: 0.9,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/basins.jpg",
+      alt: "Women carrying basins through a market. Photograph by Emanuel Silva Morgan.",
+      grow: 1.2,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/boy.jpg",
+      alt: "A child at play in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
+      grow: 1.1,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/colonial.jpg",
+      alt: "A historic building in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
+      grow: 0.95,
+    },
+    {
+      src: "/images/photography/emanuel-silva-morgan/musician.jpg",
+      alt: "A musician playing at a gathering in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
+      grow: 0.85,
     },
   ],
   products: [

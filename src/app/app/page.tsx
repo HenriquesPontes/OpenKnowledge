@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
-import { appLanding, appRoadmap, appWhy, nav } from "@/lib/constants";
+import { appFaq, appLanding, appRoadmap, appVision, appWhy, nav } from "@/lib/constants";
 import { APP_STORE_URL, PLAY_STORE_URL } from "@/lib/catalog";
 
 export const metadata = {
@@ -139,6 +139,63 @@ export default function ForroVivoAppPage() {
               </div>
             ))}
           </div>
+          <p className="mt-6 text-center text-muted text-sm tracking-[-0.01em]">
+            {appWhy.photoCredit.label}:{" "}
+            <a
+              href={appWhy.photoCredit.href}
+              className="text-white hover:text-white/70 transition-colors"
+            >
+              {appWhy.photoCredit.name}
+            </a>
+          </p>
+        </Container>
+      </section>
+
+      <section id="vision" className="pt-10 pb-14 sm:pt-16 sm:pb-20">
+        <Container>
+          <h2
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          >
+            {appVision.title}
+          </h2>
+          <p className="mt-6 max-w-[720px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+            {appVision.about}
+          </p>
+          <p className="mt-6 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
+            {appVision.body}
+          </p>
+        </Container>
+      </section>
+
+      <section id="faq" className="pt-10 pb-20 sm:pt-16 sm:pb-28">
+        <Container>
+          <h2
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          >
+            {appFaq.title}
+          </h2>
+          <div className="mt-10 max-w-[720px] divide-y divide-border border-t border-b border-border">
+            {appFaq.items.map((item) => (
+              <details key={item.question} className="group py-5">
+                <summary className="cursor-pointer list-none text-white font-heading text-lg tracking-[-0.02em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm">
+                  {item.question}
+                </summary>
+                <p className="mt-3 text-muted text-base leading-7 tracking-[-0.01em]">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+          <p className="mt-10 text-muted text-sm tracking-[-0.01em]">
+            <a
+              href="/app/credits"
+              className="text-white hover:text-white/70 transition-colors"
+            >
+              Credits
+            </a>
+          </p>
         </Container>
       </section>
     </div>

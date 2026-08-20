@@ -40,7 +40,7 @@ export default function MethodologyPage() {
         resolved.
       </p>
 
-      <div className="-mx-6 sm:mx-0 mt-4">
+      <div id="how-it-works" className="-mx-6 sm:mx-0 mt-4">
         <MethodologyPipeline />
       </div>
 

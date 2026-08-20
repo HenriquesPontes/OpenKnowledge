@@ -60,7 +60,7 @@ export default function MachineTranslationPage() {
         </div>
       </section>
 
-      <section className="pb-16 sm:pb-24">
+      <section id="how-it-works" className="pb-16 sm:pb-24">
         <Container>
           <h2 className="font-heading text-white tracking-[-0.03em] text-2xl sm:text-3xl">
             {translationPage.releasesTitle}

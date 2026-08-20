@@ -68,6 +68,15 @@ export default function OverviewPage() {
       <section className="pt-[4.75rem] sm:pt-[5.25rem]">
         <Container className="max-w-[90rem]">
           <Collage />
+          <p className="mt-4 text-muted text-sm tracking-[-0.01em]">
+            {productOverview.photoCredit.label}:{" "}
+            <a
+              href={productOverview.photoCredit.href}
+              className="text-white hover:text-white/70 transition-colors"
+            >
+              {productOverview.photoCredit.name}
+            </a>
+          </p>
         </Container>
       </section>
 

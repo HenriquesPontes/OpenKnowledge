@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="mt-auto">
       <Container>
-        <div className="border-t border-border pt-8 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:pt-10 sm:pb-14">
+        <div className="pt-8 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:pt-10 sm:pb-14">
           <p className="text-center text-foreground text-sm tracking-[-0.01em] break-words">
             {footer.companyName}
           </p>

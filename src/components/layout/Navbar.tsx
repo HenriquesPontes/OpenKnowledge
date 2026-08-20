@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { nav } from "@/lib/constants";
+import { nav, sectionNavLink } from "@/lib/constants";
 
 function ExternalArrow() {
   return (
@@ -39,7 +39,10 @@ export function Navbar() {
 
   useLayoutEffect(() => {
     const root = document.documentElement;
-    root.classList.toggle("forro-theme", pathname === "/app");
+    root.classList.toggle(
+      "forro-theme",
+      pathname === "/app" || pathname.startsWith("/app/"),
+    );
     return () => {
       root.classList.remove("forro-theme");
     };
@@ -71,10 +74,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled || open
-          ? "border-border bg-background/72 backdrop-blur-xl"
-          : "border-transparent bg-transparent"
+          ? "bg-background/72 backdrop-blur-xl"
+          : "bg-transparent"
       }`}
     >
       <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[64px] pt-[env(safe-area-inset-top)]">
@@ -98,15 +101,19 @@ export function Navbar() {
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
           {nav.links
             .filter((link) => !accountAuth)
-            .map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="hidden sm:inline text-muted hover:text-foreground transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
-            >
-              {link.label}
-            </a>
-          ))}
+            .map((link) => {
+              const resolved =
+                link.label === "How it works" ? sectionNavLink(pathname) : link;
+              return (
+                <a
+                  key={resolved.label}
+                  href={resolved.href}
+                  className="hidden sm:inline text-muted hover:text-foreground transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                >
+                  {resolved.label}
+                </a>
+              );
+            })}
 
           <div ref={menuRef}>
             <button
