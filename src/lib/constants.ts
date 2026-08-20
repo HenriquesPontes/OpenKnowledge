@@ -7,6 +7,9 @@ export const howItWorks = {
 } as const;
 
 export function howItWorksHref(pathname: string) {
+  if (pathname === "/connect" || pathname.startsWith("/connect/")) {
+    return pathname === "/connect" ? howItWorks.hash : "/connect#how-it-works";
+  }
   return (howItWorks.paths as readonly string[]).includes(pathname)
     ? howItWorks.hash
     : howItWorks.home;
@@ -38,7 +41,6 @@ export const nav = {
           { label: "Forro Vivo App", href: "/app" },
           { label: "Forro Connect", href: "/connect" },
           { label: "Languages", href: "/languages" },
-          { label: "API Platform", href: "/api" },
         ],
       },
       {
@@ -46,10 +48,9 @@ export const nav = {
         size: "medium",
         items: [
           { label: "Documentation", href: "/docs" },
-          { label: "Quickstart", href: "/docs/quickstart" },
+          { label: "API Platform", href: "/api" },
           { label: "Methodology", href: "/docs/methodology" },
           { label: "Research", href: "/research" },
-          { label: "Knowledge Base", href: "/knowledge" },
           { label: "Machine translation", href: "/translation" },
         ],
       },
@@ -58,7 +59,6 @@ export const nav = {
         size: "medium",
         items: [
           { label: "About", href: "/about" },
-          { label: "Developers", href: "/developers" },
           { label: "GitHub", href: GITHUB_URL, external: true },
           { label: "Legal", href: "/legal" },
         ],
@@ -500,7 +500,7 @@ export const architecture = {
     { label: "Source", href: "/docs/methodology" },
     { label: "Extraction", href: "/docs/methodology" },
     { label: "Verification", href: "/docs/methodology" },
-    { label: "Structured entry", href: "/knowledge" },
+    { label: "Structured entry", href: "/languages" },
     { label: "Review", href: "/docs/methodology" },
     { label: "Published dataset", href: GITHUB_URL },
     { label: "API", href: "/api" },
@@ -515,7 +515,7 @@ export const architecture = {
           { label: "Research", href: "/research" },
           { label: "Dictionary", href: "/languages" },
           { label: "Culture", href: "/about" },
-          { label: "Data", href: "/knowledge" },
+          { label: "Data", href: "/languages" },
           { label: "API", href: "/api" },
         ],
       },
@@ -534,7 +534,8 @@ export const architecture = {
         href: "/connect",
         items: [
           { label: "Waitlist matching", href: "/connect" },
-          { label: "Learner to native speaker" },
+          { label: "Learner to native speaker", href: "/connect" },
+          { label: "Community income", href: "/connect/income" },
         ],
       },
     ],
@@ -547,6 +548,7 @@ export const architecture = {
 
 export const appLanding = {
   title: "Aprenda Forro. Preserve a Cultura.",
+  titleLines: ["Aprenda Forro.", "Preserve a Cultura."],
   description:
     "O primeiro aplicativo completo dedicado à língua Forro de São Tomé e Príncipe. Vocabulário, lições e contexto cultural na ponta dos seus dedos.",
 } as const;
@@ -560,21 +562,21 @@ export const appWhy = {
   },
   cards: [
     {
-      title: "Stronger Family Connections",
-      body: "Communicate with family and friends, deepening your bond through shared language.",
+      title: "Family",
+      body: "Speak with family and friends in the language you share.",
       image: "/images/photography/emanuel-silva-morgan/children.jpg",
       imageAlt:
         "Children looking through a wooden doorway in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
     },
     {
-      title: "New Global Opportunities",
-      body: "Language proficiency unlocks unique business and personal growth opportunities across the continent.",
+      title: "Opportunity",
+      body: "Learn Forro for work, study, and life with the people who speak it.",
       image: "/images/photography/emanuel-silva-morgan/school.jpg",
       imageAlt:
         "Schoolchildren gathered on a street in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
     },
     {
-      title: "Richer Travel Experiences",
+      title: "Travel",
       body: "Enhance your African adventures with deeper immersion and genuine connections with communities. All of our greatest memories always start with a simple Olá, bom dia, boa tarde, boa noite.",
       image: "/images/photography/emanuel-silva-morgan/sunset.jpg",
       imageAlt:
@@ -586,8 +588,8 @@ export const appWhy = {
 export const appVision = {
   title: "Our broader vision",
   about:
-    "ForroVivo is an AI-powered language learning platform dedicated to preserving and teaching Forro, the African Creole language of São Tomé and Príncipe. It combines a digital dictionary, translation, pronunciation, interactive learning, and AI-powered exercises.",
-  body: "Our broader vision is to use AI and technology to preserve African Creole languages, making them accessible to new generations while protecting the cultures and identities connected to them.",
+    "The Forro Vivo App starts with Forro. ForroVivo is the platform around it: Open Knowledge for isolated lexicons, and Forro Connect for live lessons with native speakers.",
+  body: "The aim is to preserve African Creole languages and the cultures connected to them, without mixing one language into another.",
 } as const;
 
 export const appFaq = {
@@ -596,37 +598,41 @@ export const appFaq = {
     {
       question: "What is Forro Vivo?",
       answer:
-        "Forro Vivo is the learning app for Forro (Santome / Santomense). It is dedicated to preserving and teaching the language with a digital dictionary, translation, pronunciation, interactive lessons, and AI-powered exercises.",
+        "Forro Vivo is a learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
     },
     {
       question: "What does the app include?",
       answer:
-        "Dictionary, lessons, exercises, and language practice. Translation and pronunciation sit in that learning product. Forro Connect is separate: it matches learners with native speakers.",
+        "A dictionary, lessons, exercises, translation, and pronunciation. Forro Connect (Coming soon).",
     },
     {
       question: "Where can I download it?",
-      answer:
-        "On the App Store and on Google Play. The public CTA on this page opens those stores.",
+      answer: "On the App Store and Google Play (Coming soon).",
     },
     {
       question: "Does the app have voice and audio?",
       answer:
-        "Voice capability and audio arrive in version 5, now a reliable beta on track for public release. The current public release is the dictionary and academy, without voice.",
+        "Voice capability and audio arrive in version 5.",
     },
     {
       question: "Is this the same as Open Knowledge?",
       answer:
-        "No. This page is the Forro Vivo App. Open Knowledge is the public linguistic knowledge site: attested lexicons, sources, and the read-only API. The Knowledge Base does not treat AI-generated information as linguistic evidence.",
+        "No. This is the learning app. Open Knowledge is the public linguistic knowledge site: lexicons, sources, and the read-only API.",
+    },
+    {
+      question: "Is this Forro Connect?",
+      answer:
+        "No. The app is software: dictionary, lessons, and exercises. Forro Connect is live lessons with a native speaker.",
     },
     {
       question: "How is AI used?",
       answer:
-        "The app uses AI for learning and exercises. Where AI supports learning, the underlying language knowledge remains source-traceable and evidence-first.",
+        "The app uses custom language models for lessons and exercises. The language knowledge behind those lessons stays tied to sources.",
     },
     {
       question: "What about other African Creole languages?",
       answer:
-        "The broader vision is to preserve African Creole languages and protect the cultures connected to them. Isolated lexicons for São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola are documented on Open Knowledge. They stay in separate folders.",
+        "The app starts with Forro from São Tomé and Príncipe. Other African Creole languages are coming soon.",
     },
   ],
 } as const;
@@ -634,17 +640,17 @@ export const appFaq = {
 export const appCredits = {
   title: "Credits",
   description:
-    "People and organisations behind the Forro Vivo App. The app is a ForroVivo product operated by LIVLU TECHNOLOGIES LTD.",
+    "The people behind the Forro Vivo App, a ForroVivo product operated by LIVLU TECHNOLOGIES LTD.",
   people: [
     {
       name: "Henriques Pontes",
       role: "Founder & Project Lead · Product & Technology",
-      body: "Henriques leads the Forro Vivo App and the ForroVivo African Creole Knowledge Project—evidence-first research, structured datasets, and the learning product.",
+      body: "Henriques leads the Forro Vivo App and the ForroVivo African Creole Knowledge Project: research, structured datasets, and the learning product.",
     },
     {
       name: "Luís Lima",
       role: "Early Collaborator · Early tester",
-      body: "Luís has been involved since the earliest conceptual stage in 2023. He helped shape the idea, tested builds, and kept the product grounded in real use.",
+      body: "Luís has been involved since the first ideas in 2023. He helped shape the product, tested builds, and kept the work grounded in real need in the community.",
     },
     {
       name: "Clara Armand-Delille",
@@ -655,7 +661,7 @@ export const appCredits = {
   groups: [
     {
       title: "Early testers",
-      body: "Early testers used unfinished builds, reported what broke, and said what the product needed before the dictionary and academy were public. Luís Lima has been part of that work from the start. Clara Armand-Delille tested early builds while mentoring the project. The same thanks go to everyone else who tested those builds and sent feedback.",
+      body: "Early testers used unfinished builds, reported what broke, and said what the product needed before the dictionary and academy were public. Luís Lima has been part of that work from the start. Clara Armand-Delille tested early builds while mentoring the project. Thanks also to everyone else who tested those builds and sent feedback.",
       people: [
         {
           name: "Luís Lima",
@@ -683,7 +689,7 @@ export const appCredits = {
   sections: [
     {
       title: "Linguistic Research",
-      body: "The app is built on the Linguistic Research initiative that started on 23 March 2023. Isolated lexicons and sources are published through Open Knowledge and the Linguistic Research API.",
+      body: "The app is built on linguistic research that began in May 2023. Isolated lexicons from the public source.",
       href: "/research",
       linkLabel: "Open research",
     },
@@ -699,20 +705,20 @@ export const appCredits = {
 export const appRoadmap = {
   title: "Roadmap",
   description:
-    "From Linguistic Research to a public learning app. Early betas built the dictionary and the academy. Version 4 went public. Voice and audio arrive in 5.0.0, now a reliable beta on track for release.",
+    "From linguistic research in 2023 to a public learning app. The current release is dictionary and academy. Voice and audio are in version 5, now in beta.",
   steps: [
     {
       label: "Foundation",
       date: "23 March 2023",
       description:
-        "Linguistic Research begins. There is no app yet, only the question of how to preserve Forro. Founder: Henriques Pontes. Early collaborator: Luís Lima.",
+        "Linguistic research begins. Founder: Henriques Pontes. Early collaborator: Luís Lima.",
       href: "/research",
     },
     {
       label: "1.0.0",
       date: "Beta",
       description:
-        "First TestFlight. The dictionary and lexicon go into people’s hands: look up Forro, Portuguese, and English.",
+        "First TestFlight. Look up Forro, Portuguese, and English.",
     },
     {
       label: "2.0.2",
@@ -724,25 +730,24 @@ export const appRoadmap = {
       label: "3.5.0",
       date: "Beta",
       description:
-        "Academy and lessons. Forro becomes a path to walk, not only a list of words. Still without voice or audio.",
+        "Academy and lessons. Forro becomes a path to walk, not only a list of words.",
     },
     {
       label: "4.0.0",
       date: "January 2026",
       description:
-        "The jump to public. Forro Vivo leaves TestFlight and ships on the App Store dictionary and academy, not voice.",
+        "The jump to public. Forro Vivo leaves TestFlight and ships on the App Store dictionary and academy.",
     },
     {
       label: "4.0.5",
       date: "March 2026",
       description:
-        "A total redesign: modern, clean aesthetic and functionality. This is the current public release. Voice and audio are not in 4.",
+        "A total redesign: modern, clean aesthetic and functionality. This is the current public release.",
     },
     {
       label: "5.0.0",
       date: "Beta",
-      description:
-        "Voice capability and audio arrive here. Reliable beta, on track for public release.",
+      description: "Voice and audio. Now in beta.",
     },
   ],
 } as const;
@@ -750,14 +755,147 @@ export const appRoadmap = {
 export const connectArchitecture = {
   title: "How it works",
   description:
-    "Forro Connect connects learners directly with real Forro speakers and cultural knowledge holders.",
+    "Forro Connect connects learners directly with real Forro speakers and cultural knowledge holders. Paid live lessons are how the work is funded and how speakers earn.",
   steps: [
-    { label: "Learner" },
-    { label: "Native speaker" },
-    { label: "Direct match" },
-    { label: "Live lesson" },
-    { label: "Cultural knowledge" },
-    { label: "Community income" },
+    {
+      label: "Learner",
+      description: "Someone who wants to learn Forro from a real speaker.",
+    },
+    {
+      label: "Native speaker",
+      description:
+        "A Forro speaker or cultural knowledge holder in the community.",
+    },
+    {
+      label: "Direct match",
+      description: "Connect pairs them for a real lesson, not an anonymous feed.",
+    },
+    {
+      label: "Live lesson",
+      description: "They meet. Language is taught in living conversation.",
+    },
+    {
+      label: "Cultural knowledge",
+      description:
+        "The lesson carries culture, not only words. That knowledge stays with the speaker.",
+    },
+    {
+      label: "Community income",
+      description:
+        "The lesson is paid work. Speakers earn. The project is funded.",
+      href: "/connect/income",
+    },
+  ],
+} as const;
+
+export const connectIncome = {
+  title: "Community income",
+  href: "/connect/income",
+  eyebrow: "Forro Connect",
+  description:
+    "This is where Forro Connect has income and impact. A live lesson is work. The speaker is paid. The project is funded by making that match possible.",
+  body: "The Forro Vivo App teaches with dictionary, lessons and exercises. Forro Connect is different: it puts a learner in a live lesson with a real Forro speaker. That session is the product. Community income is the last step of How it works because preservation only lasts if the people who hold the language can earn from teaching it.",
+  image: {
+    src: "/images/photography/emanuel-silva-morgan/basins.jpg",
+    alt: "Women carrying basins through a market in São Tomé and Príncipe. Photograph by Emanuel Silva Morgan.",
+  },
+  flowTitle: "The breakdown",
+  flowDescription:
+    "One paid live lesson moves money and knowledge in the same direction: toward the people who speak Forro, and toward the product that makes the lesson possible.",
+  flow: [
+    { label: "Paid live lesson" },
+    { label: "Speaker is paid" },
+    { label: "Connect is funded" },
+    { label: "Language stays in the community" },
+  ],
+  partiesTitle: "Who is in the exchange",
+  parties: [
+    {
+      title: "Learner",
+      role: "Pays for the lesson",
+      body: "A person who wants to learn Forro from a real speaker. They pay for live time, conversation, and cultural knowledge — not for a scraped dictionary.",
+    },
+    {
+      title: "Speaker",
+      role: "Earns community income",
+      body: "A native speaker or cultural knowledge holder. Teaching is their work. Community income is their pay for that lesson.",
+    },
+    {
+      title: "Project",
+      role: "Earns by operating Connect",
+      body: "LIVLU TECHNOLOGIES LTD operates Forro Connect. Project income comes from matching, hosting the lesson, and keeping learner and speaker connected.",
+    },
+  ],
+  breakdownTitle: "What a lesson is made of",
+  breakdown: [
+    {
+      title: "Language",
+      body: "Forro as it is spoken. The learner hears and uses the language with someone who lives it.",
+    },
+    {
+      title: "Culture",
+      body: "Knowledge that sits around the words: how people greet, cook, remember, and teach. That knowledge stays with the speaker. It is not extracted into a dataset and sold back.",
+    },
+    {
+      title: "Time",
+      body: "A live session is time. Time is what is paid. Community income is payment for that time, not a donation for existing.",
+    },
+  ],
+  howTitle: "How a session becomes income",
+  how: [
+    {
+      title: "A learner books a live lesson",
+      body: "Someone who wants to learn Forro is matched with a native speaker or cultural knowledge holder. The match is direct. The lesson is live.",
+    },
+    {
+      title: "The speaker is paid for the lesson",
+      body: "Teaching Forro and sharing cultural knowledge is work. Community income means that work is paid, not asked as unpaid heritage labour.",
+    },
+    {
+      title: "The project is funded by operating the match",
+      body: "LIVLU TECHNOLOGIES LTD operates Forro Connect. Project income comes from running the matching, the lesson, and the continuity between learner and speaker. That is how Connect sustains itself without selling the language away from the community.",
+    },
+  ],
+  notTitle: "What this is not",
+  not: [
+    {
+      title: "Not the App Store product",
+      body: "The Forro Vivo App is dictionary, lessons, and exercises. It does not replace a speaker. Community income lives on Connect, in the live lesson.",
+    },
+    {
+      title: "Not unpaid extraction",
+      body: "Recordings, words, and culture are not taken from the community to train a model and then sold without the speaker. The lesson is the product. The speaker is in it.",
+    },
+    {
+      title: "Not a marketplace of the language itself",
+      body: "Forro is not listed as a commodity. What is sold is teaching time with a real person. The language remains theirs.",
+    },
+  ],
+  outcomesTitle: "Income and impact",
+  outcomes: [
+    {
+      title: "Income",
+      body: "Speakers and cultural knowledge holders earn from live lessons. The project earns by operating Connect. Both sides of that exchange are required for the product to exist.",
+    },
+    {
+      title: "Impact",
+      body: "Language preservation becomes paid teaching. Forro stays with the people who speak it, and learners meet the language as a living culture, not only as an app.",
+    },
+  ],
+  compareTitle: "Two products, one mission",
+  compare: [
+    {
+      title: "Forro Vivo App",
+      body: "Software learning: dictionary, lessons, exercises, and language practice. On the App Store.",
+      href: "/app",
+      linkLabel: "Forro Vivo App",
+    },
+    {
+      title: "Forro Connect",
+      body: "Human teaching: learner, speaker, live lesson, community income. Waitlist open now.",
+      href: "/connect",
+      linkLabel: "Forro Connect",
+    },
   ],
 } as const;
 
@@ -835,7 +973,7 @@ export const productOverview = {
       label: "Forro Vivo App",
       href: "/app",
       description:
-        "The learning product for Forro and related Creole languages: dictionary, lessons, exercises and language practice. On the App Store.",
+        "A learning app for African Creole languages, starting with Forro of São Tomé and Príncipe. Dictionary, lessons, and exercises. On the App Store.",
     },
     {
       label: "Forro Connect",
@@ -917,7 +1055,7 @@ export const translationPage = {
     { heading: "Languages", label: "Isolated lexicons", href: "/languages" },
     { heading: "Research", label: "Linguistic Research", href: "/research" },
     { heading: "Methodology", label: "Evidence-first pipeline", href: "/docs/methodology" },
-    { heading: "Knowledge", label: "Knowledge Base", href: "/knowledge" },
+    { heading: "Knowledge", label: "Isolated lexicons", href: "/languages" },
     { heading: "API", label: "API Platform", href: "/api" },
   ],
 } as const;
@@ -936,7 +1074,7 @@ export const docsNav = [
     heading: "Knowledge",
     links: [
       { label: "Languages", href: "/languages" },
-      { label: "Lexical entries", href: "/knowledge" },
+      { label: "Lexical entries", href: "/languages" },
       { label: "Sources", href: "/research" },
     ],
   },

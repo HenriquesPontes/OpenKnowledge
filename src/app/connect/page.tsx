@@ -2,10 +2,11 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
 import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
-import { connectArchitecture } from "@/lib/constants";
+import { connectArchitecture, connectIncome } from "@/lib/constants";
 
 export const metadata = {
   title: "Forro Connect",
+  description: connectArchitecture.description,
 };
 
 export default function ForroConnectPage() {
@@ -44,6 +45,25 @@ export default function ForroConnectPage() {
         description={connectArchitecture.description}
         steps={connectArchitecture.steps}
       />
+
+      <section className="pt-10 pb-20 sm:pt-16 sm:pb-28">
+        <Container>
+          <h2
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05] text-center"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          >
+            {connectIncome.title}
+          </h2>
+          <p className="mt-4 mx-auto max-w-[720px] text-center text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+            {connectIncome.description}
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button href={connectIncome.href}>
+              Community income breakdown
+            </Button>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

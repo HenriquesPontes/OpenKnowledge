@@ -41,9 +41,9 @@ export default function ForroVivoAppPage() {
                 className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
                 style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
               >
-                Aprenda Forro.
+                {appLanding.titleLines[0]}
                 <br />
-                Preserve a Cultura.
+                {appLanding.titleLines[1]}
               </h1>
               <p className="mt-4 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
                 {appLanding.description}
@@ -87,7 +87,7 @@ export default function ForroVivoAppPage() {
                 <div className="absolute inset-[-5.84%_-19.79%_-0.01%_0] overflow-hidden rounded-[85px]">
                   <Image
                     src="/images/app/phone-hero.png"
-                    alt="Forro Vivo no iPhone"
+                    alt="Forro Vivo on iPhone"
                     fill
                     priority
                     quality={100}
@@ -157,15 +157,15 @@ export default function ForroVivoAppPage() {
       <section id="vision" className="pt-10 pb-14 sm:pt-16 sm:pb-20">
         <Container>
           <h2
-            className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05] text-center"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
             {appVision.title}
           </h2>
-          <p className="mt-6 max-w-[720px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+          <p className="mt-6 mx-auto max-w-[720px] text-center text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
             {appVision.about}
           </p>
-          <p className="mt-6 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
+          <p className="mt-6 mx-auto max-w-[720px] text-center text-muted text-base leading-7 tracking-[-0.01em]">
             {appVision.body}
           </p>
         </Container>
@@ -174,12 +174,12 @@ export default function ForroVivoAppPage() {
       <section id="faq" className="pt-10 pb-20 sm:pt-16 sm:pb-28">
         <Container>
           <h2
-            className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+            className="font-heading text-white tracking-[-0.03em] leading-[1.05] text-center"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
             {appFaq.title}
           </h2>
-          <div className="mt-10 max-w-[720px] divide-y divide-border border-t border-b border-border">
+          <div className="mt-10 mx-auto max-w-[720px] divide-y divide-border border-t border-b border-border">
             {appFaq.items.map((item) => (
               <details key={item.question} className="group py-5">
                 <summary className="cursor-pointer list-none text-white font-heading text-lg tracking-[-0.02em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm">
@@ -191,7 +191,7 @@ export default function ForroVivoAppPage() {
               </details>
             ))}
           </div>
-          <p className="mt-10 text-muted text-sm tracking-[-0.01em]">
+          <p className="mt-10 text-center text-muted text-sm tracking-[-0.01em]">
             <a
               href="/app/credits"
               className="text-white hover:text-white/70 transition-colors"

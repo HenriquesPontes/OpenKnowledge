@@ -184,17 +184,7 @@ export function Navbar() {
             >
               {account.loginLabel}
             </Button>
-          ) : (
-            <Button
-              href={nav.login.href}
-              variant="outline"
-              size="sm"
-              className="shrink-0"
-            >
-              <span className="sm:hidden">API</span>
-              <span className="hidden sm:inline">{nav.login.label}</span>
-            </Button>
-          )}
+          ) : null}
 
           {accountAuth ? (
             <Button

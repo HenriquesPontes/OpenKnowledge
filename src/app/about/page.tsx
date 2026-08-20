@@ -142,7 +142,7 @@ export default function AboutPage() {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-3">
-          <Button href="/knowledge">Open knowledge</Button>
+          <Button href="/">Open Knowledge</Button>
           <Button href="/languages" variant="outline">
             Browse languages
           </Button>
