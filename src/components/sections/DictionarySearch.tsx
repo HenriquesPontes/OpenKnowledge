@@ -60,6 +60,20 @@ function countryIsoForDataset(dataset: string) {
   return countries.find((item) => item.datasetPrefix === prefix)?.isoA2;
 }
 
+function optionForDataset(datasets: DatasetOption[], next: string) {
+  const exact = datasets.find((item) => item.dataset === next);
+  if (exact) return exact.dataset;
+  const slug = next.split("/").pop() ?? next;
+  return (
+    datasets.find(
+      (item) =>
+        item.dataset === slug ||
+        item.dataset.endsWith(`/${slug}`) ||
+        item.dataset.endsWith(`_${slug}`),
+    )?.dataset ?? next
+  );
+}
+
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
@@ -491,7 +505,13 @@ function LookupResults({
   );
 }
 
-export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
+export function DictionarySearch({
+  datasets,
+  children,
+}: {
+  datasets: DatasetOption[];
+  children?: ReactNode;
+}) {
   const [dataset, setDataset] = useState(datasets[0]?.dataset ?? "");
   const [headword, setHeadword] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
@@ -538,14 +558,43 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
   const countryIso = countryIsoForDataset(dataset);
 
   return (
-    <div>
-      <form onSubmit={onSubmit} className="mt-8">
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,36rem)] lg:gap-x-12 lg:gap-y-8">
+      {countryIso ? (
+        <div
+          className={
+            children
+              ? "lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:sticky lg:top-28"
+              : "lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-28"
+          }
+        >
+          <AfricaMap
+            focusCountryId={countryIso}
+            focusDataset={dataset}
+            onFocusDataset={(next) => setDataset(optionForDataset(datasets, next))}
+          />
+        </div>
+      ) : null}
+
+      {children ? (
+        <div className="lg:col-start-1 lg:row-start-1">{children}</div>
+      ) : null}
+
+      <form
+        onSubmit={onSubmit}
+        className={
+          countryIso
+            ? children
+              ? "lg:col-start-1 lg:row-start-2"
+              : "lg:col-start-1 lg:row-start-1"
+            : undefined
+        }
+      >
+        <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center">
           <select
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
             aria-label="Isolated lexicon"
-            className="field w-full max-w-full sm:max-w-[280px]"
+            className="field w-full lg:max-w-[280px]"
           >
             {datasets.map((item) => (
               <option key={item.dataset} value={item.dataset}>
@@ -553,41 +602,37 @@ export function DictionarySearch({ datasets }: { datasets: DatasetOption[] }) {
               </option>
             ))}
           </select>
-          <div className="flex w-full items-center gap-3 sm:w-auto">
-            <input
-              type="search"
-              value={headword}
-              onChange={(event) => setHeadword(event.target.value)}
-              placeholder="Look up a headword"
-              required
-              className="field min-w-0 flex-1 sm:w-[280px] sm:flex-none"
-            />
-            <Button
-              type="submit"
-              disabled={status === "loading"}
-              className="shrink-0 px-5 sm:px-8"
-            >
-              {status === "loading" ? "Looking up…" : "Look up"}
-            </Button>
-          </div>
+          <input
+            type="search"
+            value={headword}
+            onChange={(event) => setHeadword(event.target.value)}
+            placeholder="Look up a headword"
+            required
+            className="field w-full min-w-0 lg:w-[280px]"
+          />
+          <Button type="submit" disabled={status === "loading"}>
+            {status === "loading" ? "Looking up…" : "Look up"}
+          </Button>
         </div>
       </form>
 
-      {countryIso ? (
-        <div className="mt-10">
-          <AfricaMap
-            focusCountryId={countryIso}
-            focusDataset={dataset}
-            onFocusDataset={setDataset}
-          />
+      {error || result ? (
+        <div
+          className={
+            countryIso
+              ? children
+                ? "lg:col-start-1 lg:row-start-3"
+                : "lg:col-start-1 lg:row-start-2"
+              : undefined
+          }
+        >
+          {error ? (
+            <p className="text-muted text-base tracking-[-0.01em]">{error}</p>
+          ) : null}
+
+          {result ? <LookupResults result={result} datasets={datasets} /> : null}
         </div>
       ) : null}
-
-      {error ? (
-        <p className="mt-8 text-muted text-base tracking-[-0.01em]">{error}</p>
-      ) : null}
-
-      {result ? <LookupResults result={result} datasets={datasets} /> : null}
     </div>
   );
 }

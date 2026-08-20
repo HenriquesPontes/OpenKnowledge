@@ -1,8 +1,8 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { BrowserMockup } from "@/components/sections/BrowserMockup";
-import { apiPaths, apiSection } from "@/lib/constants";
-import { API_ORIGIN, fetchLanguagesCatalog, sampleByCountry } from "@/lib/catalog";
+import { ApiExplorer } from "@/components/sections/ApiExplorer";
+import { apiPaths, languages } from "@/lib/constants";
+import { API_ORIGIN, fetchLanguagesCatalog } from "@/lib/catalog";
 
 export const metadata = {
   title: "API Platform",
@@ -13,24 +13,23 @@ export const metadata = {
 
 export default async function ApiPage() {
   const catalog = await fetchLanguagesCatalog();
-  const sampleRecords = catalog?.languages
-    ? sampleByCountry(catalog.languages)
-    : [];
-  const sample = JSON.stringify(
-    sampleRecords.length
-      ? {
-          isolation: catalog?.isolation,
-          languages: sampleRecords.map((language) => ({
-            dataset: language.dataset,
-            language: language.language,
-            language_name: language.language_name,
-            path: language.path,
-          })),
-        }
-      : { host: API_ORIGIN, path: "/v1/languages" },
-    null,
-    2,
-  );
+  const catalogOptions =
+    catalog?.languages
+      ?.filter((item) => item.dataset)
+      .map((item) => ({
+        dataset: item.dataset,
+        label: item.language_name
+          ? `${item.language_name} (${item.dataset})`
+          : item.dataset,
+      })) ?? [];
+
+  const datasets =
+    catalogOptions.length > 0
+      ? catalogOptions
+      : languages.map((language) => ({
+          dataset: language.dataset,
+          label: `${language.title} (${language.dataset})`,
+        }));
 
   return (
     <section className="pt-28 pb-20 sm:pt-36">
@@ -45,28 +44,24 @@ export default async function ApiPage() {
           API Platform
         </h1>
         <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          Public, read-only linguistic API. Hosted at api.forrovivo.com. GET
-          only. Loads the published JSON. Does not invent translations, merge
-          languages, or write lexicon data.
+          Public, read-only linguistic API. Versioned under /v1. GET only. Loads
+          the published JSON. Does not invent translations, merge languages, or
+          write lexicon data. No API key. Each match keeps its cited source.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button href="/api/login" className="w-full sm:w-auto">
-            Log in
+          <Button href="#try" className="w-full sm:w-auto">
+            Try the API
           </Button>
           <Button href="/docs/quickstart" variant="outline" className="w-full sm:w-auto">
             Quickstart
           </Button>
-          <Button
-            href={apiSection.playground}
-            variant="ghost"
-            className="w-full sm:w-auto"
-          >
-            Try the API
+          <Button href="/docs/api-reference" variant="ghost" className="w-full sm:w-auto">
+            API reference
           </Button>
         </div>
 
         <div className="mt-12">
-          <BrowserMockup command={apiSection.command} body={sample} />
+          <ApiExplorer datasets={datasets} />
         </div>
 
         <ul className="mt-12 divide-y divide-border border-t border-b border-border max-w-[720px]">
@@ -81,6 +76,10 @@ export default async function ApiPage() {
             </li>
           ))}
         </ul>
+        <p className="mt-8 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
+          Curl and other clients should call {API_ORIGIN.replace("https://", "")}.
+          This page is the web UI for the same isolated /v1 routes.
+        </p>
       </Container>
     </section>
   );

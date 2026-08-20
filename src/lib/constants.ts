@@ -481,11 +481,53 @@ export const lexiconLocations: Record<string, { lat: number; lon: number }> = {
   angola: { lat: -8.838, lon: 13.234 },
 };
 
+/** SVG admin1 path ids from public/images/maps/africa/{st,cv,gw}.svg → isolated lexicon. */
+export const lexiconMapRegions: Record<string, string> = {
+  STP: "saotome/lungie",
+  ST01: "saotome/forro",
+  ST02: "saotome/forro",
+  ST03: "saotome/angolar",
+  ST04: "saotome/forro",
+  ST05: "saotome/forro",
+  ST06: "saotome/forro",
+  CVBR: "caboverde/brava",
+  CVCF: "caboverde/fogo",
+  CVMO: "caboverde/fogo",
+  CVSF: "caboverde/fogo",
+  CVTA: "caboverde/santiago",
+  CVCA: "caboverde/santiago",
+  CVRS: "caboverde/santiago",
+  CVPR: "caboverde/santiago",
+  CVSD: "caboverde/santiago",
+  CVCR: "caboverde/santiago",
+  CVSM: "caboverde/santiago",
+  CVSS: "caboverde/santiago",
+  CVSO: "caboverde/santiago",
+  CVMA: "caboverde/maio",
+  CVBV: "caboverde/boavista",
+  CVRB: "caboverde/saonicolau",
+  CVTS: "caboverde/saonicolau",
+  CVSL: "caboverde/sal",
+  CVSV: "caboverde/saovicente",
+  CVRG: "caboverde/santoantao",
+  CVPN: "caboverde/santoantao",
+  CVPA: "caboverde/santoantao",
+  GWGA: "guinebissau/gabu",
+  GWTO: "guinebissau/tombali",
+  GWBA: "guinebissau/bafata",
+  GWOI: "guinebissau/oio",
+  GWCA: "guinebissau/cacheu",
+  GWBM: "guinebissau/biombo",
+  GWBS: "guinebissau/bissau",
+  GWQU: "guinebissau/quinara",
+  GWBL: "guinebissau/bolama",
+};
+
 export const apiSection = {
   title: "Build with attested linguistic knowledge",
   command: `curl ${API_ORIGIN}/v1/languages`,
   tryHref: "/api",
-  playground: `${API_ORIGIN}/docs`,
+  playground: "/api#try",
 } as const;
 
 export const cloneSection = {
@@ -1089,8 +1131,8 @@ export const docsNav = [
     links: [
       { label: "Introduction", href: "/docs" },
       { label: "Quickstart", href: "/docs/quickstart" },
-      { label: "Authentication", href: "/docs" },
-      { label: "Rate limits", href: "/docs" },
+      { label: "Authentication", href: "/docs/api-reference#authentication" },
+      { label: "Rate limits", href: "/docs/api-reference#rate-limits" },
     ],
   },
   {
@@ -1103,10 +1145,13 @@ export const docsNav = [
   {
     heading: "API reference",
     links: [
-      { label: "GET /languages", href: "/docs/api-reference" },
-      { label: "GET /entries", href: "/docs/api-reference" },
-      { label: "GET /search", href: "/docs/api-reference" },
-      { label: "GET /sources", href: "/docs/api-reference" },
+      { label: "Versioning", href: "/docs/api-reference#versioning" },
+      { label: "CORS", href: "/docs/api-reference#cors" },
+      { label: "Attribution", href: "/docs/api-reference#attribution" },
+      { label: "GET /v1/languages", href: "/docs/api-reference#routes" },
+      { label: "GET /v1/lookup", href: "/docs/api-reference#routes" },
+      { label: "GET /v1/search", href: "/docs/api-reference#routes" },
+      { label: "GET /v1/sources", href: "/docs/api-reference#routes" },
     ],
   },
   {
@@ -1120,43 +1165,34 @@ export const docsNav = [
 ] as const;
 
 export const apiPaths = [
-  { method: "GET", path: "/v1", detail: "Service identity and catalog links." },
+  { method: "GET", path: "/v1", detail: "Service identity, versioning, CORS, and catalog links." },
+  { method: "GET", path: "/v1/health", detail: "Versioned health check." },
   { method: "GET", path: "/v1/kb", detail: "Knowledge Base collection map." },
   { method: "GET", path: "/v1/languages", detail: "Isolated lexicons. Not a merged word list." },
   { method: "GET", path: "/v1/datasets", detail: "Published dataset index." },
   {
     method: "GET",
-    path: "/v1/saotome/forro/lookup?headword=",
-    detail: "Look up one Forro headword.",
+    path: "/v1/{family}/{variety}/lookup?headword=",
+    detail: "Look up one headword in that folder only. Example: /v1/saotome/forro/lookup?headword=kume.",
   },
   {
     method: "GET",
-    path: "/v1/caboverde/{island}/lookup?headword=",
-    detail: "Look up one Kabuverdianu island variety.",
+    path: "/v1/angola/contruy/lookup?headword=",
+    detail: "Look up Angola Contruy. This is not Angolar of São Tomé.",
   },
   {
     method: "GET",
-    path: "/v1/guinebissau/{region}/lookup?headword=",
-    detail: "Look up one Guinea-Bissau regional Kriol variety.",
+    path: "/v1/search?dataset={family}/{variety}&q=",
+    detail: "Search inside one named dataset only. dataset= is required.",
   },
   {
     method: "GET",
-    path: "/v1/angola/lookup?headword=",
-    detail: "Look up Angola Contruy. This is not Angolar.",
-  },
-  {
-    method: "GET",
-    path: "/v1/search?dataset=saotome/forro&q=",
-    detail: "Search inside one named dataset only.",
-  },
-  {
-    method: "GET",
-    path: "/v1/{dataset}/entries",
+    path: "/v1/{family}/{variety}/entries",
     detail: "Lexical entries from that folder only.",
   },
   {
     method: "GET",
-    path: "/v1/{dataset}/sources",
+    path: "/v1/{family}/{variety}/sources",
     detail: "Bibliography for that folder.",
   },
 ] as const;

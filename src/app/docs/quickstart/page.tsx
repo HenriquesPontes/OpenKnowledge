@@ -38,7 +38,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={lookup}
-          body="Exact matches from that folder only, for example saotome/forro, caboverde/santiago, guinebissau/bissau, or angola. Missing terms return TERM_NOT_FOUND."
+          body="Exact matches from that folder only, for example saotome/forro, caboverde/santiago, guinebissau/bissau, or angola/contruy. Missing terms return TERM_NOT_FOUND."
         />
       </div>
 
@@ -52,9 +52,16 @@ export default function QuickstartPage() {
         />
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Button href="/docs/api-reference">API reference</Button>
+        <Button href="/api#try" variant="outline">
+          Try the API
+        </Button>
       </div>
+      <p className="mt-8 text-muted text-base leading-7 tracking-[-0.01em]">
+        No authentication. Browser clients may call any origin. Fair-use rate
+        limits apply. Each match includes source attribution.
+      </p>
     </>
   );
 }

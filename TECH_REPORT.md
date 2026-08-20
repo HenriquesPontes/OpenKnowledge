@@ -227,24 +227,24 @@ Documented in `apiPaths` (`src/lib/constants.ts`) and rendered on `/api` and `/d
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| GET | `/v1` | Service identity and catalog links |
+| GET | `/v1` | Service identity, versioning, CORS, and catalog links |
+| GET | `/v1/health` | Versioned health check |
 | GET | `/v1/kb` | Knowledge Base collection map |
 | GET | `/v1/languages` | Isolated lexicons (not a merged word list) |
 | GET | `/v1/datasets` | Published dataset index |
-| GET | `/v1/saotome/forro/lookup?headword=` | One Forro headword |
-| GET | `/v1/caboverde/{island}/lookup?headword=` | One Kabuverdianu island variety |
-| GET | `/v1/guinebissau/{region}/lookup?headword=` | One regional Kriol variety |
-| GET | `/v1/angola/lookup?headword=` | Angola Contruy (not Angolar) |
+| GET | `/v1/{family}/{variety}/lookup?headword=` | One headword in that folder |
+| GET | `/v1/angola/contruy/lookup?headword=` | Angola Contruy (not Angolar) |
 | GET | `/v1/search?dataset=…&q=` | Search inside one named dataset only |
-| GET | `/v1/{dataset}/entries` | Lexical entries from that folder |
-| GET | `/v1/{dataset}/sources` | Bibliography for that folder |
+| GET | `/v1/{family}/{variety}/entries` | Lexical entries from that folder |
+| GET | `/v1/{family}/{variety}/sources` | Bibliography for that folder |
 
 Rules the site documents:
 
 - GET-only. This frontend never POSTs to the linguistic API.
-- No API key today. Rate limits and signed keys are deferred until usage requires them.
+- No API key. Fair-use rate limits apply on the Worker. Browser CORS allows any origin.
 - Missing terms return `TERM_NOT_FOUND`. Empty fields stay empty; the service does not invent glosses.
 - Search requires `dataset=` and never crosses folders.
+- Lookup envelopes include `attribution`. Responses send `API-Version` and `Link` (`rel=source`, `rel=license`).
 
 OpenAPI playground: `https://api.forrovivo.com/docs`.
 

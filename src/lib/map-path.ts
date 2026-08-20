@@ -197,7 +197,7 @@ export function parseCountrySvgLayout(
       name: attrs.name ?? attrs.id,
       d: attrs.d,
       centroid,
-      lngLat: centroid,
+      lngLat: centroid, // SVG pixels, not geographic lon/lat
       markers: [],
       subregion,
     })

@@ -26,14 +26,15 @@ export default function DocsIndexPage() {
         {principle}
       </p>
       <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-        The API is GET-only. Each path serves one dataset. Parent indexes are
-        not merged dictionaries. If a term is not attested, the service returns
-        TERM_NOT_FOUND.
+        The API is GET-only. Routes live under /v1. Each path serves one dataset.
+        Parent indexes are not merged dictionaries. If a term is not attested,
+        the service returns TERM_NOT_FOUND. There is no API key. Browser clients
+        may call from any origin. Responses name their sources.
       </p>
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Button href="/docs/quickstart">Quickstart</Button>
-        <Button href="/docs/methodology" variant="outline">
-          Methodology
+        <Button href="/docs/api-reference" variant="outline">
+          API reference
         </Button>
         <Button href={GITHUB_URL} variant="ghost">
           View source on GitHub

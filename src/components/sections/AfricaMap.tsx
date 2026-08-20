@@ -6,6 +6,7 @@ import {
   useState,
   type CSSProperties,
   type KeyboardEvent,
+  type PointerEvent,
 } from "react";
 import type { FeatureCollection, Geometry } from "geojson";
 import africaGeojson from "@/data/africa-countries.json";
@@ -14,6 +15,7 @@ import {
   countries,
   languages,
   lexiconLocations,
+  lexiconMapRegions,
 } from "@/lib/constants";
 import {
   buildFocusLayout,
@@ -43,12 +45,25 @@ const knowledgeHrefs: Record<string, string> = {
 
 const fillNorth = "#ffffff";
 const fillSouth = "#e6e6e6";
+const fillSelected = "#4285F4";
+const fillIdle = "#c8c8c8";
 const stroke = "#141414";
 const strokeHover = "#818181";
+const strokeSelected = "#ffffff";
 
 function countryFill(subregion: string, lifted: boolean) {
   if (lifted) return "#ffffff";
   return subregion === "Northern Africa" ? fillNorth : fillSouth;
+}
+
+function regionFill(
+  subregion: string,
+  state: { selected: boolean; hovered: boolean; hasSelection: boolean },
+) {
+  if (state.selected) return fillSelected;
+  if (state.hovered) return "#ffffff";
+  if (state.hasSelection) return fillIdle;
+  return countryFill(subregion, false);
 }
 
 function distanceSq(
@@ -58,26 +73,6 @@ function distanceSq(
   const dx = a.lon - b.lon;
   const dy = a.lat - b.lat;
   return dx * dx + dy * dy;
-}
-
-function nearestPathId(
-  paths: PathData[],
-  location?: { lat: number; lon: number },
-) {
-  if (!location || paths.length === 0) return paths[0]?.id ?? null;
-  let best = paths[0];
-  let bestDistance = Number.POSITIVE_INFINITY;
-  for (const path of paths) {
-    const next = distanceSq(
-      { lon: path.lngLat[0], lat: path.lngLat[1] },
-      location,
-    );
-    if (next < bestDistance) {
-      best = path;
-      bestDistance = next;
-    }
-  }
-  return best.id;
 }
 
 function foldName(value: string) {
@@ -104,6 +99,9 @@ function datasetForPath(
   path: PathData,
   useSvgNames: boolean,
 ) {
+  const mapped = lexiconMapRegions[path.id];
+  if (mapped) return mapped;
+
   const country = countries.find((item) => item.isoA2 === countryId);
   if (!country) return null;
   const candidates = languages.filter((item) => item.country === country.id);
@@ -158,31 +156,14 @@ function countryMeta(id: string) {
   };
 }
 
-function namedFocusPathId(
-  paths: PathData[],
+function pathMatchesDataset(
   countryId: string,
-  dataset?: string,
+  path: PathData,
+  dataset: string | undefined,
+  useSvgNames: boolean,
 ) {
-  if (!dataset) return null;
-  const country = countries.find((item) => item.isoA2 === countryId);
-  const candidates = languages.filter((item) => item.country === country?.id);
-  if (candidates.length <= 1) return null;
-  const language = languages.find((item) => item.dataset === dataset);
-  if (!language) return null;
-
-  let best: PathData | null = null;
-  let bestScore = 0;
-  for (const path of paths) {
-    const score = Math.max(
-      nameMatchScore(path.name, language.title),
-      nameMatchScore(path.name, language.aliases),
-    );
-    if (score > bestScore) {
-      best = path;
-      bestScore = score;
-    }
-  }
-  return bestScore > 0 ? best?.id ?? null : null;
+  if (!dataset) return false;
+  return datasetForPath(countryId, path, useSvgNames) === dataset;
 }
 
 export function AfricaMap({
@@ -254,26 +235,36 @@ export function AfricaMap({
   const focusLocation = focusDataset
     ? lexiconLocations[focusDataset]
     : undefined;
-  const focusPathId = focused
-    ? usingSvg
-      ? namedFocusPathId(layout.paths, countryId ?? "", focusDataset)
-      : nearestPathId(layout.paths, focusLocation)
-    : null;
-  const activeId = focused
-    ? (hoveredId ?? selectedId ?? focusPathId)
-    : (hoveredId ?? selectedId);
+  const selectedPathIds = useMemo(() => {
+    if (!focused || !countryId || !focusDataset) return new Set<string>();
+    return new Set(
+      layout.paths
+        .filter((path) =>
+          pathMatchesDataset(countryId, path, focusDataset, usingSvg),
+        )
+        .map((path) => path.id),
+    );
+  }, [focused, countryId, focusDataset, layout.paths, usingSvg]);
+  const selectedPathId = focused
+    ? ([...selectedPathIds][0] ?? selectedId)
+    : selectedId;
+  const hasLexiconSelection = focused
+    ? selectedPathIds.size > 0
+    : Boolean(selectedId);
+  const activeId = hoveredId ?? selectedPathId;
 
   const ordered = useMemo(() => {
     return [...layout.paths].sort((a, b) => {
       const rank = (path: PathData) => {
-        if (path.id === activeId) return 3;
-        if (path.id === hoveredId) return 2;
+        if (selectedPathIds.has(path.id)) return 4;
+        if (path.id === hoveredId) return 3;
+        if (path.id === activeId) return 2;
         if (path.markers.length > 0 || knowledgeHrefs[path.id]) return 1;
         return 0;
       };
       return rank(a) - rank(b);
     });
-  }, [layout.paths, activeId, hoveredId]);
+  }, [layout.paths, activeId, hoveredId, selectedPathIds]);
 
   function closeCountry() {
     setOpenedCountryId(null);
@@ -295,6 +286,7 @@ export function AfricaMap({
       if (!path) return;
       const dataset = datasetForPath(countryId, path, usingSvg);
       if (dataset) onFocusDataset(dataset);
+      setSelectedId(id);
       return;
     }
     setSelectedId(id);
@@ -320,39 +312,43 @@ export function AfricaMap({
       ? layout.project(focusLocation.lon, focusLocation.lat)
       : null;
   const language = languages.find((item) => item.dataset === focusDataset);
+  const hoveredDataset =
+    hoveredId && countryId && active
+      ? datasetForPath(countryId, active, usingSvg)
+      : null;
+  const hoveredLanguage = hoveredDataset
+    ? languages.find((item) => item.dataset === hoveredDataset)
+    : undefined;
   const meta = countryId ? countryMeta(countryId) : null;
   const lexiconHref = countryId ? knowledgeHrefs[countryId] : undefined;
   const namibia = layout.paths.find((path) => path.id === "NA");
+  const cardLanguage = hoveredId ? hoveredLanguage : language;
   const cardTitle = focused
-    ? hoveredId
-      ? (active?.name ?? language?.title ?? meta?.title)
-      : (language?.title ?? meta?.title ?? active?.name)
+    ? (cardLanguage?.title ?? meta?.title ?? active?.name)
     : active?.name;
+  const cardCountry = focused
+    ? (countries.find((item) => item.id === cardLanguage?.country)?.title ??
+      meta?.title)
+    : active?.subregion;
 
   const countryCard = active || (focused && cardTitle) ? (
-    <div className="max-w-[min(15rem,calc(100%-0.75rem))] rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5">
-      <p className="text-white text-sm tracking-[-0.01em]">
+    <div className="w-max max-w-full rounded-xl border border-border bg-[#141414]/90 px-3 py-2.5">
+      <p className="whitespace-nowrap text-white text-sm tracking-[-0.01em]">
         {cardTitle}
       </p>
-      {focused ? (
-        <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
-          {hoveredId
-            ? (language?.title ?? meta?.title)
-            : (language?.group ?? meta?.subregion ?? meta?.title)}
-        </p>
-      ) : active?.subregion ? (
-        <p className="mt-0.5 text-muted text-xs tracking-[-0.01em]">
-          {active.subregion}
+      {cardCountry ? (
+        <p className="mt-0.5 whitespace-nowrap text-muted text-xs tracking-[-0.01em]">
+          {cardCountry}
         </p>
       ) : null}
       {!focused && active ? (
-        <p className="mt-2 text-xs tracking-[-0.01em] text-white/70">
+        <p className="mt-2 whitespace-nowrap text-xs tracking-[-0.01em] text-white/70">
           Open country map
         </p>
       ) : lexiconHref && canLeave ? (
         <a
           href={lexiconHref}
-          className="mt-2 inline-block text-xs tracking-[-0.01em] text-white/70 hover:text-white transition-colors"
+          className="mt-2 inline-block whitespace-nowrap text-xs tracking-[-0.01em] text-white/70 hover:text-white transition-colors"
         >
           Open lexicon
         </a>
@@ -436,8 +432,13 @@ export function AfricaMap({
             ))}
           </g>
           {ordered.map((pathData) => {
+            const selected = focused
+              ? selectedPathIds.has(pathData.id)
+              : pathData.id === selectedId;
+            const hovered = pathData.id === hoveredId;
             const lifted =
-              pathData.id === activeId ||
+              selected ||
+              hovered ||
               (!focused &&
                 (selectedId === pathData.id || hoveredId === pathData.id));
             const knowledge = Boolean(knowledgeHrefs[pathData.id]);
@@ -449,6 +450,11 @@ export function AfricaMap({
               }
             }
 
+            function onPointerDown(event: PointerEvent<SVGGElement>) {
+              if (event.button !== 0) return;
+              selectRegion(pathData.id);
+            }
+
             return (
               <g
                 key={pathData.id}
@@ -458,10 +464,8 @@ export function AfricaMap({
                 role="button"
                 tabIndex={0}
                 aria-label={pathData.name}
-                aria-pressed={
-                  pathData.id === (focused ? (selectedId ?? focusPathId) : selectedId)
-                }
-                onClick={() => selectRegion(pathData.id)}
+                aria-pressed={selected}
+                onPointerDown={onPointerDown}
                 onKeyDown={onKeyDown}
                 onPointerEnter={(event) => {
                   if (event.pointerType !== "touch") setHoveredId(pathData.id);
@@ -469,14 +473,22 @@ export function AfricaMap({
                 onPointerLeave={(event) => {
                   if (event.pointerType !== "touch") setHoveredId(null);
                 }}
-                onFocus={() => setHoveredId(pathData.id)}
-                onBlur={() => setHoveredId(null)}
               >
                 <path
                   d={pathData.d}
-                  fill={countryFill(pathData.subregion, lifted)}
-                  stroke={lifted ? strokeHover : stroke}
-                  strokeWidth={knowledge || lifted ? 1.6 : 1.2}
+                  fill={
+                    focused
+                      ? regionFill(pathData.subregion, {
+                          selected,
+                          hovered,
+                          hasSelection: hasLexiconSelection,
+                        })
+                      : countryFill(pathData.subregion, lifted)
+                  }
+                  stroke={
+                    selected ? strokeSelected : lifted ? strokeHover : stroke
+                  }
+                  strokeWidth={selected || knowledge || lifted ? 1.8 : 1.2}
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
                 />
@@ -539,7 +551,7 @@ export function AfricaMap({
           </div>
         ) : null}
         {focused && countryCard ? (
-          <div className="absolute left-0 top-2 z-20 sm:left-auto sm:right-0 sm:top-4">
+          <div className="pointer-events-none absolute left-0 top-2 z-20 max-w-[calc(100%-1rem)] sm:left-auto sm:right-0 sm:top-4">
             {countryCard}
           </div>
         ) : null}

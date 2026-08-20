@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { API_ORIGIN } from "@/lib/catalog";
+import { fetchResearchApi } from "@/lib/catalog";
 
 const DATASET_PATTERN = /^[a-z0-9]+(?:\/[a-z0-9]+)?$/;
 const GENERIC_ERROR = "The dictionary could not complete that lookup.";
@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(
-      `${API_ORIGIN}/v1/${dataset}/lookup?headword=${encodeURIComponent(headword)}`,
+    const response = await fetchResearchApi(
+      `/v1/${dataset}/lookup?headword=${encodeURIComponent(headword)}`,
       { next: { revalidate: 120 } },
     );
     const body = await response.text();

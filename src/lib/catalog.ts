@@ -1,4 +1,6 @@
 export const API_ORIGIN = "https://api.forrovivo.com";
+export const API_FALLBACK_ORIGIN =
+  "https://linguistic-research-forro-vivo.pontes-18.workers.dev";
 export const GITHUB_URL =
   "https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-";
 export const APP_ORIGIN = "https://www.forrovivo.com";
@@ -31,12 +33,46 @@ const SAMPLE_DATASETS = [
   "saotome/forro",
   "caboverde/santiago",
   "guinebissau/bissau",
-  "angola",
+  "angola/contruy",
 ] as const;
+
+const RESEARCH_ORIGINS = [API_ORIGIN, API_FALLBACK_ORIGIN] as const;
+
+export async function fetchResearchApi(
+  pathAndQuery: string,
+  init?: RequestInit,
+): Promise<Response> {
+  const suffix = pathAndQuery.startsWith("/") ? pathAndQuery : `/${pathAndQuery}`;
+  let lastError: unknown;
+  for (const origin of RESEARCH_ORIGINS) {
+    const controller = new AbortController();
+    const waitMs = origin === API_ORIGIN ? 2500 : 20000;
+    const timer = setTimeout(() => controller.abort(), waitMs);
+    const parent = init?.signal;
+    if (parent) {
+      if (parent.aborted) controller.abort();
+      else parent.addEventListener("abort", () => controller.abort(), { once: true });
+    }
+    try {
+      const response = await fetch(`${origin}${suffix}`, {
+        ...init,
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      return response;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+    }
+  }
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("The linguistic API is unreachable.");
+}
 
 export async function fetchLanguagesCatalog(): Promise<LanguagesResponse | null> {
   try {
-    const response = await fetch(`${API_ORIGIN}/v1/languages`, {
+    const response = await fetchResearchApi("/v1/languages", {
       next: { revalidate: 21600 },
     });
     if (!response.ok) return null;
