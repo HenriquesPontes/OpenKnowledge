@@ -82,16 +82,22 @@ export default function OverviewPage() {
 
       <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <h1
-          className="mx-auto max-w-[44rem] text-center font-heading tracking-[-0.03em] leading-[1.25]"
+          className="mx-auto max-w-[44rem] text-center font-heading tracking-[-0.03em] leading-[1.25] text-muted"
           style={{ fontSize: "clamp(1.85rem, 4.8vw, 3.5rem)" }}
         >
-          <span className="text-muted">{statement.before}</span>
-          <span className="text-white">{statement.preserve}</span>
-          <br />
-          <span className="text-muted">{statement.middle.trim()}</span>
-          <br />
-          <span className="text-white">{statement.accessible}</span>
-          <span className="text-muted">{statement.after}</span>
+          {statement.lines.map((line, lineIndex) => (
+            <span key={line.map((part) => part.text).join("")}>
+              {lineIndex > 0 ? <br /> : null}
+              {line.map((part) => (
+                <span
+                  key={part.text}
+                  style={"color" in part ? { color: part.color } : undefined}
+                >
+                  {part.text}
+                </span>
+              ))}
+            </span>
+          ))}
         </h1>
       </section>
 

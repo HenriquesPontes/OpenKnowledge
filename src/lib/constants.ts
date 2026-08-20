@@ -763,11 +763,21 @@ export const productOverview = {
   description:
     "ForroVivo products for learning, community, languages, and public linguistic data. Open Knowledge is this site. Machine translation is a capability, not a product.",
   statement: {
-    before: "Our work is to ",
-    preserve: "document, preserve, and structure",
-    middle: " African Creole languages and make them ",
-    accessible: "accessible",
-    after: " to new generations.",
+    lines: [
+      [
+        { text: "Our work is to " },
+        { text: "document", color: "#4285F4" },
+        { text: ", " },
+        { text: "preserve", color: "#EA4335" },
+        { text: ", and " },
+        { text: "structure", color: "#FBBC05" },
+      ],
+      [
+        { text: "African Creole languages and make them " },
+        { text: "accessible", color: "#34A853" },
+        { text: " to new generations." },
+      ],
+    ],
   },
   photoCredit: {
     label: "Photography",
