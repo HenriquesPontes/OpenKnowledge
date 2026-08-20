@@ -191,14 +191,15 @@ export default function ForroVivoAppPage() {
               </details>
             ))}
           </div>
-          <p className="mt-10 text-center text-muted text-sm tracking-[-0.01em]">
-            <a
+          <div className="mt-10 flex justify-center">
+            <Button
               href="/app/credits"
-              className="text-white hover:text-white/70 transition-colors"
+              variant="outline"
+              className="border-[#4CAF50] hover:border-[#58CC02] hover:bg-[#243829] focus-visible:ring-offset-[#121C17]"
             >
               Credits
-            </a>
-          </p>
+            </Button>
+          </div>
         </Container>
       </section>
     </div>
