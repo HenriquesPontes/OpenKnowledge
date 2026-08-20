@@ -676,6 +676,8 @@ export const appLanding = {
   titleLines: ["Learn Forro.", "Preserve the culture."],
   description:
     "The first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe.",
+  storeCta: "Download on the App Store",
+  playCta: "Google Play — Coming soon",
   seoTitle: "Forro Vivo — Learn Forro, the first African Creole learning app",
   seoDescription:
     "The first learning app for African Creole languages, starting with Forro of São Tomé and Príncipe. Dictionary, lessons, and exercises. On the App Store.",
@@ -1146,13 +1148,10 @@ export const translationArchitecture = {
 
 export const translationPage = {
   eyebrow: "Capability",
+  headline: "Not a translator on this site.",
+  headlineClose: "Evidence comes first.",
   description:
     "Open Knowledge does not run a translator. Translation is a ForroVivo capability. This page is the evidence it would need: isolated lexicons, attested sources, and human review.",
-  heroLead: "Not a",
-  heroEmphasisA: "translator",
-  heroMid: " on this site. ",
-  heroEmphasisB: "Evidence",
-  heroTail: " comes first",
   questionsTitle: "Translation is only as reliable as the evidence under it.",
   questionsBody:
     "See how isolated lexicons, attested sources, and human review come before any model. There is no translate box here.",
@@ -1186,7 +1185,7 @@ export const translationPage = {
     },
   ],
   wellBeing:
-    "This Open Knowledge site does not implement translation. Translation is a ForroVivo capability, not a product.",
+    "There is no translator on this site. Translation is a ForroVivo capability, not a product.",
   links: [
     { heading: "Languages", label: "Isolated lexicons", href: "/languages" },
     { heading: "Research", label: "Linguistic Research", href: "/research" },

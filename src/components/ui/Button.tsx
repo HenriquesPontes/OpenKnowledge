@@ -19,7 +19,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center rounded-full font-normal cursor-pointer select-none",
+    "inline-flex items-center justify-center rounded-full font-normal cursor-pointer select-none whitespace-nowrap leading-none",
     "transition-[color,background-color,border-color,opacity,box-shadow] duration-150 ease-out",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414]",
     "active:opacity-90 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",

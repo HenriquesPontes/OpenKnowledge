@@ -86,13 +86,16 @@ export async function fetchLanguagesCatalog(): Promise<LanguagesResponse | null>
 
 export function isCountryDataset(
   dataset: string,
-  meta?: { type?: string; kind?: string },
+  meta?: { type?: string; kind?: string; language?: string; language_name?: string },
 ) {
   if (meta?.type === "country" || meta?.kind === "index" || meta?.kind === "country") {
     return true;
   }
   if (!dataset.includes("/")) return true;
-  return dataset.split("/")[1] === "country";
+  const slug = dataset.split("/")[1]?.toLowerCase();
+  if (slug === "country" || slug === "contruy") return true;
+  const name = `${meta?.language ?? ""} ${meta?.language_name ?? ""}`.toLowerCase();
+  return name.includes("contruy");
 }
 
 export function recordForDataset(

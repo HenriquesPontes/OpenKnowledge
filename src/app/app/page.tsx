@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
-import { appFaq, appLanding, appRoadmap, appVision, appWhy, footer, nav } from "@/lib/constants";
+import { appFaq, appLanding, appRoadmap, appVision, appWhy, footer } from "@/lib/constants";
 import { APP_ORIGIN, APP_STORE_URL, jsonLdScript } from "@/lib/catalog";
 
 export const metadata: Metadata = {
@@ -115,7 +115,7 @@ export default function ForroVivoAppPage() {
                   href={APP_STORE_URL}
                   className="w-full sm:w-auto gap-1.5 bg-[#58CC02] text-[#121C17] hover:bg-[#4CAF50] focus-visible:ring-offset-[#121C17]"
                 >
-                  {nav.cta}
+                  {appLanding.storeCta}
                   <ExternalArrow />
                 </Button>
                 <Button
@@ -123,7 +123,7 @@ export default function ForroVivoAppPage() {
                   disabled
                   className="w-full sm:w-auto border-[#4CAF50] focus-visible:ring-offset-[#121C17]"
                 >
-                  Google Play — Coming soon
+                  {appLanding.playCta}
                 </Button>
               </div>
             </div>

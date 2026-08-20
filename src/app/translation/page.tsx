@@ -24,25 +24,16 @@ export default function TranslationCapabilityPage() {
           <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
             {translationPage.eyebrow}
           </p>
-          <div className="mt-4 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-20">
-            <h1
-              className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
-              style={{ fontSize: "clamp(2.25rem, 6vw, 4.25rem)" }}
-            >
-              {translationPage.heroLead}{" "}
-              <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
-                {translationPage.heroEmphasisA}
-              </span>
-              {translationPage.heroMid}
-              <span className="underline decoration-white decoration-[1.5px] underline-offset-[0.18em]">
-                {translationPage.heroEmphasisB}
-              </span>
-              {translationPage.heroTail}
-            </h1>
-            <p className="text-muted text-lg sm:text-[21px] leading-normal tracking-[-0.01em] lg:pt-2">
-              {translationPage.description}
-            </p>
-          </div>
+          <h1
+            className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+          >
+            {translationPage.headline}{" "}
+            <span className="block">{translationPage.headlineClose}</span>
+          </h1>
+          <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] leading-normal tracking-[-0.01em]">
+            {translationPage.description}
+          </p>
         </Container>
       </section>
 

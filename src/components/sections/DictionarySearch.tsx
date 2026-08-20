@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import { API_ORIGIN, isCountryDataset } from "@/lib/catalog";
@@ -519,7 +519,11 @@ export function DictionarySearch({
   datasets: DatasetOption[];
   children?: ReactNode;
 }) {
-  const [dataset, setDataset] = useState(datasets[0]?.dataset ?? "");
+  const options = useMemo(
+    () => datasets.filter((item) => !isCountryDataset(item.dataset)),
+    [datasets],
+  );
+  const [dataset, setDataset] = useState(options[0]?.dataset ?? "");
   const [headword, setHeadword] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
   const [result, setResult] = useState<LookupResult | null>(null);
@@ -577,7 +581,7 @@ export function DictionarySearch({
           <AfricaMap
             focusCountryId={countryIso}
             focusDataset={dataset}
-            onFocusDataset={(next) => setDataset(optionForDataset(datasets, next))}
+            onFocusDataset={(next) => setDataset(optionForDataset(options, next))}
           />
         </div>
       ) : null}
@@ -601,9 +605,9 @@ export function DictionarySearch({
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
             aria-label="Isolated lexicon"
-            className="field w-full lg:max-w-[280px]"
+            className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           >
-            {datasets.map((item) => (
+            {options.map((item) => (
               <option key={item.dataset} value={item.dataset}>
                 {item.label}
               </option>
@@ -615,7 +619,7 @@ export function DictionarySearch({
             onChange={(event) => setHeadword(event.target.value)}
             placeholder="Look up a headword"
             required
-            className="field w-full min-w-0 lg:w-[280px]"
+            className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           />
           <Button type="submit" disabled={status === "loading"}>
             {status === "loading" ? "Looking up…" : "Look up"}
@@ -637,7 +641,7 @@ export function DictionarySearch({
             <p className="text-muted text-base tracking-[-0.01em]">{error}</p>
           ) : null}
 
-          {result ? <LookupResults result={result} datasets={datasets} /> : null}
+          {result ? <LookupResults result={result} datasets={options} /> : null}
         </div>
       ) : null}
     </div>
