@@ -747,7 +747,8 @@ export const appRoadmap = {
     {
       label: "5.0.0",
       date: "Beta",
-      description: "Voice and audio. Now in beta.",
+      description:
+        "Voice capability and audio arrive here. Reliable beta, on track for public release.",
     },
   ],
 } as const;
