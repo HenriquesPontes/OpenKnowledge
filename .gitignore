@@ -33,6 +33,14 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Cloudflare (credentials and local state — never commit tokens or keys)
+.wrangler/
+.dev.vars
+.dev.vars.*
+.cloudflare/
+.r2/
+*.toml.local
+
 # waitlist emails
 /Join waitlist/*.json
 

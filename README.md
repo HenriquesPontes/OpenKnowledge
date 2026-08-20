@@ -35,6 +35,11 @@ Then open the local Next.js origin. Production build: `npm run build` then `npm 
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. |
 | `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
 | `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
+| `CLOUDFLARE_ACCOUNT_ID` | Server. Cloudflare account. |
+| `CLOUDFLARE_API_TOKEN` | Server. Cloudflare API. |
+| `R2_ACCESS_KEY_ID` | Server. R2 S3 access key. |
+| `R2_SECRET_ACCESS_KEY` | Server. R2 S3 secret. |
+| `R2_S3_ENDPOINT` | Server. R2 S3 API origin. |
 
 On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored).
 
