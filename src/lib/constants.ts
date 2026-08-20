@@ -47,13 +47,19 @@ export const nav = {
   ctaHref: APP_STORE_URL,
   login: {
     label: "API Platform",
-    href: `${API_ORIGIN}/docs`,
+    href: "/api/login",
   },
   dictionaryAuth: {
     loginLabel: "Log in",
     loginHref: "/dictionaries/login",
     cta: "Create an account — It's free",
     ctaHref: "/dictionaries/register",
+  },
+  apiAuth: {
+    loginLabel: "Log in",
+    loginHref: "/api/login",
+    cta: "Create an account — It's free",
+    ctaHref: "/api/register",
   },
 } as const;
 

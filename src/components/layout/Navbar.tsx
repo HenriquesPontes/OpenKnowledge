@@ -30,6 +30,9 @@ function ExternalArrow() {
 export function Navbar() {
   const pathname = usePathname();
   const dictionaryAuth = pathname.startsWith("/dictionaries");
+  const apiAuth = pathname === "/api" || pathname.startsWith("/api/");
+  const accountAuth = dictionaryAuth || apiAuth;
+  const account = dictionaryAuth ? nav.dictionaryAuth : nav.apiAuth;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -94,7 +97,7 @@ export function Navbar() {
 
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
           {nav.links
-            .filter((link) => !dictionaryAuth)
+            .filter((link) => !accountAuth)
             .map((link) => (
             <a
               key={link.label}
@@ -165,14 +168,14 @@ export function Navbar() {
             ) : null}
           </div>
 
-          {dictionaryAuth ? (
+          {accountAuth ? (
             <Button
-              href={nav.dictionaryAuth.loginHref}
+              href={account.loginHref}
               variant="outline"
               size="sm"
               className="shrink-0"
             >
-              {nav.dictionaryAuth.loginLabel}
+              {account.loginLabel}
             </Button>
           ) : (
             <Button
@@ -186,14 +189,14 @@ export function Navbar() {
             </Button>
           )}
 
-          {dictionaryAuth ? (
+          {accountAuth ? (
             <Button
-              href={nav.dictionaryAuth.ctaHref}
+              href={account.ctaHref}
               size="sm"
               className="shrink-0 max-sm:px-3"
             >
               <span className="sm:hidden">It&apos;s free</span>
-              <span className="hidden sm:inline">{nav.dictionaryAuth.cta}</span>
+              <span className="hidden sm:inline">{account.cta}</span>
             </Button>
           ) : (
             <Button

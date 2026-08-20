@@ -4,8 +4,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 type Mode = "login" | "register";
+type Surface = "dictionary" | "api";
 
-export function DictionaryAccountForm({ mode }: { mode: Mode }) {
+const SUCCESS: Record<Surface, Record<Mode, string>> = {
+  dictionary: {
+    login: "You're on the dictionary list. We'll be in touch.",
+    register: "Your dictionary account request is in. We'll be in touch.",
+  },
+  api: {
+    login: "You're on the API Platform list. We'll be in touch.",
+    register: "Your API Platform account request is in. We'll be in touch.",
+  },
+};
+
+export function DictionaryAccountForm({
+  mode,
+  surface = "dictionary",
+}: {
+  mode: Mode;
+  surface?: Surface;
+}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
@@ -28,11 +46,7 @@ export function DictionaryAccountForm({ mode }: { mode: Mode }) {
       const data = await response.json();
       if (response.ok) {
         setStatus("success");
-        setMessage(
-          mode === "register"
-            ? "Your dictionary account request is in. We'll be in touch."
-            : "You're on the dictionary list. We'll be in touch.",
-        );
+        setMessage(SUCCESS[surface][mode]);
         setEmail("");
         return;
       }

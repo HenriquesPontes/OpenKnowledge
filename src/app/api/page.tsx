@@ -47,12 +47,15 @@ export default async function ApiPage() {
           languages, or write lexicon data.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button href="/docs/quickstart" className="w-full sm:w-auto">
+          <Button href="/api/login" className="w-full sm:w-auto">
+            Log in
+          </Button>
+          <Button href="/docs/quickstart" variant="outline" className="w-full sm:w-auto">
             Quickstart
           </Button>
           <Button
             href={apiSection.playground}
-            variant="outline"
+            variant="ghost"
             className="w-full sm:w-auto"
           >
             Try the API
