@@ -49,7 +49,7 @@ export default function ConnectDocsPage() {
       </ul>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Build paths
+        Explore
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <a
@@ -74,7 +74,7 @@ export default function ConnectDocsPage() {
             {connectIncome.title}
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            {connectIncome.description}
+            How a paid live lesson pays the speaker and funds the project.
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
             Open breakdown →

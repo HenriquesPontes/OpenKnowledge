@@ -7,7 +7,7 @@ import { fetchLanguagesCatalog } from "@/lib/catalog";
 export const metadata = {
   title: "Languages",
   description:
-    "Isolated lexicons by country. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each folder is its own lexicon.",
+    "The documented languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each language and variety is kept separate, never mixed.",
   alternates: { canonical: "/languages" },
 };
 
@@ -61,12 +61,12 @@ export default async function LanguagesPage({ searchParams }: Props) {
           className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
           style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
         >
-          Isolated lexicons by country
+          Every language on its own terms
         </h1>
         <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
           {query
             ? `Results for “${query}”.`
-            : "São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each folder is its own lexicon."}
+            : "The languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each language and variety is documented separately, never mixed."}
         </p>
 
         <form action="/languages" method="get" className="mt-8">
@@ -86,7 +86,7 @@ export default async function LanguagesPage({ searchParams }: Props) {
 
         {visibleCountries.length === 0 ? (
           <p className="mt-16 text-muted text-base tracking-[-0.01em]">
-            No isolated lexicon matched that search.
+            No language matched that search.
           </p>
         ) : (
         <div className="mt-16 space-y-16">

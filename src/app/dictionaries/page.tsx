@@ -7,7 +7,7 @@ import { fetchLanguagesCatalog } from "@/lib/catalog";
 export const metadata: Metadata = {
   title: "Dictionaries",
   description:
-    "Look up a headword in one isolated lexicon. Forro, Angolar, Lung’Ie, Cabo Verdean islands, Guinea-Bissau regions, and Angola Umbundu, Kimbundu, and Kikongo stay separate.",
+    "Search words in Forro, Angolar, Lung’Ie, Cabo Verdean island varieties, Guinea-Bissau Kriol, Umbundu, Kimbundu, and Kikongo. Each language has its own dictionary.",
   alternates: { canonical: "/dictionaries" },
 };
 
@@ -43,9 +43,9 @@ export default async function DictionariesPage() {
             Online dictionaries
           </h1>
           <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
-            Look up a headword in one isolated lexicon. Forro, Angolar, Lung’Ie,
-            Cabo Verdean islands, Guinea-Bissau regions, and Angola Umbundu,
-            Kimbundu, and Kikongo stay separate.
+            Search words in Forro, Angolar, Lung’Ie, Cabo Verdean island
+            varieties, Guinea-Bissau Kriol, Umbundu, Kimbundu, and Kikongo.
+            Each language has its own dictionary, built from real sources.
           </p>
         </DictionarySearch>
       </Container>

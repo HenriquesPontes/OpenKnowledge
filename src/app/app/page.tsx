@@ -88,6 +88,27 @@ function ExternalArrow() {
   );
 }
 
+function StoreCtas({ className }: { className?: string }) {
+  return (
+    <div className={className}>
+      <Button
+        href={APP_STORE_URL}
+        className="w-fit gap-1.5 bg-[#58CC02] text-[#121C17] hover:bg-[#4CAF50] focus-visible:ring-offset-[#121C17]"
+      >
+        {appLanding.storeCta}
+        <ExternalArrow />
+      </Button>
+      <Button
+        variant="outline"
+        disabled
+        className="w-fit border-[#4CAF50] focus-visible:ring-offset-[#121C17]"
+      >
+        {appLanding.playCta}
+      </Button>
+    </div>
+  );
+}
+
 export default function ForroVivoAppPage() {
   return (
     <div className="forro-app flex flex-1 flex-col bg-background">
@@ -97,7 +118,7 @@ export default function ForroVivoAppPage() {
       />
       <section className="relative overflow-hidden pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
         <Container className="relative">
-          <div className="grid items-center gap-12 md:grid-cols-2">
+          <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12">
             <div>
               <h1
                 className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
@@ -110,25 +131,11 @@ export default function ForroVivoAppPage() {
               <p className="mt-4 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
                 {appLanding.description}
               </p>
-              <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
-                <Button
-                  href={APP_STORE_URL}
-                  className="w-full sm:w-auto gap-1.5 bg-[#58CC02] text-[#121C17] hover:bg-[#4CAF50] focus-visible:ring-offset-[#121C17]"
-                >
-                  {appLanding.storeCta}
-                  <ExternalArrow />
-                </Button>
-                <Button
-                  variant="outline"
-                  disabled
-                  className="w-full sm:w-auto border-[#4CAF50] focus-visible:ring-offset-[#121C17]"
-                >
-                  {appLanding.playCta}
-                </Button>
-              </div>
+              <StoreCtas className="mt-6 hidden flex-row flex-wrap gap-3 items-center md:flex" />
             </div>
 
-            <div className="relative flex items-center justify-center">
+            <div className="relative flex flex-col items-center">
+              <StoreCtas className="mb-6 flex flex-col gap-3 items-center md:hidden" />
               <div
                 className="relative mx-auto w-full max-w-[280px] drop-shadow-2xl md:max-w-[350px]"
                 style={{ aspectRatio: "9 / 19.5" }}

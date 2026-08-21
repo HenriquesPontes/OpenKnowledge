@@ -176,6 +176,7 @@ src/
     cn.ts                 Tailwind class merge
 public/
   images/logo-icon.png
+  images/app/forro-icon.png
   images/maps/africa/     Per-country SVG overlays (ISO alpha-2 filenames)
 Join waitlist/            Local waitlist JSON (gitignored)
 ```
@@ -422,7 +423,7 @@ Root `src/app/layout.tsx`:
 
 - `metadataBase` from `NEXT_PUBLIC_SITE_URL`, defaulting to `https://www.forrovivo.com` (production is served at `https://forrovivo.com`)
 - Title template: `%s | Open Knowledge`
-- Icons: `/images/logo-icon.png`
+- Icons: `/images/app/forro-icon.png`
 - Open Graph / Twitter summary cards
 - `html lang="en"` with `class="dark"`
 - Viewport: device-width, `viewportFit: cover`, `colorScheme: dark`, `themeColor: #141414`

@@ -59,7 +59,7 @@ export const nav = {
           { label: "API Platform", href: "/api" },
           { label: "Methodology", href: "/docs/methodology" },
           { label: "Research", href: "/research" },
-          { label: "Translation capability", href: "/translation" },
+          { label: "Machine Translation", href: "/translation" },
         ],
       },
       {
@@ -1034,7 +1034,7 @@ export const productOverview = {
   eyebrow: "Products",
   title: "Overview",
   description:
-    "ForroVivo products for learning, community, languages, and public linguistic data. Open Knowledge is this site. Machine translation is a capability, not a product.",
+    "Everything ForroVivo builds: the learning app, live lessons with native speakers, documented languages, and open linguistic data.",
   statement: {
     lines: [
       [
@@ -1116,21 +1116,21 @@ export const productOverview = {
       label: "Languages",
       href: "/languages",
       description:
-        "Isolated lexicons by country. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each folder is its own lexicon.",
+        "The documented languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Each language kept separate, with its own sources.",
     },
     {
       label: "API Platform",
       href: "/api",
       description:
-        "Dashboard and live try UI for the Linguistic Research API. Rules and routes are in Documentation.",
+        "Build with the linguistic data. Create an account, get a key, and try the Linguistic Research API live.",
     },
   ],
 } as const;
 
 export const translationArchitecture = {
-  title: "What a translator would need",
+  title: "Evidence before models",
   description:
-    "Translation is only as reliable as the evidence under it. Isolated datasets, verified entries, then grounded models. Missing data is preferable to incorrect data. This site does not run a translator.",
+    "Isolated lexicons, attested sources, and human review come first. Structured pairs and grounded models follow. Missing data is preferable to incorrect data.",
   steps: [
     { label: "Isolated lexicon" },
     { label: "Attested sources" },
@@ -1141,45 +1141,42 @@ export const translationArchitecture = {
 } as const;
 
 export const translationPage = {
-  eyebrow: "Capability",
-  headline: "Not a translator on this site.",
-  headlineClose: "Evidence comes first.",
+  eyebrow: "Machine Translation",
+  headline: "Evidence before models.",
+  headlineClose: "Translation follows the lexicon.",
   description:
-    "Open Knowledge does not run a translator. Translation is a ForroVivo capability. This page is the evidence it would need: isolated lexicons, attested sources, and human review.",
-  questionsTitle: "Translation is only as reliable as the evidence under it.",
+    "Reliable translation for these languages starts with isolated lexicons, attested sources, and human review. Open Knowledge holds that evidence. Translation is a ForroVivo capability built on top of it.",
+  questionsTitle: "Reliability starts with the lexicon.",
   questionsBody:
-    "See how isolated lexicons, attested sources, and human review come before any model. There is no translate box here.",
+    "Isolated folders, attested sources, and human review come before any model. See how the pipeline stays evidence-first.",
   questionsCta: "Read methodology",
   questionsHref: "/docs/methodology",
-  releasesTitle: "What a translator would need",
+  releasesTitle: "The foundation",
   releases: [
     {
       title: "Isolated lexicon",
-      body: "Each folder is its own lexicon. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola stay separate. Do not copy between them.",
+      body: "Each language stays in its own folder. São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola are never mixed or copied across.",
       href: "/languages",
       linkLabel: "Open languages",
-      layer: "Isolated lexicon",
       surface: "Languages",
     },
     {
       title: "Attested sources",
-      body: "The ForroVivo Knowledge Base does not treat AI-generated information as linguistic evidence. Every documented linguistic claim should be traceable to a source.",
+      body: "Every linguistic claim should be traceable to a source. Generated text is not treated as evidence in the knowledge base.",
       href: "/research",
       linkLabel: "Open research",
-      layer: "Attested sources",
       surface: "Research",
     },
     {
       title: "Human review",
-      body: "Structured pairs, then grounded models. Missing data is preferable to incorrect data. This Open Knowledge site does not implement translation.",
+      body: "Structured pairs and grounded models follow verification. Empty fields are preferred over incorrect ones.",
       href: "/docs/methodology",
       linkLabel: "Open methodology",
-      layer: "Human review",
       surface: "Methodology",
     },
   ],
   wellBeing:
-    "There is no translator on this site. Translation is a ForroVivo capability, not a product.",
+    "Open Knowledge publishes the data layer. ForroVivo builds translation on that foundation.",
   links: [
     { heading: "Languages", label: "Isolated lexicons", href: "/languages" },
     { heading: "Research", label: "Linguistic Research", href: "/research" },
@@ -1332,13 +1329,13 @@ export const apiPaths = [
   {
     method: "GET",
     path: "/v1/{family}/{variety}",
-    detail: "One lexicon metadata document for that folder.",
+    detail: "One lexicon metadata document for that dataset.",
   },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/lookup?headword=",
     detail:
-      "Exact headword lookup in that folder only. Example: /v1/saotome/forro/lookup?headword=kume.",
+      "Exact headword lookup in that dataset only. Example: /v1/saotome/forro/lookup?headword=kume.",
   },
   {
     method: "GET",
@@ -1363,17 +1360,17 @@ export const apiPaths = [
   {
     method: "GET",
     path: "/v1/{family}/{variety}/sources",
-    detail: "Bibliography for that folder.",
+    detail: "Bibliography for that dataset.",
   },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/grammar",
-    detail: "Attested grammar records for that folder, or an empty list.",
+    detail: "Attested grammar records for that dataset, or an empty list.",
   },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/audio/{filename}",
-    detail: "Audio file for an attested example in that folder.",
+    detail: "Audio file for an attested example in that dataset.",
   },
 ] as const;
 

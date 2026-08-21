@@ -46,7 +46,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={lookup}
-          body="One folder only, for example saotome/forro or angola/umbundu."
+          body="Exact matches from one dataset only, for example saotome/forro or angola/umbundu."
         />
       </div>
 
@@ -56,7 +56,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={`curl "${API_ORIGIN}/v1/search?dataset=saotome/forro&q=kume"`}
-          body="Requires dataset=."
+          body="Both dataset= and q= are required. Search never crosses datasets."
         />
       </div>
 

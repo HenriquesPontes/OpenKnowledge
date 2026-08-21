@@ -193,7 +193,7 @@ function EntryCard({
   index: number;
   total: number;
 }) {
-  const headword = display(entry.headword) ?? "Untitled headword";
+  const headword = display(entry.headword) ?? "Untitled entry";
   const pronunciation = display(entry.pronunciation);
   const ipa = display(entry.ipa);
   const phonetic =
@@ -546,7 +546,7 @@ export function DictionarySearch({
         setError(
           errorMessage(
             data,
-            "No entry matched that headword in this isolated lexicon.",
+            "No entry found for that word in this dictionary.",
           ),
         );
         setStatus("done");
@@ -604,7 +604,7 @@ export function DictionarySearch({
           <select
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
-            aria-label="Isolated lexicon"
+            aria-label="Dictionary"
             className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           >
             {options.map((item) => (
@@ -617,7 +617,7 @@ export function DictionarySearch({
             type="search"
             value={headword}
             onChange={(event) => setHeadword(event.target.value)}
-            placeholder="Look up a headword"
+            placeholder="Search a word"
             required
             className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           />

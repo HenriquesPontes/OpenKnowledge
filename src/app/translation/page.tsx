@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { translationPage } from "@/lib/constants";
 
 export const metadata = {
-  title: "Translation capability",
+  title: "Machine Translation",
   description: translationPage.description,
   alternates: { canonical: "/translation" },
 };
@@ -72,23 +72,9 @@ export default function TranslationCapabilityPage() {
                 <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
                   {card.body}
                 </p>
-                <a
-                  href={card.href}
-                  className="mt-5 text-[13px] tracking-[-0.01em] text-white hover:text-white/70 transition-colors underline-offset-4 hover:underline"
-                >
-                  {card.linkLabel} <Arrow />
-                </a>
                 <div className="mt-auto pt-8">
-                  <dl className="border-t border-border pt-4 space-y-3">
+                  <dl className="border-t border-border pt-4">
                     <div className="flex items-baseline justify-between gap-4">
-                      <dt className="text-[11px] tracking-[0.08em] uppercase text-muted">
-                        Layer
-                      </dt>
-                      <dd className="text-[13px] tracking-[-0.01em] text-white text-right">
-                        {card.layer}
-                      </dd>
-                    </div>
-                    <div className="flex items-baseline justify-between gap-4 border-t border-border pt-3">
                       <dt className="text-[11px] tracking-[0.08em] uppercase text-muted">
                         Surface
                       </dt>

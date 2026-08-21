@@ -699,11 +699,12 @@ export function ResearchStudio({
             className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
             style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
           >
-            Published entries in every isolated lexicon
+            Published entries by language
           </h2>
           <p className="mt-3 max-w-[40rem] text-muted text-sm sm:text-base leading-6 tracking-[-0.01em]">
-            Each bar is one folder. Colour is the country index it belongs to.
-            Hover a bar to read the lexicon; click a country node to isolate that cluster.
+            Each bar is one language or variety. Colour is the country it
+            belongs to. Hover a bar to read the name; click a country node to
+            isolate that cluster.
           </p>
           <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16.5rem] lg:gap-10">
             <LexiconFlow

@@ -403,14 +403,14 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
             className="inline-flex items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]/20"
           >
             <Image
-              src="/images/logo-icon.png"
+              src="/images/app/forro-icon.png"
               alt=""
               width={512}
               height={512}
               priority
               quality={100}
               sizes="28px"
-              className="h-7 w-7 invert"
+              className="h-7 w-7"
             />
           </a>
           <a

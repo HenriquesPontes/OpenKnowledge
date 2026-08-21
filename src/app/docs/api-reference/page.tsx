@@ -69,7 +69,7 @@ export default function ApiReferencePage() {
       <Section id="principles" title="Principles">
         <p>
           The API is read-only for lexicon data. It does not invent translations,
-          merge languages, or write into folders. Missing data is preferable to
+          merge languages, or write into datasets. Missing data is preferable to
           incorrect data. Each path serves one isolated dataset. Parent country
           indexes are not merged dictionaries.
         </p>
@@ -199,7 +199,7 @@ export default function ApiReferencePage() {
           List routes such as entries accept <Code>offset</Code> (default{" "}
           <Code>0</Code>) and <Code>limit</Code>. Stay within the server’s
           accepted range; oversized values are clamped. Responses include the
-          page of items for that folder only.
+          page of items for that dataset only.
         </p>
       </Section>
 
@@ -208,7 +208,7 @@ export default function ApiReferencePage() {
           <Code>message</Code>. Common codes:</p>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            <Code>TERM_NOT_FOUND</Code> — no matching headword in that folder
+            <Code>TERM_NOT_FOUND</Code> — no matching headword in that dataset
           </li>
           <li>
             <Code>DATASET_NOT_FOUND</Code> — unknown family or variety path
@@ -238,7 +238,7 @@ export default function ApiReferencePage() {
         <div className="mt-4">
           <BrowserMockup
             command={languagesExample}
-            body="One object per isolated lexicon. Counts are per folder."
+            body="One object per isolated lexicon, with entry counts per dataset."
           />
         </div>
       </Section>
@@ -246,7 +246,7 @@ export default function ApiReferencePage() {
       <Section id="lookup" title="Lookup">
         <p>
           <Code>GET /v1/{"{family}/{variety}"}/lookup?headword=</Code> returns
-          exact matches from that folder only. Required query:{" "}
+          exact matches from that dataset only. Required query:{" "}
           <Code>headword</Code>. The envelope includes <Code>dataset</Code>,{" "}
           <Code>attribution</Code>, <Code>query</Code>, <Code>match</Code>,{" "}
           <Code>count</Code>, and <Code>entries</Code>.
@@ -269,12 +269,12 @@ export default function ApiReferencePage() {
         <p>
           <Code>GET /v1/search?dataset={"{family}/{variety}"}&amp;q=</Code>{" "}
           searches inside one named dataset. Both <Code>dataset</Code> and{" "}
-          <Code>q</Code> are required. Search never crosses folders.
+          <Code>q</Code> are required. Search never crosses datasets.
         </p>
         <p>
           Dataset-scoped search also exists at{" "}
           <Code>GET /v1/{"{family}/{variety}"}/search?q=</Code> and covers
-          entries, knowledge, and sources inside that folder.
+          entries, knowledge, and sources inside that dataset.
         </p>
         <div className="mt-4">
           <BrowserMockup
@@ -287,7 +287,7 @@ export default function ApiReferencePage() {
       <Section id="entries" title="Entries">
         <p>
           <Code>GET /v1/{"{family}/{variety}"}/entries</Code> lists lexical
-          entries for one folder. Optional <Code>q</Code>, <Code>offset</Code>,
+          entries for one dataset. Optional <Code>q</Code>, <Code>offset</Code>,
           and <Code>limit</Code>. Fetch one record with{" "}
           <Code>/entries/{"{entry_id}"}</Code>.
         </p>
@@ -296,7 +296,7 @@ export default function ApiReferencePage() {
       <Section id="knowledge" title="Knowledge and sources">
         <p>
           <Code>GET /v1/{"{family}/{variety}"}/sources</Code> returns the
-          bibliography for that folder. Knowledge collections such as{" "}
+          bibliography for that dataset. Knowledge collections such as{" "}
           <Code>grammar</Code> return attested records or an empty list until a
           cited source fills them. Country-level collection indexes list paths
           per isolated dataset; they do not merge records.
@@ -309,7 +309,7 @@ export default function ApiReferencePage() {
           <Code>
             /v1/{"{family}/{variety}"}/audio/{"{filename}"}
           </Code>
-          . Files stay inside the same isolated folder as the entry.
+          . Files stay inside the same isolated dataset as the entry.
         </p>
       </Section>
 

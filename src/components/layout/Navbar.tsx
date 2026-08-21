@@ -88,7 +88,7 @@ export function Navbar() {
           className="group flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
         >
           <Image
-            src="/images/logo-icon.png"
+            src="/images/app/forro-icon.png"
             alt=""
             width={512}
             height={512}

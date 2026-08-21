@@ -19,16 +19,16 @@ export default function AboutPage() {
         </h1>
 
         <p className="mt-4 max-w-[720px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          ForroVivo is the platform. It documents, preserves, and structures
-          African Creole languages. Open Knowledge is this site, the public
-          front door to the Linguistic Knowledge Base.
+          ForroVivo documents, preserves, and structures African Creole
+          languages, and makes them accessible to new generations. Open
+          Knowledge is this site: the public home of that work.
         </p>
 
         <p className="mt-6 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
-          Where AI supports learning, the underlying language knowledge remains
-          source-traceable and evidence-first. The broader aim is to make these
-          languages accessible to new generations without mixing one into
-          another, and without erasing the cultures connected to them.
+          Every language is documented on its own terms, never mixed into
+          another, and never separated from the culture it belongs to. Where AI
+          supports learning, the language knowledge underneath stays tied to
+          real sources.
         </p>
 
         <p className="mt-6 max-w-[760px] text-muted text-base leading-7 tracking-[-0.01em]">
@@ -48,20 +48,20 @@ export default function AboutPage() {
         <div className="mt-16 max-w-[760px] divide-y divide-border border-t border-b border-border">
           {[
             {
-              title: "Isolated lexicons",
-              body: "Structured content with provenance and language context.",
+              title: "One language, one lexicon",
+              body: "Every language and variety is documented separately, with its own sources and context.",
             },
             {
               title: "Cultural responsibility",
-              body: "Community knowledge published with rights and attribution.",
+              body: "Community knowledge is published with rights and attribution, and stays connected to the people who hold it.",
             },
             {
               title: "Evidence before output",
-              body: "Verification keeps claims traceable and auditable.",
+              body: "Every claim is traceable to a source. A missing entry is better than an invented one.",
             },
             {
-              title: "Public API & tooling",
-              body: "Machine-readable access for research, education, and language technology.",
+              title: "Open access",
+              body: "A public API and open datasets for research, education, and language technology.",
             },
           ].map((item) => (
             <div key={item.title} className="py-5 sm:py-6">

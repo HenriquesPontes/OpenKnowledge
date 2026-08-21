@@ -8,7 +8,7 @@ import { fetchLanguagesCatalog } from "@/lib/catalog";
 export const metadata = {
   title: "API Platform",
   description:
-    "API Platform dashboard and live try UI. Full reference is in Documentation.",
+    "Build with attested linguistic data. Manage your API keys and try live requests. The full reference is in Documentation.",
   alternates: { canonical: "/api" },
 };
 
@@ -48,7 +48,8 @@ export default async function ApiPage() {
                 API Platform
               </h1>
               <p className="mt-4 max-w-[480px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-                Keys and live try. Documentation is the source of truth.
+                Build with attested linguistic data. Manage your keys and try
+                live requests — the full reference is in Documentation.
               </p>
             </>
           }

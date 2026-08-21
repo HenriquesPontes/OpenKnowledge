@@ -1,7 +1,7 @@
 export const metadata = {
   title: "About ForroVivo",
   description:
-    "ForroVivo is the platform. It documents, preserves, and structures African Creole languages. Open Knowledge is the public front door.",
+    "ForroVivo documents, preserves, and structures African Creole languages, and makes them accessible to new generations. Open Knowledge is the public home of that work.",
   alternates: { canonical: "/about" },
 };
 

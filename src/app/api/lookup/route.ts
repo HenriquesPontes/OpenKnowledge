@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   if (!DATASET_PATTERN.test(dataset) || !headword) {
     return NextResponse.json(
-      { error: "Choose an isolated lexicon and enter a headword." },
+      { error: "Choose a dictionary and enter a word." },
       { status: 400 },
     );
   }

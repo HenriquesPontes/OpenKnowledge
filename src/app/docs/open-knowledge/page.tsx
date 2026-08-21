@@ -43,13 +43,13 @@ export default function OpenKnowledgeDocsPage() {
           </div>
           <BrowserMockup
             command={apiSection.command}
-            body="Returns isolated lexicons. Counts are per folder."
+            body="Returns every published lexicon with entry counts."
           />
         </div>
       </div>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Build paths
+        Explore
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <a
@@ -60,9 +60,8 @@ export default function OpenKnowledgeDocsPage() {
             API documentation
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            Source of truth for /v1 on {API_ORIGIN.replace("https://", "")}.
-            Full API documentation covers auth, errors, lookup, search, and
-            every route.
+            The source of truth for /v1 on {API_ORIGIN.replace("https://", "")}:
+            authentication, errors, lookup, search, and every route.
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
             Open API documentation →

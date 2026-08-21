@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/images/logo-icon.png",
-    apple: "/images/logo-icon.png",
+    icon: "/images/app/forro-icon.png",
+    apple: "/images/app/forro-icon.png",
   },
   openGraph: {
     type: "website",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/logo-icon.png",
+        url: "/images/app/forro-icon.png",
         alt: "Open Knowledge",
       },
     ],
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     title:
       "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
     description,
-    images: ["/images/logo-icon.png"],
+    images: ["/images/app/forro-icon.png"],
   },
 };
 
@@ -87,7 +87,7 @@ const organizationJsonLd = {
       "@id": `${APP_ORIGIN}/#organization`,
       name: footer.companyName,
       url: APP_ORIGIN,
-      logo: `${APP_ORIGIN}/images/logo-icon.png`,
+      logo: `${APP_ORIGIN}/images/app/forro-icon.png`,
       sameAs: [GITHUB_URL, APP_STORE_URL],
     },
     {

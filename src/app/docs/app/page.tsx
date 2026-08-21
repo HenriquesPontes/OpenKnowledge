@@ -50,7 +50,7 @@ export default function AppDocsPage() {
       </p>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Build paths
+        Explore
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <a
