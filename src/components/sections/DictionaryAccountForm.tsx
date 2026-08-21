@@ -84,9 +84,7 @@ export function DictionaryAccountForm({
               {status === "loading" ? waitlist.joining : waitlist.joinCta}
             </Button>
           </div>
-          <div className="mt-3">
-            <TurnstileWidget onToken={setTurnstileToken} />
-          </div>
+          <TurnstileWidget onToken={setTurnstileToken} />
           {status === "error" ? (
             <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
               {message}

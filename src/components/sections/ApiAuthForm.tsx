@@ -320,7 +320,11 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             </div>
           </div>
 
-          <TurnstileWidget onToken={setTurnstileToken} />
+          <TurnstileWidget
+            theme="light"
+            showLabel
+            onToken={setTurnstileToken}
+          />
           <FieldError message={fieldErrors.turnstile} />
 
           <p className="mt-3 text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
@@ -349,7 +353,11 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
           <FieldError message={fieldErrors.password} />
 
           <div className="mt-3">
-            <TurnstileWidget onToken={setTurnstileToken} />
+            <TurnstileWidget
+              theme="light"
+              showLabel
+              onToken={setTurnstileToken}
+            />
             <FieldError message={fieldErrors.turnstile} />
           </div>
 

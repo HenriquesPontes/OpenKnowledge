@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useLocale } from "@/components/locale/LocaleProvider";
+
+type TurnstileTheme = "light" | "dark";
 
 type TurnstileApi = {
   render: (
     element: HTMLElement,
     options: {
       sitekey: string;
-      theme?: "light" | "dark" | "auto";
+      theme?: TurnstileTheme | "auto";
       size?: "normal" | "compact" | "flexible";
+      language?: string;
       callback?: (token: string) => void;
       "error-callback"?: () => void;
       "expired-callback"?: () => void;
@@ -58,10 +62,15 @@ function loadTurnstileScript() {
 
 export function TurnstileWidget({
   onToken,
+  theme = "dark",
+  showLabel = false,
 }: {
   onToken: (token: string) => void;
+  theme?: TurnstileTheme;
+  showLabel?: boolean;
 }) {
-  const hostId = useId().replace(/:/g, "");
+  const { copy, locale } = useLocale();
+  const hostRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const onTokenRef = useRef(onToken);
   onTokenRef.current = onToken;
@@ -75,13 +84,14 @@ export function TurnstileWidget({
     async function mount() {
       try {
         await loadTurnstileScript();
-        if (cancelled || !window.turnstile) return;
-        const el = document.getElementById(`turnstile-${hostId}`);
-        if (!el || widgetId.current) return;
+        if (cancelled || !window.turnstile || widgetId.current) return;
+        const el = hostRef.current;
+        if (!el) return;
         widgetId.current = window.turnstile.render(el, {
           sitekey: siteKey,
-          theme: "light",
-          size: "compact",
+          theme,
+          size: "flexible",
+          language: locale,
           callback: (token) => onTokenRef.current(token),
           "expired-callback": () => onTokenRef.current(""),
           "error-callback": () => onTokenRef.current(""),
@@ -101,17 +111,23 @@ export function TurnstileWidget({
         } catch {
           /* ignore */
         }
-        widgetId.current = null;
       }
+      widgetId.current = null;
     };
-  }, [hostId, siteKey]);
+  }, [locale, siteKey, theme]);
 
   return (
-    <div className="mt-3">
-      <p className="mb-1.5 text-sm font-semibold tracking-[-0.01em] text-[#141414]">
-        Let us know you are human
-      </p>
-      <div id={`turnstile-${hostId}`} className="min-h-[65px]" />
+    <div className="mt-3 w-full min-w-0">
+      {showLabel ? (
+        <p
+          className={`mb-1.5 text-sm font-semibold tracking-[-0.01em] ${
+            theme === "light" ? "text-[#141414]" : "text-white"
+          }`}
+        >
+          {copy.apiAuth.turnstileLabel}
+        </p>
+      ) : null}
+      <div ref={hostRef} className="min-h-[65px] w-full" />
     </div>
   );
 }
