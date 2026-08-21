@@ -1,12 +1,15 @@
-# Open Knowledge — Technical Report
+# Open Knowledge — Technical Report (v1.0)
 
 **Product:** Open Knowledge  
-**Platform:** ForroVivo  
+**Pillar:** Open Knowledge  
 **Operator:** LIVLU TECHNOLOGIES LTD (registered in England and Wales)  
 **Company website:** livlutechnologies.com (not ready yet)  
 **Repository:** [HenriquesPontes/OpenKnowledge](https://github.com/HenriquesPontes/OpenKnowledge)  
 **Package name:** `open-knowledge`  
-**Report date:** 21 August 2026
+**Report date:** 21 August 2026  
+**Incremental report:** [TECH_REPORT_v2.0.md](TECH_REPORT_v2.0.md)
+
+**Place in LIVLU TECHNOLOGIES:** Individual Open Knowledge team repo. Sister pillars: Learning (ForroVivo App) and Research (datasets + API). Same company goal; separate repos and licences.
 
 This document is the technical report for the Open Knowledge website as implemented in this repository: this Next.js site at `https://forrovivo.com` (`www.forrovivo.com` redirects there). It records routing, stack, waitlist, Beehiiv, dictionary lookup, the `/v1` playground and proxies, API Platform accounts, English/Portuguese locale switching, legal policy pages, and the product documentation hub.
 
@@ -51,7 +54,7 @@ Domain architecture is `forrovivo.com`. Production is served at `https://forrovi
 
 Named on the site: Henriques Pontes (Founder & Project Lead) and Luís Lima (Early Collaborator). Linguistic Research is dated from 23 March 2023.
 
-Licensing, as stated on Legal and Research: third-party dictionaries and papers keep their original licences; project-original material is CC BY 4.0 unless a source page says otherwise.
+Licensing, as stated on Legal: Open Knowledge and the Forro Vivo App are proprietary under the LIVLU TECHNOLOGIES LTD EULA. Open-source licensing applies only to Linguistic Research: third-party dictionaries and papers keep their original licences; Linguistic Research project-original materials are CC BY 4.0 unless a source page says otherwise.
 
 ---
 

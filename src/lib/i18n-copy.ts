@@ -323,7 +323,7 @@ const en = {
     founder:
       "Linguistic research is where ForroVivo began, founded by Henriques Pontes with early collaborator Luís Lima.",
     evidence:
-      "This is the public evidence layer for Forro, Angolar, Lung’Ie, Kabuverdianu island varieties, Guinea-Bissau Kriol, and Umbundu, Kimbundu, and Kikongo of Angola. Every entry should be traceable to a source. Third-party dictionaries and papers keep their original licenses; project-original material is CC BY 4.0.",
+      "This is the public evidence layer for Forro, Angolar, Lung’Ie, Kabuverdianu island varieties, Guinea-Bissau Kriol, and Umbundu, Kimbundu, and Kikongo of Angola. Every entry should be traceable to a source. Third-party dictionaries and papers keep their original licenses. Open-source licensing applies to Linguistic Research project-original materials (CC BY 4.0). This Open Knowledge website is proprietary.",
     methodologyCta: "Methodology",
     bibliographyCta: "Bibliography on GitHub",
   },
@@ -647,7 +647,7 @@ const en = {
       "Fair-use limits apply per client. When a client exceeds the policy the API returns 429 with code RATE_LIMITED and Retry-After. Always read RateLimit-Policy on the response rather than hard-coding a budget. Health and OpenAPI paths stay exempt.",
     attributionTitle: "Source attribution",
     attributionBody:
-      "Every linguistic claim stays tied to a cited source. Lookup envelopes include an attribution object (dataset, GitHub tree, sources path, license). Each entry carries source and graph.documented_by when present. Project materials are CC BY 4.0. Source extracts keep their original terms.",
+      "Every linguistic claim stays tied to a cited source. Lookup envelopes include an attribution object (dataset, GitHub tree, sources path, license). Each entry carries source and graph.documented_by when present. Linguistic Research project materials are CC BY 4.0. Source extracts keep their original terms. This website remains proprietary under the LIVLU EULA.",
     paginationTitle: "Pagination",
     paginationBody:
       "List routes such as entries accept offset (default 0) and limit. Stay within the server’s accepted range; oversized values are clamped. Responses include the page of items for that dataset only.",
@@ -839,7 +839,7 @@ const en = {
       "This licence does not transfer ownership of ForroVivo software, marks, or project-original materials. Platform stores may grant additional rights or limits for apps you download through them.",
     researchTitle: "Linguistic Research materials",
     researchP1:
-      "Published Linguistic Research materials are provided for research and education. Third-party dictionaries and papers keep their original licences. Project-original material is published under CC BY 4.0 unless a source page says otherwise. Attribution should remain intact where CC BY 4.0 applies.",
+      "Published Linguistic Research materials are provided for research and education. Third-party dictionaries and papers keep their original licences. Linguistic Research project-original material is published under CC BY 4.0 unless a source page says otherwise. Attribution should remain intact where CC BY 4.0 applies. The Open Knowledge website and the Forro Vivo App remain proprietary under this EULA and are not open source.",
     researchP2:
       "Dataset isolation is part of the licence conditions for research use: do not merge, invent, or substitute lexical forms across languages or varieties and then present them as ForroVivo-attested evidence. Missing data must remain missing rather than guessed.",
     appTitle: "Forro Vivo App",
@@ -1122,7 +1122,7 @@ const pt: SiteCopy = {
       },
       {
         title: "Licenças",
-        body: "Dicionários e artigos de terceiros mantêm as suas licenças originais. Material original do projecto é publicado sob CC BY 4.0, salvo indicação em contrário numa página de fonte. O nome ForroVivo e marcas relacionadas são usados pela LIVLU TECHNOLOGIES LTD.",
+        body: "Dicionários e artigos de terceiros mantêm as suas licenças originais. A licença open source aplica-se aos materiais originais de Linguistic Research (CC BY 4.0, salvo indicação em contrário numa página de fonte). Este website Open Knowledge e a Forro Vivo App são proprietários sob o EULA da LIVLU TECHNOLOGIES LTD. O nome ForroVivo e marcas relacionadas são usados pela LIVLU TECHNOLOGIES LTD.",
         href: "/legal",
         linkLabel: "Legal",
       },
@@ -1771,7 +1771,7 @@ const pt: SiteCopy = {
     founder:
       "A investigação linguística é onde o ForroVivo começou, fundado por Henriques Pontes com o colaborador inicial Luís Lima.",
     evidence:
-      "Esta é a camada pública de evidência para Forro, Angolar, Lung’Ie, variedades insulares de Kabuverdianu, Kriol da Guiné-Bissau, e Umbundu, Kimbundu e Kikongo de Angola. Cada entrada deve ser rastreável até uma fonte. Dicionários e artigos de terceiros mantêm as suas licenças originais; material original do projecto é CC BY 4.0.",
+      "Esta é a camada pública de evidência para Forro, Angolar, Lung’Ie, variedades insulares de Kabuverdianu, Kriol da Guiné-Bissau, e Umbundu, Kimbundu e Kikongo de Angola. Cada entrada deve ser rastreável até uma fonte. Dicionários e artigos de terceiros mantêm as suas licenças originais. A licença open source aplica-se aos materiais originais de Linguistic Research (CC BY 4.0). Este website Open Knowledge é proprietário.",
     methodologyCta: "Metodologia",
     bibliographyCta: "Bibliografia no GitHub",
   },
@@ -2098,7 +2098,7 @@ const pt: SiteCopy = {
       "Aplicam-se limites de uso justo por cliente. Quando um cliente excede a política, a API devolve 429 com o código RATE_LIMITED e Retry-After. Leia sempre RateLimit-Policy na resposta em vez de codificar um orçamento. Os caminhos de saúde e OpenAPI permanecem isentos.",
     attributionTitle: "Atribuição de fontes",
     attributionBody:
-      "Cada afirmação linguística permanece ligada a uma fonte citada. Os envelopes de consulta incluem um objecto attribution (conjunto de dados, árvore GitHub, caminho de fontes, licença). Cada entrada transporta source e graph.documented_by quando presentes. Materiais do projecto são CC BY 4.0. Extractos de fontes mantêm os seus termos originais.",
+      "Cada afirmação linguística permanece ligada a uma fonte citada. Os envelopes de consulta incluem um objecto attribution (conjunto de dados, árvore GitHub, caminho de fontes, licença). Cada entrada transporta source e graph.documented_by quando presentes. Materiais originais de Linguistic Research são CC BY 4.0. Extractos de fontes mantêm os seus termos originais. Este website permanece proprietário sob o EULA da LIVLU.",
     paginationTitle: "Paginação",
     paginationBody:
       "Rotas de lista como entries aceitam offset (predefinição 0) e limit. Permaneça dentro do intervalo aceite pelo servidor; valores excessivos são limitados. As respostas incluem a página de itens apenas desse conjunto de dados.",
@@ -2293,7 +2293,7 @@ const pt: SiteCopy = {
       "Esta licença não transfere a propriedade do software ForroVivo, das marcas ou dos materiais originais do projecto. As lojas de plataforma podem conceder direitos ou limites adicionais para aplicações que descarregue através delas.",
     researchTitle: "Materiais de Linguistic Research",
     researchP1:
-      "Os materiais publicados de Linguistic Research são fornecidos para investigação e educação. Dicionários e artigos de terceiros mantêm as suas licenças originais. Material original do projecto é publicado sob CC BY 4.0, salvo indicação em contrário numa página de fonte. A atribuição deve permanecer intacta onde se aplica CC BY 4.0.",
+      "Os materiais publicados de Linguistic Research são fornecidos para investigação e educação. Dicionários e artigos de terceiros mantêm as suas licenças originais. Material original de Linguistic Research é publicado sob CC BY 4.0, salvo indicação em contrário numa página de fonte. A atribuição deve permanecer intacta onde se aplica CC BY 4.0. O website Open Knowledge e a Forro Vivo App permanecem proprietários sob este EULA e não são open source.",
     researchP2:
       "O isolamento de conjuntos de dados faz parte das condições de licença para uso de investigação: não funda, invente ou substitua formas lexicais entre línguas ou variedades e depois as apresente como evidência atestada pelo ForroVivo. Dados em falta devem permanecer em falta em vez de serem adivinhados.",
     appTitle: "Forro Vivo App",

@@ -1,12 +1,37 @@
 # ForroVivo
 ## African Creole Knowledge & Language Technology Project
 
-**Document:** Product brand story
+**Document:** Product brand story  
+**Operator:** LIVLU TECHNOLOGIES LTD  
+**Structure:** Three individual team pillars, one goal — Open Knowledge · Learning · Research
 
-The public website wordmark and metadata title are **Open Knowledge**. ForroVivo is the platform. LIVLU TECHNOLOGIES LTD is the operator.
+The public website wordmark and metadata title are **Open Knowledge**. LIVLU TECHNOLOGIES LTD is the operator.
 
-> Open linguistic research. Open knowledge. Open technology.
+> Open linguistic research (Research pillar). Public knowledge site. Learning apps.  
 > Building a digital foundation for African Creole languages.
+
+---
+
+## Place in LIVLU TECHNOLOGIES
+
+```
+                    LIVLU TECHNOLOGIES
+                           │
+              ┌────────────┼────────────┐
+              ↓            ↓            ↓
+        Open Knowledge   Learning     Research
+              │            │            │
+              ↓            ↓            ↓
+            API       ForroVivo App   Datasets
+```
+
+| Pillar | What it is | Licence |
+|--------|------------|---------|
+| **Open Knowledge** | Public site, docs hub, API playground at forrovivo.com | Proprietary (EULA) |
+| **Learning** | ForroVivo App (iOS + Android), sister native clients | Proprietary (EULA) |
+| **Research** | Attested datasets + `api.forrovivo.com` | Open — CC BY 4.0 (+ source terms) |
+
+Each pillar is an individual repository and team surface. Same company goal; separate code and release cadence. Forro Connect is an Open Knowledge product surface (`/connect`), not a fourth pillar.
 
 ---
 
@@ -14,15 +39,15 @@ The public website wordmark and metadata title are **Open Knowledge**. ForroVivo
 
 ## What is ForroVivo?
 
-ForroVivo is an open research and technology initiative dedicated to documenting, preserving, structuring and expanding access to the linguistic and cultural knowledge of African Creole and contact languages.
+ForroVivo is the product name used across LIVLU TECHNOLOGIES’ three pillars: documenting, preserving, structuring, and expanding access to the linguistic and cultural knowledge of African Creole and contact languages.
 
-The project began in 2023 with a focus on Forro, the Creole language of São Tomé and Príncipe.
+The work began in 2023 with a focus on Forro, the Creole language of São Tomé and Príncipe.
 
 The original idea was to use technology to make Forro easier to learn and preserve for future generations.
 
 The project has since evolved into a broader vision:
 
-> Build an open linguistic knowledge infrastructure for African Creole languages that can support language preservation, education, research, AI, NLP and machine translation.
+> Build linguistic knowledge infrastructure for African Creole languages that can support language preservation, education, research, AI, NLP and machine translation — with **open attested Research data**, and proprietary Learning and Open Knowledge products.
 
 ForroVivo is not only a dictionary.
 
@@ -32,13 +57,13 @@ It is not only a machine translation project.
 
 It is an ecosystem combining:
 
-- Open linguistic knowledge
+- Open linguistic knowledge (Research datasets — open licence)
 - Cultural knowledge
 - Research data
 - Structured datasets
-- Language-learning technology
+- Language-learning technology (Learning apps — proprietary)
 - Human language teaching
-- Developer APIs
+- Developer APIs (via Open Knowledge playground + Research host)
 - AI/NLP research
 - Machine translation
 - Community economic opportunities
@@ -126,7 +151,7 @@ He leads:
 - Research structure
 - Data architecture
 - AI strategy
-- Open-source development
+- Open-source development for the Research pillar (datasets / API)
 - Platform development
 
 His work combines technology, AI and digital preservation with a focus on underrepresented languages.
@@ -259,15 +284,18 @@ Each variety is its own folder. Lookup and search stay inside one named dataset.
 
 Domain architecture is **forrovivo.com**.
 
-ForroVivo is a product family operated by LIVLU TECHNOLOGIES LTD. The public product domain is `forrovivo.com`. Production is served at `https://forrovivo.com`. `https://www.forrovivo.com` redirects there. Other properties are not the domain architecture.
+LIVLU TECHNOLOGIES LTD operates three individual pillars toward one goal. The public product domain is `forrovivo.com`. Production is served at `https://forrovivo.com`. `https://www.forrovivo.com` redirects there. Other properties are not the domain architecture.
 
 ```text
-FORROVIVO.COM
-├── Open Knowledge (this Next.js site)
-└── Connect (learners with native speakers; waitlist at /connect)
+LIVLU TECHNOLOGIES
+├── Open Knowledge  → forrovivo.com (this Next.js site)
+│                     ├── API playground / docs → developers → AI / NLP / MT
+│                     └── Connect waitlist at /connect
+├── Learning        → ForroVivo App (App Store + Android; separate repos)
+└── Research        → Datasets + https://api.forrovivo.com (open licence)
 ```
 
-The Forro Vivo App is on the App Store. It is not this domain.
+The Forro Vivo App is on the App Store (and Android in its Learning repo). It is not this website codebase.
 
 The Linguistic Research API is at `https://api.forrovivo.com`.
 

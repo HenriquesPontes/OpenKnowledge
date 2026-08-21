@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
       { source: "/foundation", destination: "/dictionaries", permanent: true },
       { source: "/dictionaries/login", destination: "/api/login", permanent: true },
       { source: "/docs/api", destination: "/docs/api-reference", permanent: true },
+      { source: "/privacy", destination: "/legal/privacy", permanent: true },
+      { source: "/terms", destination: "/legal/terms", permanent: true },
     ];
   },
 };

@@ -1,13 +1,29 @@
 # Open Knowledge
 
-> Public linguistic knowledge site for **ForroVivo**, operated by **LIVLU TECHNOLOGIES LTD**. Isolated Creole lexicons, attested sources, and a public API — no AI-generated text treated as linguistic evidence.
+> **LIVLU TECHNOLOGIES** · **Open Knowledge** pillar  
+> Public linguistic knowledge site operated by **LIVLU TECHNOLOGIES LTD**. Isolated Creole lexicons, attested sources, and a developer API surface — no AI-generated text treated as linguistic evidence.
 
-> Live site: [forrovivo.com](https://forrovivo.com) (`www.forrovivo.com` redirects there). The wordmark and metadata title are Open Knowledge. ForroVivo is the platform.
+> Live site: [forrovivo.com](https://forrovivo.com) (`www.forrovivo.com` redirects there). The wordmark and metadata title are Open Knowledge.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-blue)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org)
-[![License](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey)](https://forrovivo.com/legal/eula)
+[![License](https://img.shields.io/badge/License-Proprietary-important)](LICENSE)
+
+---
+
+## Place in LIVLU TECHNOLOGIES
+
+Individual team project. One company goal with Learning and Research.
+
+```
+LIVLU TECHNOLOGIES
+├── Open Knowledge  ← this repository (site → API → developers → AI / NLP / MT)
+├── Learning        → ForroVivo App (separate repos)
+└── Research        → Datasets + api.forrovivo.com (separate repo)
+```
+
+Lexical data is **not** stored here. Sister projects keep their own git history, license, and release cadence.
 
 ---
 
@@ -32,10 +48,10 @@ Curl and other clients call [https://api.forrovivo.com](https://api.forrovivo.co
 ### Developers
 - 🔌 **API playground** — Same-origin `/api/v1` explorer. Curl examples target `api.forrovivo.com`.
 - 🔑 **API Platform** — Email and password accounts, signed session, optional key issue. Public GET still works without a key.
-- 📚 **Docs hub** — Open Knowledge, Forro Vivo App, and Forro Connect. Full Linguistic Research contract at `/docs/api-reference`.
+- 📚 **Docs hub** — Open Knowledge, Forro Vivo App (Learning), and Forro Connect. Full Research API contract at `/docs/api-reference`.
 
-### Product family
-- 📱 **Forro Vivo App** — Learning product on the App Store. Product page at `/app`.
+### Sister products (other pillars)
+- 📱 **Learning — Forro Vivo App** — App Store product page at `/app`.
 - 🤝 **Forro Connect** — Learners with native speakers. Waitlist on `/connect`.
 - 🌐 **English / Portuguese** — Locale cookie `fv_locale`. Switcher in the footer.
 
@@ -131,15 +147,15 @@ On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials
 
 ---
 
-## 🔗 Related products
+## 🔗 Related projects (same goal, separate teams)
 
-| Product | Role |
-|---------|------|
-| Open Knowledge | This website. Playground at `/api`. |
-| Linguistic Research API | `https://api.forrovivo.com` |
-| Linguistic Research repo | Isolated datasets and methodology |
-| Forro Vivo App | App Store. Product page at `/app` |
-| Forro Connect | Learners with native speakers. Waitlist on `/connect` |
+| Pillar | Project | Role |
+|--------|---------|------|
+| **Open Knowledge** | This website | Site, docs hub, API playground at `/api` |
+| **Research** | Linguistic Research API | `https://api.forrovivo.com` |
+| **Research** | Linguistic Research repo | Isolated datasets and methodology |
+| **Learning** | Forro Vivo App | App Store. Product page at `/app` |
+| Open Knowledge surface | Forro Connect | Learners with native speakers. Waitlist on `/connect` |
 
 livlutechnologies.com is the planned company website. It is not ready yet.
 
@@ -181,7 +197,19 @@ Pull requests are welcome. For major changes, open an issue first.
 
 ## 📄 License
 
-Project-original material is CC BY 4.0 unless a source page says otherwise. Third-party dictionaries and papers keep their original licences. See [Legal](https://forrovivo.com/legal/eula).
+**Operator:** LIVLU TECHNOLOGIES LTD · **Pillar:** Open Knowledge  
+
+This website and repository are **proprietary**. They are **not** open source. See [LICENSE](LICENSE) and the [EULA](https://forrovivo.com/legal/eula).
+
+**Open source applies only to the Research pillar** (Linguistic Research datasets and project-original materials: CC BY 4.0 + source terms). Linking to or displaying that data here does not relicense this site.
+
+## Legal & contact
+
+- Company: [forrovivo.com/legal/company](https://www.forrovivo.com/legal/company)
+- Terms: [forrovivo.com/legal/terms](https://www.forrovivo.com/legal/terms)
+- Privacy: [forrovivo.com/legal/privacy](https://www.forrovivo.com/legal/privacy)
+- EULA: [forrovivo.com/legal/eula](https://www.forrovivo.com/legal/eula)
+- Contact: support@forrovivo.com | geral@forrovivo.com
 
 ---
 

@@ -4,6 +4,10 @@
 > Version: v2.0 (Feature Complete)
 > Based on: v1.0 → v2.0 Incremental Iteration
 > Project Path: `<project-root>/Open knowledge/`
+> Product: Open Knowledge
+> Pillar: Open Knowledge
+> Operator: LIVLU TECHNOLOGIES LTD
+> Team note: Individual Open Knowledge repo; Learning and Research stay separate
 
 ---
 
@@ -234,7 +238,7 @@ Dictionary search still loads the map with `next/dynamic` and `ssr: false`. Home
 | `/legal/company` | LIVLU TECHNOLOGIES LTD and the product family |
 | `/legal/terms` | Terms of service |
 | `/legal/privacy` | Waitlists, accounts, product data |
-| `/legal/eula` | Licence for the site and research materials |
+| `/legal/eula` | Licence for the site and ForroVivo software products (Learning apps). Research datasets stay under the Research repo licence (CC BY 4.0 + source terms). |
 
 `/careers` and `/careers/[id]` describe roles. They are in `sitemap.ts`. Careers is **not** in the Company mega-menu (About, GitHub, Legal only).
 

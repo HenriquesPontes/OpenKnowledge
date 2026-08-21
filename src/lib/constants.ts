@@ -825,7 +825,7 @@ export const appCredits = {
     },
     {
       title: "Licences",
-      body: "Third-party dictionaries and papers keep their original licences. Project-original material is published under CC BY 4.0 unless a source page says otherwise. The ForroVivo name and related marks are used by LIVLU TECHNOLOGIES LTD.",
+      body: "Third-party dictionaries and papers keep their original licences. Open-source licensing applies to Linguistic Research project-original materials (CC BY 4.0 unless a source page says otherwise). This Open Knowledge website and the Forro Vivo App are proprietary under the LIVLU TECHNOLOGIES LTD EULA. The ForroVivo name and related marks are used by LIVLU TECHNOLOGIES LTD.",
       href: "/legal",
       linkLabel: "Legal",
     },
