@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateAccount } from "@/lib/api-accounts";
 import {
+  API_SESSION_SECRET_REQUIRED,
   clearApiSession,
   createApiSession,
   isValidEmail,
@@ -11,6 +12,8 @@ import {
 
 const INVALID_EMAIL = "A valid email address is required.";
 const INVALID_CREDENTIALS = "Email or password is incorrect.";
+const SESSION_SECRET_MISSING =
+  "API Platform sessions are not configured on this host.";
 
 export async function GET() {
   const session = await readApiSession();
@@ -76,7 +79,16 @@ export async function POST(request: NextRequest) {
       email: session.email,
       key_prefix: session.key_prefix ?? null,
     });
-  } catch {
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === API_SESSION_SECRET_REQUIRED
+    ) {
+      return NextResponse.json(
+        { error: SESSION_SECRET_MISSING },
+        { status: 503 },
+      );
+    }
     return NextResponse.json(
       { error: "Could not start an API Platform session." },
       { status: 500 },

@@ -92,10 +92,12 @@ export function registrationCodes(): string[] {
 
 export function validateRegistrationCode(code: string): string | null {
   const trimmed = code.trim();
-  if (!trimmed) return null;
+  if (!trimmed) {
+    return "A registration code is required.";
+  }
   const allowed = registrationCodes();
   if (allowed.length === 0) {
-    return "Registration codes are not enabled yet.";
+    return "Registration is closed. Contact support for an invite code.";
   }
   if (!allowed.includes(trimmed)) {
     return "That registration code is not valid.";
@@ -113,9 +115,10 @@ export async function createAccount(input: {
   if (passwordError) return { error: passwordError, status: 400 };
 
   const code = input.registrationCode?.trim() || "";
-  if (code) {
-    const codeError = validateRegistrationCode(code);
-    if (codeError) return { error: codeError, status: 400 };
+  const codeError = validateRegistrationCode(code);
+  if (codeError) {
+    const status = registrationCodes().length === 0 ? 503 : 400;
+    return { error: codeError, status };
   }
 
   try {
@@ -127,7 +130,7 @@ export async function createAccount(input: {
       email,
       password_hash: hashPassword(input.password),
       created_at: new Date().toISOString(),
-      registration_code: code || undefined,
+      registration_code: code,
     };
     await writeAccounts([...accounts, account]);
     return { account };

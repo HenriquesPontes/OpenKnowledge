@@ -14,6 +14,7 @@ import {
   connectArchitecture as connectArchitectureEn,
   connectIncome as connectIncomeEn,
   productOverview as productOverviewEn,
+  productRoadmap as productRoadmapEn,
   translationArchitecture as translationArchitectureEn,
   translationPage as translationPageEn,
   docsProducts as docsProductsEn,
@@ -160,6 +161,14 @@ function copyProductOverview() {
   };
 }
 
+function copyProductRoadmap() {
+  return {
+    title: productRoadmapEn.title,
+    description: productRoadmapEn.description,
+    steps: productRoadmapEn.steps.map((step) => ({ ...step })),
+  };
+}
+
 function copyTranslationArchitecture() {
   return {
     title: translationArchitectureEn.title,
@@ -263,6 +272,7 @@ const en = {
     incomeCta: "Community income breakdown",
   },
   productOverview: copyProductOverview(),
+  productRoadmap: copyProductRoadmap(),
   translationArchitecture: copyTranslationArchitecture(),
   translationPage: copyTranslationPage(),
   docsProducts: copyDocsProducts(),
@@ -451,6 +461,7 @@ const en = {
     emailRequired: "Email cannot be blank.",
     passwordRequired: "Password cannot be blank.",
     passwordMismatch: "Passwords do not match.",
+    registrationCodeRequired: "A registration code is required.",
     turnstileRequired: "Complete the human verification challenge.",
     invalidValue: "Invalid value.",
     couldNotContinue: "Could not continue.",
@@ -1484,6 +1495,54 @@ const pt: SiteCopy = {
       },
     ],
   },
+  productRoadmap: {
+    title: "Roteiro de produto",
+    description:
+      "Da investigação linguística em 2023 a uma família de produtos: línguas documentadas, uma aplicação de aprendizagem, uma API para programadores e lições ao vivo com falantes nativos.",
+    steps: [
+      {
+        label: "Fundação",
+        date: "23 de Março de 2023",
+        description:
+          "Começa a investigação linguística. Fundador: Henriques Pontes. Colaborador inicial: Luís Lima.",
+        href: "/research",
+      },
+      {
+        label: "Open Knowledge",
+        date: "Público",
+        description:
+          "Léxicos isolados, fontes atestadas e a Linguistic Research API pública.",
+        href: "/languages",
+      },
+      {
+        label: "Forro Vivo App",
+        date: "App Store",
+        description:
+          "Dicionário, academia e lições. A primeira aplicação de aprendizagem para línguas crioulas africanas.",
+        href: "/app",
+      },
+      {
+        label: "API Platform",
+        date: "Programadores",
+        description:
+          "Contas, chaves e um explorador em directo sobre os mesmos dados atestados.",
+        href: "/api",
+      },
+      {
+        label: "Forro Connect",
+        date: "Lista de espera",
+        description:
+          "Aprendizes com falantes nativos. Lições ao vivo e rendimento comunitário.",
+        href: "/connect",
+      },
+      {
+        label: "A seguir",
+        date: "Em curso",
+        description:
+          "Voz e áudio na aplicação de aprendizagem. Lições ao vivo no Connect. Mais línguas, cada uma nos seus próprios termos.",
+      },
+    ],
+  },
   translationArchitecture: {
     title: "Evidência antes dos modelos",
     description:
@@ -2007,6 +2066,7 @@ const pt: SiteCopy = {
     documentation: "Documentação",
     emailRequired: "O email não pode ficar em branco.",
     passwordRequired: "A palavra-passe não pode ficar em branco.",
+    registrationCodeRequired: "É necessário um código de registo.",
     passwordMismatch: "As palavras-passe não coincidem.",
     turnstileRequired: "Conclua o desafio de verificação humana.",
     invalidValue: "Valor inválido.",

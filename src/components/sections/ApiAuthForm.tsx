@@ -118,6 +118,9 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       } else if (password !== passwordConfirm) {
         nextErrors.passwordConfirm = t.passwordMismatch;
       }
+      if (!registrationCode.trim()) {
+        nextErrors.registrationCode = t.registrationCodeRequired;
+      }
       if (!turnstileToken) {
         nextErrors.turnstile = t.turnstileRequired;
       }
@@ -219,14 +222,17 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             htmlFor="api-auth-code"
             className="mt-3 block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
           >
-            {t.registrationCode}
+            {t.registrationCode}{" "}
+            <span className="text-[#e11d48]" aria-hidden="true">
+              *
+            </span>
           </label>
           <div className="mt-1.5 flex overflow-hidden rounded-md border border-[#cfcfcf] focus-within:border-[#2563eb] focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.18)]">
             <input
               id="api-auth-code"
               type="text"
               autoComplete="off"
-              placeholder={t.optional}
+              placeholder={t.registrationCodeRequired}
               value={registrationCode}
               onChange={(event) => {
                 setRegistrationCode(event.target.value);
@@ -235,6 +241,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               }}
               disabled={status === "loading" || codeStatus === "loading"}
               className="h-9 min-w-0 flex-1 border-0 bg-white px-3 text-sm tracking-[-0.01em] text-[#141414] outline-none placeholder:text-[#9a9a9a] disabled:opacity-50"
+              aria-invalid={Boolean(fieldErrors.registrationCode)}
             />
             <button
               type="button"
@@ -249,6 +256,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               {codeStatus === "loading" ? "…" : t.apply}
             </button>
           </div>
+          <FieldError message={fieldErrors.registrationCode} />
           {codeMessage ? (
             <p
               className={`mt-1 text-sm tracking-[-0.01em] ${

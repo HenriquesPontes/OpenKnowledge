@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 
 export const API_SESSION_COOKIE = "fv_api_session";
+export const API_SESSION_SECRET_REQUIRED = "API_SESSION_SECRET_REQUIRED";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SESSION_DAYS = 30;
 
@@ -11,20 +12,43 @@ export type ApiSession = {
   key_prefix?: string;
 };
 
-function sessionSecret() {
-  return (
-    process.env.API_SESSION_SECRET ||
-    process.env.BEEHIIV_API_KEY ||
-    "forrovivo-local-api-session"
-  );
+function isProductionRuntime() {
+  return process.env.NODE_ENV === "production" || Boolean(process.env.VERCEL);
+}
+
+/**
+ * Production/Vercel must set API_SESSION_SECRET. Local-only fallback is for
+ * development machines without env; Beehiiv keys are never reused for sessions.
+ */
+function sessionSecret(): string | null {
+  const configured = process.env.API_SESSION_SECRET?.trim();
+  if (configured) return configured;
+  if (isProductionRuntime()) return null;
+  return "forrovivo-local-api-session";
+}
+
+export function isApiSessionSecretConfigured() {
+  return sessionSecret() !== null;
+}
+
+function requireSessionSecret(): string {
+  const secret = sessionSecret();
+  if (!secret) {
+    throw new Error(API_SESSION_SECRET_REQUIRED);
+  }
+  return secret;
 }
 
 function sign(payload: string) {
-  return createHmac("sha256", sessionSecret()).update(payload).digest("base64url");
+  return createHmac("sha256", requireSessionSecret())
+    .update(payload)
+    .digest("base64url");
 }
 
 function encodeSession(session: ApiSession) {
-  const payload = Buffer.from(JSON.stringify(session), "utf8").toString("base64url");
+  const payload = Buffer.from(JSON.stringify(session), "utf8").toString(
+    "base64url",
+  );
   return `${payload}.${sign(payload)}`;
 }
 
@@ -98,7 +122,12 @@ export function serializeApiSession(session: ApiSession) {
 
 export function parseApiSession(token: string | undefined) {
   if (!token) return null;
-  return decodeSession(token);
+  if (!sessionSecret()) return null;
+  try {
+    return decodeSession(token);
+  } catch {
+    return null;
+  }
 }
 
 export async function readApiSession() {
@@ -110,6 +139,7 @@ export async function writeApiSession(
   session: ApiSession,
   options?: { remember?: boolean },
 ) {
+  requireSessionSecret();
   const jar = await cookies();
   const maxAge = options?.remember === false ? 60 * 60 * 12 : undefined;
   jar.set(

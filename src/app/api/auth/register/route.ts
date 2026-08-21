@@ -4,6 +4,7 @@ import {
   validateRegistrationCode,
 } from "@/lib/api-accounts";
 import {
+  API_SESSION_SECRET_REQUIRED,
   createApiSession,
   isValidEmail,
   normalizeEmail,
@@ -12,6 +13,14 @@ import {
 import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const INVALID_EMAIL = "A valid email address is required.";
+const SESSION_SECRET_MISSING =
+  "API Platform sessions are not configured on this host.";
+
+function sessionConfigError(error: unknown) {
+  return (
+    error instanceof Error && error.message === API_SESSION_SECRET_REQUIRED
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,6 +77,22 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+    if (!registrationCode.trim()) {
+      return NextResponse.json(
+        {
+          error: "A registration code is required.",
+          field: "registrationCode",
+        },
+        { status: 400 },
+      );
+    }
+    const codeError = validateRegistrationCode(registrationCode);
+    if (codeError) {
+      return NextResponse.json(
+        { error: codeError, field: "registrationCode" },
+        { status: codeError.includes("closed") ? 503 : 400 },
+      );
+    }
 
     const challenge = await verifyTurnstileToken(
       turnstileToken,
@@ -88,7 +113,14 @@ export async function POST(request: NextRequest) {
     });
     if ("error" in created) {
       return NextResponse.json(
-        { error: created.error },
+        {
+          error: created.error,
+          field:
+            created.error.toLowerCase().includes("registration code") ||
+            created.error.toLowerCase().includes("invite")
+              ? "registrationCode"
+              : undefined,
+        },
         { status: created.status },
       );
     }
@@ -100,7 +132,13 @@ export async function POST(request: NextRequest) {
       email: session.email,
       key_prefix: null,
     });
-  } catch {
+  } catch (error) {
+    if (sessionConfigError(error)) {
+      return NextResponse.json(
+        { error: SESSION_SECRET_MISSING },
+        { status: 503 },
+      );
+    }
     return NextResponse.json(
       { error: "Could not create an API Platform account." },
       { status: 500 },
@@ -123,7 +161,10 @@ export async function PUT(request: NextRequest) {
     }
     const error = validateRegistrationCode(code);
     if (error) {
-      return NextResponse.json({ error }, { status: 400 });
+      return NextResponse.json(
+        { error },
+        { status: error.includes("closed") ? 503 : 400 },
+      );
     }
     return NextResponse.json({ ok: true });
   } catch {

@@ -139,9 +139,9 @@ Lint: `npm run lint`.
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. Production is served at `https://forrovivo.com`. |
 | `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
 | `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
-| `API_SESSION_SECRET` | Server. Signs API Platform dashboard sessions. |
+| `API_SESSION_SECRET` | Server. **Required in production.** Signs API Platform dashboard sessions (no Beehiiv / hardcoded fallback). |
 | `KEYS_ISSUE_SECRET` | Server. Shared with the Research Worker for server-to-server `POST /v1/keys` (must match Worker secret). |
-| `API_REGISTRATION_CODES` | Server. Optional comma-separated registration codes for `/api/register`. |
+| `API_REGISTRATION_CODES` | Server. Comma-separated invite codes. Registration is closed if unset or empty. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public. Cloudflare Turnstile site key for create-account. |
 | `TURNSTILE_SECRET_KEY` | Server. Cloudflare Turnstile secret for siteverify. |
 

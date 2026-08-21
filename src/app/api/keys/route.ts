@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { setAccountKeyPrefix } from "@/lib/api-accounts";
 import { fetchResearchApi } from "@/lib/catalog";
 import {
+  API_SESSION_SECRET_REQUIRED,
   createApiSession,
   readApiSession,
   writeApiSession,
@@ -11,6 +12,8 @@ const GENERIC_ERROR = "The API could not issue a key. Please try again.";
 const UNAUTHORIZED = "Log in to the API Platform to get a key.";
 const ISSUE_NOT_CONFIGURED =
   "Key issuance is not configured. Set KEYS_ISSUE_SECRET for this site.";
+const SESSION_SECRET_MISSING =
+  "API Platform sessions are not configured on this host.";
 
 /** Shared with the Research Worker (`KEYS_ISSUE_SECRET` / X-ForroVivo-Keys-Issue). */
 function keysIssueSecret() {
@@ -79,6 +82,15 @@ export async function POST() {
       { status: 201 },
     );
   } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === API_SESSION_SECRET_REQUIRED
+    ) {
+      return NextResponse.json(
+        { error: SESSION_SECRET_MISSING },
+        { status: 503 },
+      );
+    }
     console.error("API key issue failed:", error);
     return NextResponse.json({ error: GENERIC_ERROR }, { status: 502 });
   }
