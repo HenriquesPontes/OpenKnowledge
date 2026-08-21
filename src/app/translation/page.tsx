@@ -75,10 +75,10 @@ export default function TranslationCapabilityPage() {
                 <div className="mt-auto pt-8">
                   <dl className="border-t border-border pt-4">
                     <div className="flex items-baseline justify-between gap-4">
-                      <dt className="text-[11px] tracking-[0.08em] uppercase text-muted">
+                      <dt className="text-xs tracking-[0.08em] uppercase text-muted">
                         Surface
                       </dt>
-                      <dd className="text-[13px] tracking-[-0.01em] text-white text-right">
+                      <dd className="text-sm tracking-[-0.01em] text-white text-right">
                         {card.surface}
                       </dd>
                     </div>
@@ -109,7 +109,7 @@ export default function TranslationCapabilityPage() {
                     href={item.href}
                     className="flex flex-col gap-1 py-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm"
                   >
-                    <span className="text-[12px] tracking-[-0.01em] text-muted">
+                    <span className="text-sm tracking-[-0.01em] text-muted">
                       {item.heading}
                     </span>
                     <span className="font-heading text-xl sm:text-2xl text-white tracking-[-0.02em] group-hover:underline underline-offset-4">

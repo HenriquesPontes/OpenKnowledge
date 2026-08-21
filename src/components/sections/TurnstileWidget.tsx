@@ -108,7 +108,7 @@ export function TurnstileWidget({
 
   return (
     <div className="mt-3">
-      <p className="mb-1.5 text-[12px] font-semibold tracking-[-0.01em] text-[#141414]">
+      <p className="mb-1.5 text-sm font-semibold tracking-[-0.01em] text-[#141414]">
         Let us know you are human
       </p>
       <div id={`turnstile-${hostId}`} className="min-h-[65px]" />

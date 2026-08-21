@@ -28,7 +28,7 @@ function Node({
         {label}
       </span>
       {date ? (
-        <span className="mt-1 block text-muted text-[11px] sm:text-xs tracking-[0.04em] uppercase">
+        <span className="mt-1 block text-muted text-xs tracking-[0.04em] uppercase">
           {date}
         </span>
       ) : null}

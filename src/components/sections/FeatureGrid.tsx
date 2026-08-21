@@ -716,7 +716,7 @@ export function ResearchStudio({
             />
             <div className="space-y-8">
               <div>
-                <p className="text-muted text-[11px] tracking-[0.08em] uppercase mb-3">
+                <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
                   Most documented
                 </p>
                 <ul className="space-y-2">
@@ -738,7 +738,7 @@ export function ResearchStudio({
                 </ul>
               </div>
               <div>
-                <p className="text-muted text-[11px] tracking-[0.08em] uppercase mb-3">
+                <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
                   Least documented
                 </p>
                 <ul className="space-y-2">
@@ -760,7 +760,7 @@ export function ResearchStudio({
                 </ul>
               </div>
               <div>
-                <p className="text-muted text-[11px] tracking-[0.08em] uppercase mb-3">
+                <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
                   Entries by country
                 </p>
                 <ul className="space-y-2">

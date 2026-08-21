@@ -19,7 +19,7 @@ export function BrowserMockup({
         <p className="text-muted text-sm sm:text-base tracking-[-0.01em] break-all">
           <span className="text-white">$</span> {command}
         </p>
-        <pre className="mt-5 text-[13px] sm:text-sm leading-relaxed text-[#cfcfcf] tracking-[-0.01em] whitespace-pre-wrap break-words">
+        <pre className="mt-5 text-sm leading-relaxed text-[#cfcfcf] tracking-[-0.01em] whitespace-pre-wrap break-words">
           {body}
         </pre>
       </div>

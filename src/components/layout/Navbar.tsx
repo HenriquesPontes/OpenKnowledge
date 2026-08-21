@@ -109,7 +109,7 @@ export function Navbar() {
                 <a
                   key={resolved.label}
                   href={resolved.href}
-                  className="hidden sm:inline text-white hover:text-white/70 transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                  className="hidden sm:inline text-white hover:text-white/70 transition-colors duration-150 text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                 >
                   {resolved.label}
                 </a>
@@ -124,7 +124,7 @@ export function Navbar() {
               onClick={() => {
                 setOpen((value) => !value);
               }}
-              className="inline-flex shrink-0 items-center h-8 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 text-white hover:text-white/70"
+              className="inline-flex shrink-0 items-center h-9 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 text-white hover:text-white/70"
             >
               {nav.menu.label}
             </button>
@@ -136,7 +136,7 @@ export function Navbar() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (
                     <div key={column.heading}>
-                      <p className="text-muted text-[11px] tracking-[0.08em] uppercase mb-2.5">
+                      <p className="text-muted text-xs tracking-[0.08em] uppercase mb-2.5">
                         {column.heading}
                       </p>
                       <ul className="space-y-1">
@@ -158,7 +158,7 @@ export function Navbar() {
                               onClick={() => setOpen(false)}
                               className={
                                 column.size === "large"
-                                  ? "block py-1.5 text-foreground text-[15px] leading-snug tracking-[-0.02em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                                  ? "block py-1.5 text-foreground text-base leading-snug tracking-[-0.02em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                                   : "block py-1.5 text-foreground text-sm tracking-[-0.01em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                               }
                             >

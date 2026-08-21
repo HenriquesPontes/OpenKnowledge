@@ -27,8 +27,8 @@ export function Button({
     variant === "ghost" && "text-muted hover:text-white",
     variant === "outline" &&
       "border border-[#3f3f3f] bg-transparent text-white hover:border-[#666] hover:bg-[#1f1f1f]",
-    size === "default" && "h-10 w-full px-5 sm:w-auto sm:px-8 text-[15px]",
-    size === "sm" && "h-8 px-3.5 sm:px-4 text-[13px]",
+    size === "default" && "h-11 w-full px-5 sm:w-auto sm:px-8 text-base",
+    size === "sm" && "h-9 px-4 sm:px-5 text-sm",
     className,
   );
 

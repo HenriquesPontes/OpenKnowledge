@@ -14,10 +14,10 @@ type Mode = "login" | "register";
 const REMEMBER_EMAIL_KEY = "fv_api_remember_email";
 
 const fieldClass =
-  "mt-1.5 h-9 w-full rounded-md border border-[#cfcfcf] bg-white px-3 text-[14px] tracking-[-0.01em] text-[#141414] outline-none transition-[border-color,box-shadow] placeholder:text-[#9a9a9a] hover:border-[#b0b0b0] focus:border-[#2563eb] focus:shadow-[0_0_0_3px_rgba(37,99,235,0.18)] disabled:opacity-50";
+  "mt-1.5 h-9 w-full rounded-md border border-[#cfcfcf] bg-white px-3 text-sm tracking-[-0.01em] text-[#141414] outline-none transition-[border-color,box-shadow] placeholder:text-[#9a9a9a] hover:border-[#b0b0b0] focus:border-[#2563eb] focus:shadow-[0_0_0_3px_rgba(37,99,235,0.18)] disabled:opacity-50";
 
 const fieldErrorClass =
-  "mt-1.5 h-9 w-full rounded-md border border-[#e11d48] bg-white px-3 text-[14px] tracking-[-0.01em] text-[#141414] outline-none focus:border-[#e11d48] focus:shadow-[0_0_0_3px_rgba(225,29,72,0.15)] disabled:opacity-50";
+  "mt-1.5 h-9 w-full rounded-md border border-[#e11d48] bg-white px-3 text-sm tracking-[-0.01em] text-[#141414] outline-none focus:border-[#e11d48] focus:shadow-[0_0_0_3px_rgba(225,29,72,0.15)] disabled:opacity-50";
 
 function ExternalArrow() {
   return (
@@ -43,7 +43,7 @@ function ExternalArrow() {
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p role="alert" className="mt-1 text-[12px] tracking-[-0.01em] text-[#b42318]">
+    <p role="alert" className="mt-1 text-sm tracking-[-0.01em] text-[#b42318]">
       {message}
     </p>
   );
@@ -188,7 +188,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
     <form onSubmit={onSubmit} className="mt-4 w-full" noValidate>
       <label
         htmlFor="api-auth-email"
-        className="block text-[12px] font-semibold tracking-[-0.01em] text-[#141414]"
+        className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
       >
         {mode === "register" ? "Work email" : "Email"}{" "}
         {mode === "register" ? (
@@ -216,7 +216,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
         <>
           <label
             htmlFor="api-auth-code"
-            className="mt-3 block text-[12px] font-semibold tracking-[-0.01em] text-[#141414]"
+            className="mt-3 block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
           >
             Registration code
           </label>
@@ -233,7 +233,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
                 setCodeMessage("");
               }}
               disabled={status === "loading" || codeStatus === "loading"}
-              className="h-9 min-w-0 flex-1 border-0 bg-white px-3 text-[14px] tracking-[-0.01em] text-[#141414] outline-none placeholder:text-[#9a9a9a] disabled:opacity-50"
+              className="h-9 min-w-0 flex-1 border-0 bg-white px-3 text-sm tracking-[-0.01em] text-[#141414] outline-none placeholder:text-[#9a9a9a] disabled:opacity-50"
             />
             <button
               type="button"
@@ -243,14 +243,14 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
                 codeStatus === "loading" ||
                 !registrationCode.trim()
               }
-              className="shrink-0 border-l border-[#cfcfcf] bg-[#f7f7f7] px-3 text-[12px] font-medium tracking-[-0.01em] text-[#141414] transition-colors hover:bg-[#efefef] disabled:cursor-not-allowed disabled:opacity-50"
+              className="shrink-0 border-l border-[#cfcfcf] bg-[#f7f7f7] px-3 text-sm font-medium tracking-[-0.01em] text-[#141414] transition-colors hover:bg-[#efefef] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {codeStatus === "loading" ? "…" : "Apply"}
             </button>
           </div>
           {codeMessage ? (
             <p
-              className={`mt-1 text-[12px] tracking-[-0.01em] ${
+              className={`mt-1 text-sm tracking-[-0.01em] ${
                 codeStatus === "ok" ? "text-[#177245]" : "text-[#b42318]"
               }`}
             >
@@ -262,7 +262,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             <div>
               <label
                 htmlFor="api-auth-password"
-                className="block text-[12px] font-semibold tracking-[-0.01em] text-[#141414]"
+                className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
               >
                 Password{" "}
                 <span className="text-[#e11d48]" aria-hidden="true">
@@ -286,7 +286,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             <div>
               <label
                 htmlFor="api-auth-password-confirm"
-                className="block text-[12px] font-semibold tracking-[-0.01em] text-[#141414]"
+                className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
               >
                 Repeat password{" "}
                 <span className="text-[#e11d48]" aria-hidden="true">
@@ -313,7 +313,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
           <TurnstileWidget onToken={setTurnstileToken} />
           <FieldError message={fieldErrors.turnstile} />
 
-          <p className="mt-3 text-[11px] leading-4 tracking-[-0.01em] text-[#8a8a8a]">
+          <p className="mt-3 text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
             By creating an account you agree to the{" "}
             <a href="/legal" className="underline underline-offset-2">
               terms
@@ -333,7 +333,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
         <>
           <label
             htmlFor="api-auth-password"
-            className="mt-3 block text-[12px] font-semibold tracking-[-0.01em] text-[#141414]"
+            className="mt-3 block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
           >
             Password
           </label>
@@ -357,7 +357,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               onChange={(event) => setRemember(event.target.checked)}
               className="mt-[2px] h-3.5 w-3.5 shrink-0 rounded-[3px] border border-[#c8c8c8] accent-[#141414]"
             />
-            <span className="text-[12px] leading-4 tracking-[-0.01em] text-[#4a4a4a]">
+            <span className="text-sm leading-4 tracking-[-0.01em] text-[#4a4a4a]">
               Save email and stay signed in on this device
             </span>
           </label>
@@ -367,7 +367,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-4 inline-flex h-9 w-full items-center justify-center rounded-md bg-[#2563eb] px-5 text-[14px] font-medium tracking-[-0.01em] text-white transition-colors hover:bg-[#1d4ed8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]/35 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-4 inline-flex h-9 w-full items-center justify-center rounded-md bg-[#2563eb] px-5 text-sm font-medium tracking-[-0.01em] text-white transition-colors hover:bg-[#1d4ed8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]/35 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "loading"
           ? mode === "register"
@@ -381,7 +381,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       {status === "error" && message && !Object.keys(fieldErrors).length ? (
         <p
           role="alert"
-          className="mt-2 rounded-md border border-[#f3c1bd] bg-[#fff5f4] px-3 py-1.5 text-[12px] tracking-[-0.01em] text-[#b42318]"
+          className="mt-2 rounded-md border border-[#f3c1bd] bg-[#fff5f4] px-3 py-1.5 text-sm tracking-[-0.01em] text-[#b42318]"
         >
           {message}
         </p>
@@ -415,7 +415,7 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
           </a>
           <a
             href={isLogin ? "/api/register" : "/api/login"}
-            className="inline-flex h-8 items-center rounded-full border border-[#d8d8d8] bg-white px-3.5 text-[13px] tracking-[-0.01em] text-[#141414] transition-colors hover:border-[#b8b8b8] hover:bg-[#f7f7f7] lg:hidden"
+            className="inline-flex h-8 items-center rounded-full border border-[#d8d8d8] bg-white px-3.5 text-sm tracking-[-0.01em] text-[#141414] transition-colors hover:border-[#b8b8b8] hover:bg-[#f7f7f7] lg:hidden"
           >
             {isLogin ? "Sign up" : "Sign in"}
           </a>
@@ -423,21 +423,21 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
 
         <div className="flex min-h-0 flex-1 flex-col justify-center py-2">
           <div className="mx-auto w-full max-w-[28rem]">
-            <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[#8a8a8a]">
+            <p className="text-xs font-medium uppercase tracking-[0.08em] text-[#8a8a8a]">
               API Platform
             </p>
             <h1 className="mt-1.5 font-heading text-[1.55rem] tracking-[-0.03em] leading-[1.15] text-[#141414] sm:text-[1.85rem]">
               {isLogin ? "Sign in to API Platform" : "Create your API account"}
             </h1>
             {isLogin ? (
-              <p className="mt-1.5 text-[13px] leading-5 tracking-[-0.01em] text-[#5c5c5c]">
+              <p className="mt-1.5 text-sm leading-5 tracking-[-0.01em] text-[#5c5c5c]">
                 Use your email and password to open the dashboard.
               </p>
             ) : null}
 
             <ApiAuthForm mode={mode} />
 
-            <p className="mt-3 text-center text-[13px] tracking-[-0.01em] text-[#5c5c5c]">
+            <p className="mt-3 text-center text-sm tracking-[-0.01em] text-[#5c5c5c]">
               {isLogin ? (
                 <>
                   Don&apos;t have an account?{" "}
@@ -469,7 +469,7 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
             </p>
 
             {isLogin ? (
-              <p className="mt-3 text-center text-[11px] leading-4 tracking-[-0.01em] text-[#8a8a8a]">
+              <p className="mt-3 text-center text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
                 By continuing, you agree to the{" "}
                 <a href="/legal" className="underline underline-offset-2">
                   terms
@@ -512,7 +512,7 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
         </div>
 
         <div className="relative z-10 flex flex-1 flex-col justify-center px-10 pb-12 xl:px-14">
-          <p className="text-[13px] tracking-[-0.01em] text-white/65">
+          <p className="text-sm tracking-[-0.01em] text-white/65">
             ForroVivo Linguistic Research API
           </p>
           <h2

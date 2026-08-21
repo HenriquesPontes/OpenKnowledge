@@ -29,7 +29,7 @@ function DocsSidebar({
       <nav className="flex gap-x-5 gap-y-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:block lg:space-y-8 lg:overflow-visible lg:pb-0">
         {nav.map((group) => (
           <div key={group.heading} className="shrink-0 lg:shrink">
-            <p className="text-muted text-xs sm:text-sm tracking-[0.08em] uppercase mb-2 lg:mb-3">
+            <p className="text-muted text-xs tracking-[0.08em] uppercase mb-2 lg:mb-3">
               {group.heading}
             </p>
             <ul className="flex gap-x-4 lg:block lg:space-y-2">
