@@ -315,15 +315,15 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
 
           <p className="mt-3 text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
             By creating an account you agree to the{" "}
-            <a href="/legal" className="underline underline-offset-2">
+            <a href="/legal/terms" className="underline underline-offset-2">
               terms
             </a>
             ,{" "}
-            <a href="/legal#privacy" className="underline underline-offset-2">
+            <a href="/legal/privacy" className="underline underline-offset-2">
               privacy policy
             </a>
             , and{" "}
-            <a href="/legal#eula" className="underline underline-offset-2">
+            <a href="/legal/eula" className="underline underline-offset-2">
               EULA
             </a>
             .
@@ -471,18 +471,18 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
             {isLogin ? (
               <p className="mt-3 text-center text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
                 By continuing, you agree to the{" "}
-                <a href="/legal" className="underline underline-offset-2">
+                <a href="/legal/terms" className="underline underline-offset-2">
                   terms
                 </a>
                 ,{" "}
                 <a
-                  href="/legal#privacy"
+                  href="/legal/privacy"
                   className="underline underline-offset-2"
                 >
                   privacy policy
                 </a>
                 , and{" "}
-                <a href="/legal#eula" className="underline underline-offset-2">
+                <a href="/legal/eula" className="underline underline-offset-2">
                   EULA
                 </a>
                 .

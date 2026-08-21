@@ -1,107 +1,44 @@
-import { Container } from "@/components/ui/Container";
-import { footer } from "@/lib/constants";
+import { legalNav, footer } from "@/lib/constants";
 
 export const metadata = {
   title: "Legal",
   description:
-    "Company information, privacy, and EULA for Open Knowledge, a ForroVivo product operated by LIVLU TECHNOLOGIES LTD.",
+    "Legal policies for ForroVivo: company information, terms of service, privacy, and EULA for Open Knowledge, the Forro Vivo App, Forro Connect, and Linguistic Research.",
   alternates: { canonical: "/legal" },
 };
 
 export default function LegalPage() {
+  const policies = legalNav.filter((item) => item.href !== "/legal");
+
   return (
-    <section className="pt-28 pb-20 sm:pt-36">
-      <Container>
-        <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-          Legal
-        </p>
-        <h1
-          className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
-          style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
-        >
-          Company, privacy, and EULA
-        </h1>
-        <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          This site is published by {footer.companyName}.
-        </p>
+    <>
+      <h1
+        className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
+        style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+      >
+        Legal
+      </h1>
+      <p className="mt-4 max-w-[40rem] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+        Policies for Open Knowledge, Linguistic Research, the Forro Vivo App,
+        and Forro Connect — operated by {footer.companyName}.
+      </p>
 
-        <div className="mt-12 max-w-[720px] space-y-12">
-          <section>
-            <h2 className="font-heading text-white tracking-[-0.02em] text-[28px] leading-tight">
-              Company information
-            </h2>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              {footer.companyName} is a private limited company {footer.registration.toLowerCase()}.
-              Company number {footer.companyNumber}.
-            </p>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              Open Knowledge is a ForroVivo product operated by{" "}
-              {footer.companyName}. You can confirm the filing record on{" "}
-              <a
-                href={footer.companiesHouseHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-white/70 transition-colors"
-              >
-                Companies House
-              </a>
-              .
-            </p>
-          </section>
-
-          <section id="privacy">
-            <h2 className="font-heading text-white tracking-[-0.02em] text-[28px] leading-tight">
-              Privacy
-            </h2>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              If you join a waitlist, we process the email address you submit
-              so we can tell you when that product is available: Open Knowledge,
-              Forro Connect, the dictionaries, or the API Platform. Addresses
-              are stored with the project waitlist and tagged by product. When
-              newsletter credentials are configured, the same address is also
-              sent to Beehiiv.
-            </p>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              We do not sell waitlist addresses. We do not use the public
-              Linguistic Research API to collect personal data. Server logs
-              may include technical data such as IP address for security and
-              operation of the site.
-            </p>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              To ask about your waitlist email, contact {footer.companyName}.
-            </p>
-          </section>
-
-          <section id="eula">
-            <h2 className="font-heading text-white tracking-[-0.02em] text-[28px] leading-tight">
-              End User License Agreement
-            </h2>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              This site and the public API are provided for research, education,
-              and language documentation. Do not treat the knowledge base as
-              legal, medical, or official government advice. Do not invent,
-              merge, or substitute lexical data across isolated datasets.
-            </p>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              Third-party dictionaries and papers keep their original licences.
-              Project-original material is published under CC BY 4.0 unless a
-              source page says otherwise. The ForroVivo name, Open Knowledge,
-              and related marks are used by {footer.companyName}.
-            </p>
-            <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              The public API is read-only. Current authentication, rate limits,
-              and access rules are defined in{" "}
-              <a
-                href="/docs/api-reference"
-                className="text-white hover:text-white/70"
-              >
-                Documentation
-              </a>
-              . These terms are governed by the laws of England and Wales.
-            </p>
-          </section>
-        </div>
-      </Container>
-    </section>
+      <div className="mt-10 divide-y divide-border border-t border-b border-border">
+        {policies.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="group flex flex-col gap-2 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm"
+          >
+            <span className="font-heading text-white text-xl sm:text-2xl tracking-[-0.02em] group-hover:underline underline-offset-4">
+              {item.label}
+            </span>
+            <span className="text-muted text-base leading-7 tracking-[-0.01em]">
+              {item.description}
+            </span>
+          </a>
+        ))}
+      </div>
+    </>
   );
 }

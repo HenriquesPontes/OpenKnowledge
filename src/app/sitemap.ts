@@ -21,7 +21,16 @@ const staticPaths = [
   "/docs/api-reference",
   "/api",
   "/about",
+  "/careers",
+  "/careers/android-developer",
+  "/careers/linguistic-research-lexicon",
+  "/careers/linguistic-research-sources",
+  "/careers/social-media-manager",
   "/legal",
+  "/legal/company",
+  "/legal/terms",
+  "/legal/privacy",
+  "/legal/eula",
   "/translation",
 ] as const;
 

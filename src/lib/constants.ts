@@ -67,6 +67,7 @@ export const nav = {
         size: "medium",
         items: [
           { label: "About", href: "/about" },
+          { label: "Careers", href: "/careers" },
           { label: "GitHub", href: GITHUB_URL, external: true },
           { label: "Legal", href: "/legal" },
         ],
@@ -1383,9 +1384,159 @@ export const footer = {
   registration: "Registered in England and Wales",
   companiesHouseHref:
     "https://find-and-update.company-information.service.gov.uk/company/16799761",
+  contacts: {
+    legal: "legal@forrovivo.com",
+    privacy: "privacy@forrovivo.com",
+    security: "security@forrovivo.com",
+    support: "support@forrovivo.com",
+    billing: "billing@forrovivo.com",
+  },
   links: [
     { label: "Legal", href: "/legal" },
-    { label: "Privacy", href: "/legal#privacy" },
-    { label: "EULA", href: "/legal#eula" },
+    { label: "Terms", href: "/legal/terms" },
+    { label: "Privacy", href: "/legal/privacy" },
+    { label: "EULA", href: "/legal/eula" },
   ],
 } as const;
+
+export const legalNav = [
+  {
+    label: "Overview",
+    href: "/legal",
+    description: "How ForroVivo products are operated and where to find each policy.",
+  },
+  {
+    label: "Company",
+    href: "/legal/company",
+    description: "LIVLU TECHNOLOGIES LTD, registration, and the ForroVivo product family.",
+  },
+  {
+    label: "Terms of service",
+    href: "/legal/terms",
+    description: "Rules for using Open Knowledge, the app, Connect, research, and the API.",
+  },
+  {
+    label: "Privacy",
+    href: "/legal/privacy",
+    description: "How waitlists, accounts, and product data are handled.",
+  },
+  {
+    label: "EULA",
+    href: "/legal/eula",
+    description: "Licence for the site, Linguistic Research data, and related software.",
+  },
+] as const;
+
+export const careersPage = {
+  title: "Careers at ForroVivo",
+  description:
+    "Build with Open Knowledge, Linguistic Research, the Forro Vivo App, and Forro Connect.",
+  applyLabel: "Apply now",
+  viewLabel: "View role",
+  roles: [
+    {
+      id: "android-developer",
+      title: "Android Developer",
+      team: "Forro Vivo App",
+      location: "Remote",
+      summary:
+        "Build the Android experience for the Forro Vivo App — dictionary, lessons, and exercises for African Creole languages, starting with Forro.",
+      about: [
+        "ForroVivo documents, preserves, and structures African Creole languages. The Forro Vivo App is the learning product: software that helps people study Forro with dictionary, lessons, and exercises. Open Knowledge and Linguistic Research supply the attested language layer behind it.",
+        "We are hiring an Android developer to bring that learning experience to Android with the same care for isolation, sources, and culture that the rest of the platform holds.",
+      ],
+      responsibilities: [
+        "Design, build, and ship Android features for dictionary lookup, lessons, and exercises.",
+        "Work with product and research so on-device language content stays tied to attested sources and never mixes lexicons.",
+        "Own performance, accessibility, and release quality on Google Play when the Android release opens.",
+        "Collaborate with the existing iOS app direction so learners get a coherent Forro Vivo experience across platforms.",
+      ],
+      requirements: [
+        "Strong Android experience with Kotlin and modern Android architecture.",
+        "Comfort shipping consumer learning or content apps with clear UX.",
+        "Care for localisation, offline-friendly patterns, and maintainable code.",
+        "Interest in language, culture, or education products is a plus.",
+      ],
+      applyHref: `mailto:${footer.contacts.support}?subject=${encodeURIComponent("Application: Android Developer")}`,
+    },
+    {
+      id: "linguistic-research-lexicon",
+      title: "Linguistic Research",
+      team: "Lexicon documentation",
+      location: "Remote",
+      summary:
+        "Document isolated lexicons with provenance — Forro, Angolar, Lung’Ie, and the wider Creole language work — without mixing one language into another.",
+      about: [
+        "Linguistic Research is the evidence layer for ForroVivo. Open Knowledge publishes isolated lexicons; the Forro Vivo App and Forro Connect depend on that integrity.",
+        "This role focuses on lexicon documentation: structured entries, clear orthography, and language context that stays inside the correct folder and variety.",
+      ],
+      responsibilities: [
+        "Document and structure lexical entries for assigned languages and varieties.",
+        "Keep each lexicon isolated — never copy or invent forms across languages because spelling looks close.",
+        "Record provenance and leave fields empty when evidence does not exist.",
+        "Work with methodology and Open Knowledge so published datasets stay consistent and auditable.",
+      ],
+      requirements: [
+        "Background in linguistics, lexicography, language documentation, or equivalent practice.",
+        "Experience with dictionaries, corpora, or structured language data.",
+        "Rigour about sources and comfort saying “unknown” instead of guessing.",
+        "Familiarity with Creole languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, or Angola is a plus.",
+      ],
+      applyHref: `mailto:${footer.contacts.support}?subject=${encodeURIComponent("Application: Linguistic Research — Lexicon")}`,
+    },
+    {
+      id: "linguistic-research-sources",
+      title: "Linguistic Research",
+      team: "Sources and attestation",
+      location: "Remote",
+      summary:
+        "Trace every linguistic claim to a source. Build the bibliography and attestation practice that keeps ForroVivo evidence-first.",
+      about: [
+        "ForroVivo does not treat generated text as linguistic evidence. Sources, papers, and attested records are how Open Knowledge, the app, and Connect stay trustworthy.",
+        "This role owns sources and attestation: bibliography, citation practice, and verification that claims remain traceable.",
+      ],
+      responsibilities: [
+        "Curate and maintain source records for Linguistic Research and Open Knowledge.",
+        "Check that published claims name their sources and that third-party licences stay intact.",
+        "Support methodology reviews when entries disagree, conflict, or lack evidence.",
+        "Help researchers and product teams understand what is attested and what must stay empty.",
+      ],
+      requirements: [
+        "Experience with academic citation, archival work, language documentation, or library/research practice.",
+        "Precision with bibliography, licences, and provenance metadata.",
+        "Ability to work carefully across Portuguese- and English-language sources.",
+        "Interest in Creole language research and community-respectful documentation is a plus.",
+      ],
+      applyHref: `mailto:${footer.contacts.support}?subject=${encodeURIComponent("Application: Linguistic Research — Sources")}`,
+    },
+    {
+      id: "social-media-manager",
+      title: "Social Media Manager",
+      team: "Communications",
+      location: "Remote",
+      summary:
+        "Tell the ForroVivo story across channels — Open Knowledge, Linguistic Research, the Forro Vivo App, and Forro Connect — with clarity and respect for the communities involved.",
+      about: [
+        "ForroVivo is a platform for African Creole languages: public knowledge, learning, and live lessons with speakers. Communications must stay accurate about what each product is and is not.",
+        "We are hiring a social media manager to grow presence without hype that erases culture or confuses the app with Connect, or research with invention.",
+      ],
+      responsibilities: [
+        "Plan and publish social content for ForroVivo products and milestones.",
+        "Keep messaging aligned with product truth: evidence-first research, learning app, and live lessons with speakers.",
+        "Engage communities respectfully and escalate sensitive language or cultural questions to the right team.",
+        "Track what resonates and improve the calendar without chasing vanity metrics over trust.",
+      ],
+      requirements: [
+        "Experience running social channels for a product, nonprofit, culture, or education brand.",
+        "Strong writing in English; Portuguese is a strong plus.",
+        "Judgement about representation, attribution, and community voice.",
+        "Comfort working with founders and research/product leads on accurate copy.",
+      ],
+      applyHref: `mailto:${footer.contacts.support}?subject=${encodeURIComponent("Application: Social Media Manager")}`,
+    },
+  ],
+} as const;
+
+export function careerRoleById(id: string) {
+  return careersPage.roles.find((role) => role.id === id);
+}
