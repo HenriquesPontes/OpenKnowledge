@@ -4,18 +4,29 @@ const SITEVERIFY = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 export const TURNSTILE_TEST_SITE_KEY = "1x00000000000000000000AA";
 export const TURNSTILE_TEST_SECRET_KEY = "1x0000000000000000000000000000000AA";
 
+function allowTestKeys() {
+  if (process.env.VERCEL_ENV === "production") return false;
+  return process.env.NODE_ENV !== "production";
+}
+
+function configuredSiteKey() {
+  return process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
+}
+
+function configuredSecret() {
+  return process.env.TURNSTILE_SECRET_KEY?.trim() ?? "";
+}
+
 export function turnstileSiteKey() {
-  return (
-    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
-    (process.env.NODE_ENV !== "production" ? TURNSTILE_TEST_SITE_KEY : "")
-  );
+  const key = configuredSiteKey();
+  if (key && key !== TURNSTILE_TEST_SITE_KEY) return key;
+  return allowTestKeys() ? TURNSTILE_TEST_SITE_KEY : "";
 }
 
 function turnstileSecret() {
-  return (
-    process.env.TURNSTILE_SECRET_KEY ||
-    (process.env.NODE_ENV !== "production" ? TURNSTILE_TEST_SECRET_KEY : "")
-  );
+  const secret = configuredSecret();
+  if (secret && secret !== TURNSTILE_TEST_SECRET_KEY) return secret;
+  return allowTestKeys() ? TURNSTILE_TEST_SECRET_KEY : "";
 }
 
 export async function verifyTurnstileToken(

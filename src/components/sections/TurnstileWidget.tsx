@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useLocale } from "@/components/locale/LocaleProvider";
+import { turnstileSiteKey } from "@/lib/turnstile";
 
 type TurnstileTheme = "light" | "dark";
 
@@ -28,7 +29,6 @@ declare global {
 }
 
 const SCRIPT_ID = "cf-turnstile-api";
-const TEST_SITE_KEY = "1x00000000000000000000AA";
 
 function loadTurnstileScript() {
   if (typeof window === "undefined") return Promise.resolve();
@@ -75,14 +75,14 @@ export function TurnstileWidget({
   const onTokenRef = useRef(onToken);
   onTokenRef.current = onToken;
 
-  const siteKey =
-    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || TEST_SITE_KEY;
+  const siteKey = turnstileSiteKey();
 
   useEffect(() => {
     let cancelled = false;
 
     async function mount() {
       try {
+        if (!siteKey) return;
         await loadTurnstileScript();
         if (cancelled || !window.turnstile || widgetId.current) return;
         const el = hostRef.current;
@@ -115,6 +115,8 @@ export function TurnstileWidget({
       widgetId.current = null;
     };
   }, [locale, siteKey, theme]);
+
+  if (!siteKey) return null;
 
   return (
     <div className="mt-3 w-full min-w-0">
