@@ -79,12 +79,6 @@ export const nav = {
     label: "API Platform",
     href: "/api/login",
   },
-  dictionaryAuth: {
-    loginLabel: "Log in",
-    loginHref: "/dictionaries/login",
-    cta: "Create an account — It's free",
-    ctaHref: "/dictionaries/register",
-  },
   apiAuth: {
     loginLabel: "Log in",
     loginHref: "/api/login",
@@ -596,8 +590,8 @@ export const lexiconMapRegions: Record<string, string> = {
 export const apiSection = {
   title: "Build with attested linguistic knowledge",
   command: `curl ${API_ORIGIN}/v1/languages`,
-  tryHref: "/api",
-  playground: "/api#try",
+  tryHref: "/api/login",
+  playground: "/api/login",
 } as const;
 
 export const cloneSection = {
@@ -1128,7 +1122,7 @@ export const productOverview = {
       label: "API Platform",
       href: "/api",
       description:
-        "Public, read-only linguistic API at api.forrovivo.com. GET only. Does not invent translations, merge languages, or write lexicon data.",
+        "Dashboard and live try UI for the Linguistic Research API. Rules and routes are in Documentation.",
     },
   ],
 } as const;
@@ -1194,73 +1188,192 @@ export const translationPage = {
   ],
 } as const;
 
-export const docsNav = [
+export const docsProducts = {
+  title: "ForroVivo for developers",
+  description:
+    "Docs and resources to help you build with Open Knowledge, the Forro Vivo App, and Forro Connect.",
+  products: [
+    {
+      label: "Open Knowledge",
+      href: "/docs/open-knowledge",
+      description:
+        "Isolated lexicons, the public Linguistic Research API, methodology, and API Platform.",
+    },
+    {
+      label: "ForroVivo",
+      href: "/docs/app",
+      description:
+        "Learning app for African Creole languages, starting with Forro. Dictionary, lessons, and exercises.",
+    },
+    {
+      label: "Forro Connect",
+      href: "/docs/connect",
+      description:
+        "Live lessons with real Forro speakers and cultural knowledge holders.",
+    },
+  ],
+} as const;
+
+export const openKnowledgeDocsNav = [
   {
-    heading: "Getting started",
+    heading: "Get started",
     links: [
-      { label: "Introduction", href: "/docs" },
+      { label: "Overview", href: "/docs/open-knowledge" },
       { label: "Quickstart", href: "/docs/quickstart" },
-      { label: "Try the API", href: "/api#try" },
+      { label: "API Platform", href: "/api/login" },
       { label: "Authentication", href: "/docs/api-reference#authentication" },
-      { label: "Rate limits", href: "/docs/api-reference#rate-limits" },
     ],
   },
   {
     heading: "Knowledge",
     links: [
       { label: "Languages", href: "/languages" },
+      { label: "Dictionaries", href: "/dictionaries" },
       { label: "Sources", href: "/research" },
-    ],
-  },
-  {
-    heading: "API reference",
-    links: [
-      { label: "Versioning", href: "/docs/api-reference#versioning" },
-      { label: "CORS", href: "/docs/api-reference#cors" },
-      { label: "Web UI", href: "/docs/api-reference#web-ui" },
-      { label: "Attribution", href: "/docs/api-reference#attribution" },
-      { label: "GET /v1/languages", href: "/docs/api-reference#routes" },
-      { label: "GET /v1/lookup", href: "/docs/api-reference#routes" },
-      { label: "GET /v1/search", href: "/docs/api-reference#routes" },
-      { label: "GET /v1/sources", href: "/docs/api-reference#routes" },
-    ],
-  },
-  {
-    heading: "Research",
-    links: [
       { label: "Methodology", href: "/docs/methodology" },
-      { label: "Sources", href: "/research" },
+    ],
+  },
+  {
+    heading: "API documentation",
+    links: [
+      { label: "Overview", href: "/docs/api-reference" },
+      { label: "Base URL", href: "/docs/api-reference#base-url" },
+      { label: "Authentication", href: "/docs/api-reference#authentication" },
+      { label: "Headers", href: "/docs/api-reference#headers" },
+      { label: "Errors", href: "/docs/api-reference#errors" },
+      { label: "Lookup", href: "/docs/api-reference#lookup" },
+      { label: "Search", href: "/docs/api-reference#search" },
+      { label: "Catalog", href: "/docs/api-reference#catalog" },
+      { label: "Entries", href: "/docs/api-reference#entries" },
+      { label: "Knowledge", href: "/docs/api-reference#knowledge" },
+      { label: "Audio", href: "/docs/api-reference#audio" },
+      { label: "Routes", href: "/docs/api-reference#routes" },
+      { label: "OpenAPI", href: "/docs/api-reference#openapi" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
       { label: "GitHub", href: GITHUB_URL },
+      { label: "All products", href: "/docs" },
     ],
   },
 ] as const;
 
+export const appDocsNav = [
+  {
+    heading: "Get started",
+    links: [
+      { label: "Overview", href: "/docs/app" },
+      { label: "Download", href: APP_STORE_URL },
+      { label: "Product page", href: "/app" },
+    ],
+  },
+  {
+    heading: "Product",
+    links: [
+      { label: "Roadmap", href: "/app#roadmap" },
+      { label: "Credits", href: "/app/credits" },
+      { label: "FAQ", href: "/app#faq" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
+      { label: "Open Knowledge", href: "/docs/open-knowledge" },
+      { label: "Forro Connect", href: "/docs/connect" },
+      { label: "All products", href: "/docs" },
+    ],
+  },
+] as const;
+
+export const connectDocsNav = [
+  {
+    heading: "Get started",
+    links: [
+      { label: "Overview", href: "/docs/connect" },
+      { label: "Product page", href: "/connect" },
+      { label: "Join waitlist", href: "/connect#waitlist" },
+    ],
+  },
+  {
+    heading: "Community",
+    links: [
+      { label: "Community income", href: "/connect/income" },
+      { label: "How it works", href: "/connect#how-it-works" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
+      { label: "Open Knowledge", href: "/docs/open-knowledge" },
+      { label: "Forro Vivo App", href: "/docs/app" },
+      { label: "All products", href: "/docs" },
+    ],
+  },
+] as const;
+
+/** @deprecated Use product-specific navs; kept for any leftover imports. */
+export const docsNav = openKnowledgeDocsNav;
+
 export const apiPaths = [
-  { method: "GET", path: "/v1", detail: "Service identity, versioning, CORS, and catalog links." },
+  { method: "GET", path: "/v1", detail: "Service identity, versioning, CORS, rate limit, attribution, and catalog links." },
   { method: "GET", path: "/v1/health", detail: "Versioned health check." },
+  { method: "GET", path: "/v1/openapi.yaml", detail: "OpenAPI 3 contract for this release." },
+  { method: "POST", path: "/v1/keys", detail: "Issue or replace an optional API key. Shown once. Public GET still works without it." },
   { method: "GET", path: "/v1/kb", detail: "Knowledge Base collection map." },
-  { method: "GET", path: "/v1/languages", detail: "Isolated lexicons. Not a merged word list." },
-  { method: "GET", path: "/v1/datasets", detail: "Published dataset index." },
+  { method: "GET", path: "/v1/languages", detail: "Isolated lexicons only. Parent country indexes are omitted." },
+  { method: "GET", path: "/v1/datasets", detail: "Published dataset index, including country indexes." },
+  {
+    method: "GET",
+    path: "/v1/{family}",
+    detail: "Country index metadata. Not a merged dictionary.",
+  },
+  {
+    method: "GET",
+    path: "/v1/{family}/{variety}",
+    detail: "One lexicon metadata document for that folder.",
+  },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/lookup?headword=",
     detail:
-      "Look up one headword in that folder only. Example: /v1/saotome/forro/lookup?headword=kume, /v1/angola/umbundu/lookup, or /v1/angola/contruy/lookup.",
+      "Exact headword lookup in that folder only. Example: /v1/saotome/forro/lookup?headword=kume.",
   },
   {
     method: "GET",
     path: "/v1/search?dataset={family}/{variety}&q=",
-    detail: "Search inside one named dataset only. dataset= is required.",
+    detail: "Search inside one named dataset. dataset= and q= are required.",
+  },
+  {
+    method: "GET",
+    path: "/v1/{family}/{variety}/search?q=",
+    detail: "Search entries, knowledge, and sources inside one dataset.",
   },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/entries",
-    detail: "Lexical entries from that folder only.",
+    detail: "List lexical entries. Optional q, offset, and limit.",
+  },
+  {
+    method: "GET",
+    path: "/v1/{family}/{variety}/entries/{entry_id}",
+    detail: "One lexical entry by id.",
   },
   {
     method: "GET",
     path: "/v1/{family}/{variety}/sources",
     detail: "Bibliography for that folder.",
+  },
+  {
+    method: "GET",
+    path: "/v1/{family}/{variety}/grammar",
+    detail: "Attested grammar records for that folder, or an empty list.",
+  },
+  {
+    method: "GET",
+    path: "/v1/{family}/{variety}/audio/{filename}",
+    detail: "Audio file for an attested example in that folder.",
   },
 ] as const;
 

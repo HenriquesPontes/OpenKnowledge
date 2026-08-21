@@ -110,10 +110,6 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
       <h2 className="text-white text-lg sm:text-[21px] tracking-[-0.01em]">
         Try the API
       </h2>
-      <p className="mt-3 max-w-[640px] text-muted text-base leading-7 tracking-[-0.01em]">
-        This page is the web UI. Requests run through this site, then into one
-        isolated lexicon. The public host for curl remains {API_ORIGIN.replace("https://", "")}.
-      </p>
 
       <form onSubmit={onSubmit} className="mt-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

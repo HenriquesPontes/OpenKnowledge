@@ -5,6 +5,9 @@ import { API_ORIGIN } from "@/lib/catalog";
 
 export const metadata = {
   title: "Quickstart",
+  description:
+    "First curl calls against the Linguistic Research API. Auth, errors, and routes are in the API reference.",
+  alternates: { canonical: "/docs/quickstart" },
 };
 
 export default function QuickstartPage() {
@@ -19,7 +22,12 @@ export default function QuickstartPage() {
         Quickstart
       </h1>
       <p className="mt-4 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        No API key. Read the catalog, then query one isolated dataset.
+        Three calls to get started. Rules for keys, errors, CORS, and naming are
+        only in the{" "}
+        <a href="/docs/api-reference" className="text-white hover:text-white/70">
+          API reference
+        </a>
+        .
       </p>
 
       <h2 className="mt-10 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
@@ -28,7 +36,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={apiSection.command}
-          body="Returns isolated lexicons. Counts are per folder."
+          body="Catalog of published lexicons."
         />
       </div>
 
@@ -38,7 +46,7 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={lookup}
-          body="Exact matches from that folder only, for example saotome/forro, caboverde/santiago, guinebissau/bissau, or angola/umbundu. Angola Contruy is angola/contruy. Parent indexes such as angola are not merged lexicons. Missing terms return TERM_NOT_FOUND."
+          body="One folder only, for example saotome/forro or angola/umbundu."
         />
       </div>
 
@@ -48,20 +56,16 @@ export default function QuickstartPage() {
       <div className="mt-4">
         <BrowserMockup
           command={`curl "${API_ORIGIN}/v1/search?dataset=saotome/forro&q=kume"`}
-          body="Search never crosses folders. dataset= is required."
+          body="Requires dataset=."
         />
       </div>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
-        <Button href="/docs/api-reference">API reference</Button>
-        <Button href="/api#try" variant="outline">
-          Try the API
+        <Button href="/docs/api-reference">API documentation</Button>
+        <Button href="/api/login" variant="outline">
+          API Platform
         </Button>
       </div>
-      <p className="mt-8 text-muted text-base leading-7 tracking-[-0.01em]">
-        No authentication. Browser clients may call any origin. Fair-use rate
-        limits apply. Each match includes source attribution.
-      </p>
     </>
   );
 }

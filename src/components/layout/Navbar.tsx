@@ -29,10 +29,9 @@ function ExternalArrow() {
 
 export function Navbar() {
   const pathname = usePathname();
-  const dictionaryAuth = pathname.startsWith("/dictionaries");
+  const authScreen =
+    pathname === "/api/login" || pathname === "/api/register";
   const apiAuth = pathname === "/api" || pathname.startsWith("/api/");
-  const accountAuth = dictionaryAuth || apiAuth;
-  const account = dictionaryAuth ? nav.dictionaryAuth : nav.apiAuth;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -72,6 +71,8 @@ export function Navbar() {
     };
   }, []);
 
+  if (authScreen) return null;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -100,7 +101,7 @@ export function Navbar() {
 
         <nav className="flex min-w-0 items-center gap-1.5 sm:gap-4">
           {nav.links
-            .filter((link) => !accountAuth)
+            .filter((link) => !apiAuth)
             .map((link) => {
               const resolved =
                 link.label === "How it works" ? sectionNavLink(pathname) : link;
@@ -108,7 +109,7 @@ export function Navbar() {
                 <a
                   key={resolved.label}
                   href={resolved.href}
-                  className="hidden sm:inline text-muted hover:text-foreground transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
+                  className="hidden sm:inline text-white hover:text-white/70 transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                 >
                   {resolved.label}
                 </a>
@@ -123,9 +124,7 @@ export function Navbar() {
               onClick={() => {
                 setOpen((value) => !value);
               }}
-              className={`inline-flex shrink-0 items-center h-8 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
-                open ? "text-foreground" : "text-muted hover:text-foreground"
-              }`}
+              className="inline-flex shrink-0 items-center h-8 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-[13px] sm:text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 text-white hover:text-white/70"
             >
               {nav.menu.label}
             </button>
@@ -175,25 +174,25 @@ export function Navbar() {
             ) : null}
           </div>
 
-          {accountAuth ? (
+          {apiAuth ? (
             <Button
-              href={account.loginHref}
+              href={nav.apiAuth.loginHref}
               variant="outline"
               size="sm"
               className="shrink-0"
             >
-              {account.loginLabel}
+              {nav.apiAuth.loginLabel}
             </Button>
           ) : null}
 
-          {accountAuth ? (
+          {apiAuth ? (
             <Button
-              href={account.ctaHref}
+              href={nav.apiAuth.ctaHref}
               size="sm"
               className="shrink-0 max-sm:px-3"
             >
               <span className="sm:hidden">It&apos;s free</span>
-              <span className="hidden sm:inline">{account.cta}</span>
+              <span className="hidden sm:inline">{nav.apiAuth.cta}</span>
             </Button>
           ) : (
             <Button

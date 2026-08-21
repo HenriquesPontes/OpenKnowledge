@@ -6,7 +6,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/waitlist", "/api/lookup", "/api/v1"],
+      disallow: [
+        "/api/waitlist",
+        "/api/lookup",
+        "/api/v1",
+        "/api/keys",
+        "/api/auth",
+      ],
     },
     sitemap: `${APP_ORIGIN}/sitemap.xml`,
   };

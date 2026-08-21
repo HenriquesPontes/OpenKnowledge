@@ -1,13 +1,14 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { ApiExplorer } from "@/components/sections/ApiExplorer";
-import { apiPaths, languages } from "@/lib/constants";
-import { API_ORIGIN, fetchLanguagesCatalog } from "@/lib/catalog";
+import { ApiPlatformShell } from "@/components/sections/ApiPlatformShell";
+import { languages } from "@/lib/constants";
+import { fetchLanguagesCatalog } from "@/lib/catalog";
 
 export const metadata = {
   title: "API Platform",
   description:
-    "Public, read-only linguistic API at api.forrovivo.com. GET only. Does not invent translations, merge languages, or write lexicon data.",
+    "API Platform dashboard and live try UI. Full reference is in Documentation.",
   alternates: { canonical: "/api" },
 };
 
@@ -34,52 +35,34 @@ export default async function ApiPage() {
   return (
     <section className="pt-28 pb-20 sm:pt-36">
       <Container>
-        <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-          Product
-        </p>
-        <h1
-          className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
-          style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+        <ApiPlatformShell
+          marketing={
+            <>
+              <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
+                Product
+              </p>
+              <h1
+                className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
+                style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+              >
+                API Platform
+              </h1>
+              <p className="mt-4 max-w-[480px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
+                Keys and live try. Documentation is the source of truth.
+              </p>
+            </>
+          }
         >
-          API Platform
-        </h1>
-        <p className="mt-4 max-w-[640px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-          Public, read-only linguistic API. Versioned under /v1. GET only. Loads
-          the published JSON. Does not invent translations, merge languages, or
-          write lexicon data. No API key. Each match keeps its cited source.
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button href="#try" className="w-full sm:w-auto">
-            Try the API
-          </Button>
-          <Button href="/docs/quickstart" variant="outline" className="w-full sm:w-auto">
-            Quickstart
-          </Button>
-          <Button href="/docs/api-reference" variant="ghost" className="w-full sm:w-auto">
-            API reference
-          </Button>
-        </div>
+          <div className="mt-12">
+            <ApiExplorer datasets={datasets} />
+          </div>
 
-        <div className="mt-12">
-          <ApiExplorer datasets={datasets} />
-        </div>
-
-        <ul className="mt-12 divide-y divide-border border-t border-b border-border max-w-[720px]">
-          {apiPaths.map((item) => (
-            <li key={item.path} className="py-4">
-              <p className="text-white text-sm sm:text-base tracking-[-0.01em] break-all">
-                {item.method} {item.path}
-              </p>
-              <p className="mt-1 text-muted text-base tracking-[-0.01em]">
-                {item.detail}
-              </p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-8 max-w-[720px] text-muted text-base leading-7 tracking-[-0.01em]">
-          Curl and other clients should call {API_ORIGIN.replace("https://", "")}.
-          This page is the web UI for the same isolated /v1 routes.
-        </p>
+          <div className="mt-10">
+            <Button href="/docs" variant="outline" className="w-full sm:w-auto">
+              Documentation
+            </Button>
+          </div>
+        </ApiPlatformShell>
       </Container>
     </section>
   );

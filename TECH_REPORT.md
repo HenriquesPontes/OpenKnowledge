@@ -132,7 +132,7 @@ This application does **not**:
 - Authenticate API consumers (the public API is GET-only and currently keyless).
 - Implement machine translation. Machine translation is a ForroVivo platform capability, not a feature of this site.
 
-Dictionary login/register pages collect email via the waitlist route. They do not issue sessions or API keys.
+Site login is API Platform only (`/api/login`, `/api/register`). Former `/dictionaries/login` and `/dictionaries/register` paths permanently redirect there.
 
 ---
 
@@ -198,25 +198,25 @@ Next.js App Router. Root layout wraps every page with skip-link, Navbar, `<main 
 | `/languages` | `src/app/languages/page.tsx` | Isolated lexicons grouped by country; `?q=` search |
 | `/languages/[id]` | `src/app/languages/[id]/page.tsx` | Country hub or variety profile |
 | `/dictionaries` | `src/app/dictionaries/page.tsx` | Headword lookup UI |
-| `/dictionaries/login` | `src/app/dictionaries/login/page.tsx` | Email waitlist framed as login |
-| `/dictionaries/register` | `src/app/dictionaries/register/page.tsx` | Email waitlist framed as account request |
+| `/dictionaries/login` | `src/app/dictionaries/login/page.tsx` | Permanent alias to `/api/login` |
+| `/dictionaries/register` | `src/app/dictionaries/register/page.tsx` | Permanent alias to `/api/register` |
 | `/docs` | `src/app/docs/page.tsx` | Introduction |
 | `/docs/quickstart` | `src/app/docs/quickstart/page.tsx` | curl examples |
 | `/docs/api-reference` | `src/app/docs/api-reference/page.tsx` | Documented GET paths |
 | `/docs/methodology` | `src/app/docs/methodology/page.tsx` | Evidence pipeline |
-| `/knowledge` | `src/app/knowledge/page.tsx` | Knowledge Base overview + product tree |
+| `/knowledge` | `src/app/knowledge/page.tsx` | Permanent alias to `/languages` |
 | `/overview` | `src/app/overview/page.tsx` | Product family overview |
 | `/research` | `src/app/research/page.tsx` | Live lexicon atlas (flow + isolation network) |
 | `/about` | `src/app/about/page.tsx` | Mission, pipeline, founders |
 | `/api` | `src/app/api/page.tsx` | API playground (`#try`) and documented GET paths |
-| `/developers` | `src/app/developers/page.tsx` | Redirects to `/docs` |
+| `/developers` | `src/app/developers/page.tsx` | Permanent alias to `/docs` |
 | `/connect` | `src/app/connect/page.tsx` | Forro Connect |
 | `/app` | `src/app/app/page.tsx` | Forro Vivo App product page (app dark-green tokens) |
 | `/translation` | `src/app/translation/page.tsx` | Translation capability explainer (this site does not run a translator) |
 | `/legal` | `src/app/legal/page.tsx` | Company, privacy, EULA |
-| `/foundation` | `src/app/foundation/page.tsx` | Redirects to `/dictionaries` |
+| `/foundation` | `src/app/foundation/page.tsx` | Permanent alias to `/dictionaries` |
 
-`/languages/[id]` uses `generateStaticParams` for country IDs (except Angola as a hub — Angola is a language id) and all language IDs. Unknown IDs call `notFound()`.
+`/languages/[id]` uses `generateStaticParams` for country IDs (São Tomé, Cabo Verde, Guiné-Bissau, Angola) and all language IDs. Unknown IDs call `notFound()`.
 
 Docs pages share `src/app/docs/layout.tsx` (sidebar from `docsNav`).
 
@@ -279,7 +279,7 @@ Success if either store succeeded (`201`). Validation errors `400`. Unexpected e
 Used by:
 
 - Home hero (`Hero`)
-- Dictionary login and register (`DictionaryAccountForm`)
+- Forro Connect waitlist (`DictionaryAccountForm`)
 
 This is interest capture, not authentication.
 
@@ -341,7 +341,7 @@ Helpers:
 - `sampleByCountry` — one sample dataset per country family for the API page mockup
 - `countryEntryTotal` — sum `entry_count` for a prefix (`saotome` includes `saotome/forro`, etc.)
 
-Pages that consume the live catalog: `/languages`, `/languages/[id]`, `/knowledge`, `/research`, `/api`, `/dictionaries`. If the API is down, UI still lists varieties from constants; live counts simply omit.
+Pages that consume the live catalog: `/languages`, `/languages/[id]`, `/research`, `/api`, `/dictionaries`. If the API is down, UI still lists varieties from constants; live counts simply omit.
 
 ### 10.3 GeoJSON — `src/data/africa-countries.json`
 
@@ -409,7 +409,7 @@ Safe-area insets on body and footer for notched devices. Skip-to-content link in
 
 - **Container:** max width `77.5rem`, responsive horizontal padding.
 - **Button:** `primary` | `outline` | `ghost`; `default` | `sm`. Renders `<a>` when `href` is set; external http(s) opens in a new tab with `noopener noreferrer`.
-- **Navbar:** fixed, blur on scroll, three-column Forro Vivo mega-menu. On `/dictionaries/*` the CTAs switch to dictionary login/register.
+- **Navbar:** fixed, blur on scroll, three-column Forro Vivo mega-menu. On `/api` routes the CTAs switch to API Platform login/register.
 - **Footer:** company legal name, registration, Legal / Privacy / EULA, current year.
 
 Heading sizes use `clamp()` rather than fixed marketing type scales.
@@ -513,10 +513,10 @@ Visual language: charcoal ground, paper-white Africa map with a drop-shadow “c
 
 These are observations, not a roadmap.
 
-- Dictionary login/register are waitlist forms, not identity.
+- Site account doors are API Platform only; `/dictionaries/login` and `/dictionaries/register` permanently redirect to `/api/login` and `/api/register`.
 - `ProductShowcase` (git clone copy control) is unused.
 - Default Create Next App SVGs remain in `public/`.
-- `/foundation` is only a redirect.
+- `/knowledge`, `/developers`, and `/foundation` are permanent aliases to `/languages`, `/docs`, and `/dictionaries`.
 - Live lexical data and methodology source of truth live in the Linguistic Research GitHub repository and API, not in this app. This site can go stale on copy if those hosts change paths.
 - No automated test suite in this repository.
 - Waitlist has no rate limiting or CAPTCHA in-app.

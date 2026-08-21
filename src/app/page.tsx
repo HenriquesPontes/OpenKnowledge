@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/Container";
 export const metadata: Metadata = {
   title: {
     absolute:
-      "Open Knowledge — Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola",
+      "Open Knowledge | Creole languages of São Tomé, Cabo Verde, Guiné-Bissau, and Angola and other languages",
   },
   description:
     "Open knowledge for the Creole languages of São Tomé and Príncipe, Cabo Verde, Guiné-Bissau, and Angola. Isolated lexicons, attested sources, and a public API. Home of Forro Vivo.",

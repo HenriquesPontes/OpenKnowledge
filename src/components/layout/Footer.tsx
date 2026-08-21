@@ -1,8 +1,16 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { footer } from "@/lib/constants";
 
 export function Footer() {
+  const pathname = usePathname();
+  const authScreen =
+    pathname === "/api/login" || pathname === "/api/register";
   const year = new Date().getFullYear();
+
+  if (authScreen) return null;
 
   return (
     <footer className="mt-auto">

@@ -1,10 +1,5 @@
-import { redirect } from "next/navigation";
-
-export const metadata = {
-  title: "Knowledge",
-  robots: { index: false, follow: true },
-};
+import { permanentRedirect } from "next/navigation";
 
 export default function KnowledgePage() {
-  redirect("/languages");
+  permanentRedirect("/languages");
 }

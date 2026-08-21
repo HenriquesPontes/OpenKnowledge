@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["motion", "d3-geo"],
   },
+  async redirects() {
+    return [
+      { source: "/knowledge", destination: "/languages", permanent: true },
+      { source: "/developers", destination: "/docs", permanent: true },
+      { source: "/foundation", destination: "/dictionaries", permanent: true },
+      { source: "/dictionaries/login", destination: "/api/login", permanent: true },
+      { source: "/docs/api", destination: "/docs/api-reference", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

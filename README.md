@@ -17,7 +17,7 @@ The Knowledge Base does not treat AI-generated information as linguistic evidenc
 - API playground on `/api`
 - Lookup proxy (`/api/lookup`) and `/v1` proxy (`/api/v1/...`) into the public Linguistic Research API
 
-Dictionary login and register collect email. They are not identity. There is no automated test suite in this repository.
+Dictionary login and register redirect to API Platform. API Platform accounts use email and password. There is no automated test suite in this repository.
 
 This site is not the Forro Vivo App (App Store), and it does not implement machine translation. Forro Connect is on `/connect`: it connects learners with native speakers. The public CTA is the waitlist.
 
@@ -37,13 +37,17 @@ Then open the local Next.js origin. Production build: `npm run build` then `npm 
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for metadata. Defaults to `https://www.forrovivo.com`. Production is served at `https://forrovivo.com`. |
 | `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
 | `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
+| `API_SESSION_SECRET` | Server. Signs API Platform dashboard sessions. |
+| `API_REGISTRATION_CODES` | Server. Optional comma-separated registration codes for `/api/register`. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public. Cloudflare Turnstile site key for create-account. |
+| `TURNSTILE_SECRET_KEY` | Server. Cloudflare Turnstile secret for siteverify. |
 | `CLOUDFLARE_ACCOUNT_ID` | Server. Cloudflare account. |
 | `CLOUDFLARE_API_TOKEN` | Server. Cloudflare API. |
 | `R2_ACCESS_KEY_ID` | Server. R2 S3 access key. |
 | `R2_SECRET_ACCESS_KEY` | Server. R2 S3 secret. |
 | `R2_S3_ENDPOINT` | Server. R2 S3 API origin. |
 
-On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored).
+On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored). API Platform accounts write `API accounts/accounts.json` (gitignored) on persistent hosts; password hashes use scrypt.
 
 ## Related products
 

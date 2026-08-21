@@ -89,10 +89,15 @@ export default function LegalPage() {
               and related marks are used by {footer.companyName}.
             </p>
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              The public API is read-only. Authentication is not required
-              today. Rate limits and access controls may be introduced if usage
-              requires them. These terms are governed by the laws of England
-              and Wales.
+              The public API is read-only. Current authentication, rate limits,
+              and access rules are defined in{" "}
+              <a
+                href="/docs/api-reference"
+                className="text-white hover:text-white/70"
+              >
+                Documentation
+              </a>
+              . These terms are governed by the laws of England and Wales.
             </p>
           </section>
         </div>
