@@ -10,7 +10,6 @@ import {
   normalizeEmail,
   writeApiSession,
 } from "@/lib/api-session";
-import { verifyTurnstileToken } from "@/lib/turnstile";
 import { AUTH_RATE, clientIp, rateLimit } from "@/lib/rate-limit";
 
 const INVALID_EMAIL = "A valid email address is required.";
@@ -51,7 +50,6 @@ export async function POST(request: NextRequest) {
       password?: unknown;
       passwordConfirm?: unknown;
       registrationCode?: unknown;
-      turnstileToken?: unknown;
       remember?: unknown;
     };
 
@@ -66,8 +64,6 @@ export async function POST(request: NextRequest) {
       typeof payload.registrationCode === "string"
         ? payload.registrationCode
         : "";
-    const turnstileToken =
-      typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
     const remember =
       payload.remember === undefined ? true : Boolean(payload.remember);
 
@@ -109,18 +105,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: codeError, field: "registrationCode" },
         { status: codeError.includes("closed") ? 503 : 400 },
-      );
-    }
-
-    const challenge = await verifyTurnstileToken(
-      turnstileToken,
-      request.headers.get("cf-connecting-ip") ||
-        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim(),
-    );
-    if (!challenge.ok) {
-      return NextResponse.json(
-        { error: challenge.error, field: "turnstile" },
-        { status: 400 },
       );
     }
 

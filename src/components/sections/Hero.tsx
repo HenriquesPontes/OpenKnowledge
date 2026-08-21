@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { TurnstileWidget } from "@/components/sections/TurnstileWidget";
 import { useLocale } from "@/components/locale/LocaleProvider";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -13,18 +12,12 @@ export function Hero() {
   const { copy } = useLocale();
   const hero = copy.hero;
   const [email, setEmail] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
   async function handleWaitlist(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email.trim()) return;
-    if (!turnstileToken) {
-      setStatus("error");
-      setMessage(copy.apiAuth.turnstileRequired);
-      return;
-    }
 
     setStatus("loading");
     setMessage("");
@@ -36,7 +29,6 @@ export function Hero() {
         body: JSON.stringify({
           email: email.trim(),
           source: "home",
-          turnstileToken,
         }),
       });
 
@@ -46,7 +38,6 @@ export function Hero() {
         setStatus("success");
         setMessage(hero.success);
         setEmail("");
-        setTurnstileToken("");
       } else {
         setStatus("error");
         setMessage(data.error || hero.error);
@@ -104,7 +95,6 @@ export function Hero() {
                   {status === "loading" ? hero.joining : hero.waitlistCta}
                 </Button>
               </div>
-              <TurnstileWidget onToken={setTurnstileToken} />
               {status === "error" ? (
                 <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
                   {message}

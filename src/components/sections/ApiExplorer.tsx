@@ -61,7 +61,13 @@ function proxyPath(
   }
 }
 
-export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
+export function ApiExplorer({
+  datasets,
+  heading = true,
+}: {
+  datasets: DatasetOption[];
+  heading?: boolean;
+}) {
   const { copy } = useLocale();
   const t = copy.apiExplorer;
   const [operation, setOperation] = useState<Operation>("lookup");
@@ -109,12 +115,14 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
   }
 
   return (
-    <div id="try" className="scroll-mt-28">
-      <h2 className="text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        {t.tryApi}
-      </h2>
+    <div id="try" className={heading ? "scroll-mt-28" : "scroll-mt-4"}>
+      {heading ? (
+        <h2 className="text-white text-lg sm:text-[21px] tracking-[-0.01em]">
+          {t.tryApi}
+        </h2>
+      ) : null}
 
-      <form onSubmit={onSubmit} className="mt-6">
+      <form onSubmit={onSubmit} className={heading ? "mt-6" : undefined}>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <select
             value={operation}

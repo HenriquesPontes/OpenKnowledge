@@ -158,6 +158,15 @@ select.field {
   background-color: var(--background);
 }
 
+body:has([data-api-dashboard]) header,
+body:has([data-api-dashboard]) footer {
+  display: none;
+}
+
+body:has([data-api-dashboard]) {
+  overflow: hidden;
+}
+
 .page-enter {
   animation: page-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

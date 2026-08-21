@@ -36,7 +36,7 @@
        |
 [DONE] Phase 8: Persistent API Platform (D1 + Vercel env + Turnstile + invite codes)
        |
-[NEXT] Phase 9: Deeper developer onboarding & playground polish
+[NEXT] Phase 9: Developer polish (Step 1 done — TERM_NOT_FOUND; Step 2 richer examples)
        |
 [NEXT] Phase 10: Stronger Research API contract surfacing (parity with Worker OpenAPI)
        |
@@ -213,7 +213,7 @@ Persistent accounts on Vercel (D1, Postgres, or equivalent) are **Phase 8** — 
 
 ---
 
-## PHASE 8: Persistent API Platform (IN PROGRESS — blocks production accounts)
+## PHASE 8: Persistent API Platform (COMPLETED)
 
 > **Goal:** Create-account and key lifecycle work on Vercel without a local filesystem.  
 > Build **one step at a time**.
@@ -249,7 +249,9 @@ npx wrangler d1 execute <your-d1-name> --remote --file=./scripts/d1-api-accounts
 - [x] D1 adapter accepts Bearer API tokens **or** Global API Key + `CLOUDFLARE_EMAIL`
 - [x] Verified D1 `INSERT` / `SELECT` / `DELETE` with write-capable credentials
 - [x] Redeploy production
-- [ ] Prefer replacing Global API Key with a scoped **Account → D1 → Edit** API token when practical
+- [x] Prefer replacing Global API Key with a scoped **Account → D1 → Edit** API token when practical
+- [x] Scoped Bearer token wired locally and on Vercel; `CLOUDFLARE_EMAIL` removed
+- [ ] Still rotate/regenerate the old Global API Key (`cfk_…`) in Cloudflare Profile if it was exposed
 - [x] Confirm Turnstile production keys (widget created for forrovivo.com)
 - [x] Set `API_REGISTRATION_CODES` on Vercel while registration is gated
 - [ ] Smoke-test register → login → key issue on production UI (needs human Turnstile)
@@ -258,10 +260,23 @@ Database id is in env (not committed). Schema: `scripts/d1-api-accounts.sql`.
 
 ---
 
-## PHASE 9–10: Developer polish (NEXT)
+## PHASE 9–10: Developer polish (IN PROGRESS)
 
-- [ ] Richer playground examples and error storytelling (`TERM_NOT_FOUND` honesty)
+> Build **one step at a time**.
+
+### Step 1 — TERM_NOT_FOUND honesty (DONE)
+
+- [x] Playground explains `TERM_NOT_FOUND` as honest absence (no invented gloss)
+- [x] Example presets: hit (`kume`) and missing (`zzznomatch`)
+- [x] HTTP status line surfaces the error code when present
+
+### Step 2 — Richer playground examples (NEXT)
+
+- [ ] More curated lookup/search examples across isolated datasets
 - [ ] Keep docs / OpenAPI narrative aligned with Research Worker package releases
+
+### Step 3 — Product polish
+
 - [ ] Product polish that does not pull lexicon files into this repo
 
 ---
@@ -281,8 +296,7 @@ Database id is in env (not committed). Schema: `scripts/d1-api-accounts.sql`.
 | **UI** | Tailwind CSS + site sections | Knowledge / docs / API surfaces |
 | **Locale** | `fv_locale` + `i18n` / `i18n-copy` | EN / PT site chrome |
 | **Maps** | d3-geo + country overlays; cobe globe | Atlas without merging lexicons |
-| **Accounts (now)** | JSON local · D1 when Cloudflare env set | Optional API Platform |
-| **Accounts (next)** | Wire D1 env on Vercel (Phase 8 Step 3) | Production create-account |
+| **Accounts** | JSON local · Cloudflare D1 on Vercel | Optional API Platform |
 | **Data origin** | Research API (`api.forrovivo.com`) | Attested lexicons stay in Research |
 | **Hosting** | Vercel | Production forrovivo.com |
 | **Docs** | `TECH_REPORT.md` · `TECH_REPORT_v2.0.md` · this file | Spec vs shipped site |

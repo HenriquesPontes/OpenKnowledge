@@ -3,7 +3,6 @@ import path from "path";
 import { randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { WAITLIST_RATE, clientIp, rateLimit } from "@/lib/rate-limit";
-import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const BEEHIIV_API_BASE = "https://api.beehiiv.com/v2";
 const WAITLIST_DIR = path.join(process.cwd(), "Join waitlist");
@@ -147,8 +146,6 @@ export async function POST(request: NextRequest) {
     const email = payload.email;
     const normalized =
       typeof email === "string" ? email.trim().toLowerCase() : "";
-    const turnstileToken =
-      typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
     const source: WaitlistSource = WAITLIST_SOURCES.includes(
       payload.source as WaitlistSource,
     )
@@ -157,11 +154,6 @@ export async function POST(request: NextRequest) {
 
     if (!normalized || !EMAIL_PATTERN.test(normalized)) {
       return NextResponse.json({ error: INVALID_EMAIL }, { status: 400 });
-    }
-
-    const challenge = await verifyTurnstileToken(turnstileToken, ip);
-    if (!challenge.ok) {
-      return NextResponse.json({ error: challenge.error }, { status: 400 });
     }
 
     let stored = false;

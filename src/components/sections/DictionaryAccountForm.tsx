@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { TurnstileWidget } from "@/components/sections/TurnstileWidget";
 import { useLocale } from "@/components/locale/LocaleProvider";
 
 export function DictionaryAccountForm({
@@ -13,7 +12,6 @@ export function DictionaryAccountForm({
   const { copy } = useLocale();
   const waitlist = copy.waitlist;
   const [email, setEmail] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
   );
@@ -22,11 +20,6 @@ export function DictionaryAccountForm({
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!email.trim()) return;
-    if (!turnstileToken) {
-      setStatus("error");
-      setMessage(copy.apiAuth.turnstileRequired);
-      return;
-    }
 
     setStatus("loading");
     setMessage("");
@@ -38,7 +31,6 @@ export function DictionaryAccountForm({
         body: JSON.stringify({
           email: email.trim(),
           source: surface,
-          turnstileToken,
         }),
       });
       const data: { error?: string } = await response.json().catch(() => ({}));
@@ -46,7 +38,6 @@ export function DictionaryAccountForm({
         setStatus("success");
         setMessage(waitlist.successConnect);
         setEmail("");
-        setTurnstileToken("");
         return;
       }
       setStatus("error");
@@ -84,7 +75,6 @@ export function DictionaryAccountForm({
               {status === "loading" ? waitlist.joining : waitlist.joinCta}
             </Button>
           </div>
-          <TurnstileWidget onToken={setTurnstileToken} />
           {status === "error" ? (
             <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
               {message}

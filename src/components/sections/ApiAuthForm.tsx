@@ -122,7 +122,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
         nextErrors.registrationCode = t.registrationCodeRequired;
       }
     }
-    if (!turnstileToken) {
+    if (mode === "login" && !turnstileToken) {
       nextErrors.turnstile = t.turnstileRequired;
     }
     if (Object.keys(nextErrors).length > 0) {
@@ -141,7 +141,6 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               password,
               passwordConfirm,
               registrationCode: registrationCode.trim(),
-              turnstileToken,
               remember,
             }
           : {
@@ -319,13 +318,6 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               <FieldError message={fieldErrors.passwordConfirm} />
             </div>
           </div>
-
-          <TurnstileWidget
-            theme="light"
-            showLabel
-            onToken={setTurnstileToken}
-          />
-          <FieldError message={fieldErrors.turnstile} />
 
           <p className="mt-3 text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
             {t.agreeCreate}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authenticateAccount } from "@/lib/api-accounts";
+import { authenticateAccount, findAccount } from "@/lib/api-accounts";
 import {
   API_SESSION_SECRET_REQUIRED,
   clearApiSession,
@@ -23,11 +23,13 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ authenticated: false });
   }
+  const account = await findAccount(session.email);
   return NextResponse.json({
     authenticated: true,
     email: session.email,
-    key_prefix: session.key_prefix ?? null,
-    created_at: session.created_at,
+    key_prefix: session.key_prefix ?? account?.key_prefix ?? null,
+    created_at: account?.created_at ?? null,
+    signed_in_at: session.created_at,
   });
 }
 
