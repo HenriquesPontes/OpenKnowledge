@@ -8,7 +8,7 @@ export default function AboutPage() {
     <section className="pt-28 pb-20 sm:pt-36">
       <Container>
         <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-          Platform
+          About
         </p>
 
         <h1
