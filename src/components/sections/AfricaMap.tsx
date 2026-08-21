@@ -184,9 +184,16 @@ export function AfricaMap({
   const [svgState, setSvgState] = useState<"idle" | "loading" | "ready" | "missing">(
     "idle",
   );
+  // d3-geo path strings can differ slightly between Node SSR and the browser;
+  // render paths only after mount to avoid hydration attribute mismatches.
+  const [mapReady, setMapReady] = useState(false);
   const countryId = focusCountryId ?? openedCountryId;
   const focused = Boolean(countryId);
   const canLeave = Boolean(openedCountryId) && !lockedFocus;
+
+  useEffect(() => {
+    setMapReady(true);
+  }, []);
 
   useEffect(() => {
     if (!countryId) {
@@ -405,9 +412,13 @@ export function AfricaMap({
         ) : null}
         <svg
           viewBox={
-            usingSvg
-              ? `-6 -4 ${layout.width + 22} ${layout.height + 28}`
-              : `0 0 ${layout.width} ${layout.height}`
+            mapReady
+              ? usingSvg
+                ? `-6 -4 ${layout.width + 22} ${layout.height + 28}`
+                : `0 0 ${layout.width} ${layout.height}`
+              : focused
+                ? "0 0 720 560"
+                : "0 0 1200 1280"
           }
           role="img"
           aria-label={
@@ -422,6 +433,8 @@ export function AfricaMap({
               "drop-shadow(4px 8px 0 rgba(0,0,0,0.55)) drop-shadow(8px 18px 22px rgba(0,0,0,0.4))",
           }}
         >
+          {mapReady ? (
+            <>
           <g transform="translate(4 10)" pointerEvents="none" aria-hidden="true">
             {layout.paths.map((pathData) => (
               <path
@@ -521,8 +534,10 @@ export function AfricaMap({
               strokeWidth="2"
             />
           ) : null}
+            </>
+          ) : null}
         </svg>
-        {!focused
+        {mapReady && !focused
           ? layout.paths
               .filter((pathData) => pathData.markers.length > 0)
               .map((pathData) => (
@@ -539,7 +554,7 @@ export function AfricaMap({
                 />
               ))
           : null}
-        {!focused && countryCard ? (
+        {mapReady && !focused && countryCard ? (
           <div
             className="absolute left-0 top-[var(--card-y,64%)] z-20 -translate-y-1/2 sm:hidden"
             style={

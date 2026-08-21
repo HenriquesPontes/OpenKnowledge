@@ -33,7 +33,10 @@ export function Footer() {
               </a>
             ))}
           </nav>
-          <p className="mt-6 text-center text-muted/80 text-sm tracking-[-0.01em]">
+          <p
+            className="mt-6 text-center text-muted/80 text-sm tracking-[-0.01em]"
+            suppressHydrationWarning
+          >
             © {year} {footer.companyName}
           </p>
         </div>
