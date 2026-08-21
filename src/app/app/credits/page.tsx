@@ -1,13 +1,19 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { appCredits, footer } from "@/lib/constants";
+import { appCredits as appCreditsEn, footer } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Credits",
-  description: appCredits.description,
+  description: appCreditsEn.description,
 };
 
-export default function ForroVivoCreditsPage() {
+export default async function ForroVivoCreditsPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const { appCredits, appCreditsPage } = copy;
+
   return (
     <div className="forro-app flex flex-1 flex-col bg-background">
       <section className="pt-24 pb-20 sm:pt-36 lg:pt-44 sm:pb-28">
@@ -16,7 +22,7 @@ export default function ForroVivoCreditsPage() {
             href="/app"
             className="text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
           >
-            Forro Vivo App
+            {appCreditsPage.breadcrumb}
           </a>
           <h1
             className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
@@ -69,7 +75,7 @@ export default function ForroVivoCreditsPage() {
                 <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
                   {group.body}
                 </p>
-                {"href" in group && group.href ? (
+                {group.href ? (
                   <div className="mt-6">
                     <Button href={group.href} variant="outline">
                       {group.linkLabel}
@@ -81,16 +87,14 @@ export default function ForroVivoCreditsPage() {
 
             <section>
               <h2 className="font-heading text-white tracking-[-0.02em] text-[28px] leading-tight">
-                Company
+                {appCreditsPage.companyTitle}
               </h2>
               <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-                {footer.companyName} is a private limited company{" "}
-                {footer.registration.toLowerCase()}. The Forro Vivo App is a
-                ForroVivo product operated by {footer.companyName}.
+                {appCreditsPage.companyBody}
               </p>
               <div className="mt-6">
                 <Button href={footer.companiesHouseHref} variant="outline">
-                  Companies House
+                  {appCreditsPage.companiesHouse}
                 </Button>
               </div>
             </section>

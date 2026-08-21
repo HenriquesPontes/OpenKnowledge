@@ -4,9 +4,11 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import { cloneSection } from "@/lib/constants";
 
 export function ProductShowcase() {
+  const { copy } = useLocale();
   const [copied, setCopied] = useState(false);
 
   async function copyCommand() {
@@ -41,11 +43,11 @@ export function ProductShowcase() {
               onClick={copyCommand}
               className="shrink-0 cursor-pointer text-muted hover:text-white transition-colors duration-150 text-sm tracking-[-0.01em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 rounded-sm"
             >
-              {copied ? "Copied" : "Copy"}
+              {copied ? copy.cloneSection.copied : copy.cloneSection.copy}
             </button>
           </div>
           <Button href={cloneSection.github} className="mt-6">
-            {cloneSection.cta}
+            {copy.cloneSection.cta}
           </Button>
         </motion.div>
       </Container>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
 import { TurnstileWidget } from "@/components/sections/TurnstileWidget";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import { APP_STORE_URL } from "@/lib/catalog";
 import { nav } from "@/lib/constants";
 
@@ -51,6 +52,8 @@ function FieldError({ message }: { message?: string }) {
 
 export function ApiAuthForm({ mode }: { mode: Mode }) {
   const router = useRouter();
+  const { copy } = useLocale();
+  const t = copy.apiAuth;
   const [email, setEmail] = useState("");
   const [registrationCode, setRegistrationCode] = useState("");
   const [password, setPassword] = useState("");
@@ -89,14 +92,14 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       const data: { error?: string } = await response.json().catch(() => ({}));
       if (!response.ok) {
         setCodeStatus("error");
-        setCodeMessage(data.error || "That registration code is not valid.");
+        setCodeMessage(data.error || t.invalidValue);
         return;
       }
       setCodeStatus("ok");
-      setCodeMessage("Registration code applied.");
+      setCodeMessage("");
     } catch {
       setCodeStatus("error");
-      setCodeMessage("Could not check that registration code.");
+      setCodeMessage(t.couldNotContinue);
     }
   }
 
@@ -107,16 +110,16 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
     setFieldErrors({});
 
     const nextErrors: Record<string, string> = {};
-    if (!email.trim()) nextErrors.email = "Email cannot be blank.";
-    if (!password) nextErrors.password = "Password cannot be blank.";
+    if (!email.trim()) nextErrors.email = t.emailRequired;
+    if (!password) nextErrors.password = t.passwordRequired;
     if (mode === "register") {
       if (!passwordConfirm) {
-        nextErrors.passwordConfirm = "Repeat your password.";
+        nextErrors.passwordConfirm = t.repeatPassword;
       } else if (password !== passwordConfirm) {
-        nextErrors.passwordConfirm = "Passwords do not match.";
+        nextErrors.passwordConfirm = t.passwordMismatch;
       }
       if (!turnstileToken) {
-        nextErrors.turnstile = "Complete the human verification challenge.";
+        nextErrors.turnstile = t.turnstileRequired;
       }
     }
     if (Object.keys(nextErrors).length > 0) {
@@ -155,9 +158,9 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       if (!response.ok) {
         setStatus("error");
         if (data.field) {
-          setFieldErrors({ [data.field]: data.error || "Invalid value." });
+          setFieldErrors({ [data.field]: data.error || t.invalidValue });
         }
-        setMessage(data.error || "Could not continue.");
+        setMessage(data.error || t.couldNotContinue);
         return;
       }
       try {
@@ -177,9 +180,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
     } catch {
       setStatus("error");
       setMessage(
-        mode === "register"
-          ? "Could not create an account."
-          : "Could not sign in.",
+        mode === "register" ? t.couldNotCreate : t.couldNotSignIn,
       );
     }
   }
@@ -190,7 +191,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
         htmlFor="api-auth-email"
         className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
       >
-        {mode === "register" ? "Work email" : "Email"}{" "}
+        {mode === "register" ? t.workEmail : t.email}{" "}
         {mode === "register" ? (
           <span className="text-[#e11d48]" aria-hidden="true">
             *
@@ -200,7 +201,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       <input
         id="api-auth-email"
         type="email"
-        placeholder="name@company.com"
+        placeholder={t.placeholderEmail}
         required
         autoFocus
         autoComplete="email"
@@ -218,14 +219,14 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             htmlFor="api-auth-code"
             className="mt-3 block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
           >
-            Registration code
+            {t.registrationCode}
           </label>
           <div className="mt-1.5 flex overflow-hidden rounded-md border border-[#cfcfcf] focus-within:border-[#2563eb] focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.18)]">
             <input
               id="api-auth-code"
               type="text"
               autoComplete="off"
-              placeholder="Optional"
+              placeholder={t.optional}
               value={registrationCode}
               onChange={(event) => {
                 setRegistrationCode(event.target.value);
@@ -245,7 +246,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               }
               className="shrink-0 border-l border-[#cfcfcf] bg-[#f7f7f7] px-3 text-sm font-medium tracking-[-0.01em] text-[#141414] transition-colors hover:bg-[#efefef] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {codeStatus === "loading" ? "…" : "Apply"}
+              {codeStatus === "loading" ? "…" : t.apply}
             </button>
           </div>
           {codeMessage ? (
@@ -264,7 +265,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
                 htmlFor="api-auth-password"
                 className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
               >
-                Password{" "}
+                {t.password}{" "}
                 <span className="text-[#e11d48]" aria-hidden="true">
                   *
                 </span>
@@ -274,7 +275,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
                 type="password"
                 required
                 autoComplete="new-password"
-                placeholder="12+ · number · symbol"
+                placeholder={t.placeholderPassword}
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 disabled={status === "loading"}
@@ -288,7 +289,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
                 htmlFor="api-auth-password-confirm"
                 className="block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
               >
-                Repeat password{" "}
+                {t.repeatPassword}{" "}
                 <span className="text-[#e11d48]" aria-hidden="true">
                   *
                 </span>
@@ -314,19 +315,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
           <FieldError message={fieldErrors.turnstile} />
 
           <p className="mt-3 text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
-            By creating an account you agree to the{" "}
-            <a href="/legal/terms" className="underline underline-offset-2">
-              terms
-            </a>
-            ,{" "}
-            <a href="/legal/privacy" className="underline underline-offset-2">
-              privacy policy
-            </a>
-            , and{" "}
-            <a href="/legal/eula" className="underline underline-offset-2">
-              EULA
-            </a>
-            .
+            {t.agreeCreate}
           </p>
         </>
       ) : (
@@ -335,7 +324,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             htmlFor="api-auth-password"
             className="mt-3 block text-sm font-semibold tracking-[-0.01em] text-[#141414]"
           >
-            Password
+            {t.password}
           </label>
           <input
             id="api-auth-password"
@@ -358,7 +347,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
               className="mt-[2px] h-3.5 w-3.5 shrink-0 rounded-[3px] border border-[#c8c8c8] accent-[#141414]"
             />
             <span className="text-sm leading-4 tracking-[-0.01em] text-[#4a4a4a]">
-              Save email and stay signed in on this device
+              {t.staySignedIn}
             </span>
           </label>
         </>
@@ -371,11 +360,11 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       >
         {status === "loading"
           ? mode === "register"
-            ? "Creating account…"
-            : "Signing in…"
+            ? t.creating
+            : t.signingIn
           : mode === "register"
-            ? "Create account"
-            : "Sign in"}
+            ? t.createAccount
+            : t.signIn}
       </button>
 
       {status === "error" && message && !Object.keys(fieldErrors).length ? (
@@ -391,6 +380,8 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
 }
 
 export function ApiAuthScreen({ mode }: { mode: Mode }) {
+  const { copy } = useLocale();
+  const t = copy.apiAuth;
   const isLogin = mode === "login";
 
   return (
@@ -399,7 +390,7 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
         <div className="flex shrink-0 items-center justify-between gap-4">
           <a
             href="/"
-            aria-label="Open Knowledge home"
+            aria-label={t.home}
             className="inline-flex items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]/20"
           >
             <Image
@@ -417,21 +408,21 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
             href={isLogin ? "/api/register" : "/api/login"}
             className="inline-flex h-8 items-center rounded-full border border-[#d8d8d8] bg-white px-3.5 text-sm tracking-[-0.01em] text-[#141414] transition-colors hover:border-[#b8b8b8] hover:bg-[#f7f7f7] lg:hidden"
           >
-            {isLogin ? "Sign up" : "Sign in"}
+            {isLogin ? t.signUp : t.signIn}
           </a>
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col justify-center py-2">
           <div className="mx-auto w-full max-w-[28rem]">
             <p className="text-xs font-medium uppercase tracking-[0.08em] text-[#8a8a8a]">
-              API Platform
+              {t.platformTitle}
             </p>
             <h1 className="mt-1.5 font-heading text-[1.55rem] tracking-[-0.03em] leading-[1.15] text-[#141414] sm:text-[1.85rem]">
-              {isLogin ? "Sign in to API Platform" : "Create your API account"}
+              {isLogin ? t.signInTitle : t.createTitle}
             </h1>
             {isLogin ? (
               <p className="mt-1.5 text-sm leading-5 tracking-[-0.01em] text-[#5c5c5c]">
-                Use your email and password to open the dashboard.
+                {t.subtitle}
               </p>
             ) : null}
 
@@ -440,22 +431,22 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
             <p className="mt-3 text-center text-sm tracking-[-0.01em] text-[#5c5c5c]">
               {isLogin ? (
                 <>
-                  Don&apos;t have an account?{" "}
+                  {t.noAccount}{" "}
                   <a
                     href="/api/register"
                     className="font-medium text-[#2563eb] hover:text-[#1d4ed8]"
                   >
-                    Sign up
+                    {t.signUp}
                   </a>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  {t.haveAccount}{" "}
                   <a
                     href="/api/login"
                     className="font-medium text-[#2563eb] hover:text-[#1d4ed8]"
                   >
-                    Sign in
+                    {t.signIn}
                   </a>
                 </>
               )}
@@ -464,28 +455,13 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
                 href="/docs"
                 className="font-medium text-[#2563eb] hover:text-[#1d4ed8]"
               >
-                Docs
+                {t.docs}
               </a>
             </p>
 
             {isLogin ? (
               <p className="mt-3 text-center text-xs leading-4 tracking-[-0.01em] text-[#8a8a8a]">
-                By continuing, you agree to the{" "}
-                <a href="/legal/terms" className="underline underline-offset-2">
-                  terms
-                </a>
-                ,{" "}
-                <a
-                  href="/legal/privacy"
-                  className="underline underline-offset-2"
-                >
-                  privacy policy
-                </a>
-                , and{" "}
-                <a href="/legal/eula" className="underline underline-offset-2">
-                  EULA
-                </a>
-                .
+                {t.agreeLogin}
               </p>
             ) : null}
           </div>
@@ -513,13 +489,13 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
 
         <div className="relative z-10 flex flex-1 flex-col justify-center px-10 pb-12 xl:px-14">
           <p className="text-sm tracking-[-0.01em] text-white/65">
-            ForroVivo Linguistic Research API
+            {t.marketingBody}
           </p>
           <h2
             className="mt-3 max-w-[13ch] font-heading tracking-[-0.03em] leading-[1.08]"
             style={{ fontSize: "clamp(2rem, 3.6vw, 3.1rem)" }}
           >
-            Where attested Forro data becomes callable.
+            {t.marketingTitle}
           </h2>
           <div className="mt-6">
             <Button
@@ -527,7 +503,7 @@ export function ApiAuthScreen({ mode }: { mode: Mode }) {
               variant="outline"
               className="rounded-full border-white/25 bg-transparent text-white hover:border-white/45 hover:bg-white/5"
             >
-              Documentation
+              {t.documentation}
             </Button>
           </div>
         </div>

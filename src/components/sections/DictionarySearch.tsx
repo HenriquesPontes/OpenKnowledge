@@ -3,8 +3,10 @@
 import { useMemo, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import { API_ORIGIN, isCountryDataset } from "@/lib/catalog";
 import { countries, languages } from "@/lib/constants";
+import type { SiteCopy } from "@/lib/i18n";
 
 const AfricaMap = dynamic(
   () =>
@@ -36,20 +38,7 @@ type LookupResult = {
   entries?: unknown[];
 };
 
-const MATCH_LABEL: Record<string, string> = {
-  exact: "Exact match",
-  normalized: "Spelling match",
-  "diacritic-insensitive": "Match ignoring accents",
-};
-
-const EXTRA_LABEL: Record<string, string> = {
-  orthography: "Orthography",
-  semantic_category: "Semantic category",
-  regional_information: "Regional note",
-  usage_notes: "Usage",
-  notes: "Notes",
-  cross_language_relation: "Cross-language relation",
-};
+type DictCopy = SiteCopy["dictionarySearch"];
 
 function countryIsoForDataset(dataset: string) {
   const language = languages.find((item) => item.dataset === dataset);
@@ -138,14 +127,32 @@ function errorMessage(data: unknown, fallback: string) {
   );
 }
 
-function matchLabel(match: string | undefined) {
+function matchLabel(match: string | undefined, t: DictCopy) {
   if (!match) return null;
-  return MATCH_LABEL[match] ?? match.replace(/-/g, " ");
+  const labels: Record<string, string> = {
+    exact: t.exactMatch,
+    normalized: t.spellingMatch,
+    "diacritic-insensitive": t.accentMatch,
+  };
+  return labels[match] ?? match.replace(/-/g, " ");
 }
 
-function senseLabel(index: number, total: number) {
-  if (total <= 1) return "Lexical entry";
-  return `Sense ${index + 1} of ${total}`;
+function senseLabel(index: number, total: number, t: DictCopy) {
+  if (total <= 1) return t.lexicalEntry;
+  return t.senseOf
+    .replace("{index}", String(index + 1))
+    .replace("{total}", String(total));
+}
+
+function extraLabels(t: DictCopy): Record<string, string> {
+  return {
+    orthography: t.orthography,
+    semantic_category: t.semanticCategory,
+    regional_information: t.regionalNote,
+    usage_notes: t.usage,
+    notes: t.notes,
+    cross_language_relation: t.crossLanguage,
+  };
 }
 
 function audioSrc(item: Record<string, unknown>, dataset: string) {
@@ -187,13 +194,16 @@ function EntryCard({
   dataset,
   index,
   total,
+  t,
 }: {
   entry: Record<string, unknown>;
   dataset: string;
   index: number;
   total: number;
+  t: DictCopy;
 }) {
-  const headword = display(entry.headword) ?? "Untitled entry";
+  const labels = extraLabels(t);
+  const headword = display(entry.headword) ?? t.untitled;
   const pronunciation = display(entry.pronunciation);
   const ipa = display(entry.ipa);
   const phonetic =
@@ -240,13 +250,13 @@ function EntryCard({
       caption:
         display(item.primary_text) ||
         display(item.kind) ||
-        "Recording",
+        t.recording,
       translation: display(item.translation_pt) || display(item.translation_en),
     }))
     .filter((item) => item.src);
 
   const extraKeys = Object.keys(entry).filter((key) => {
-    if (key in EXTRA_LABEL) return Boolean(display(entry[key]));
+    if (key in labels) return Boolean(display(entry[key]));
     return false;
   });
 
@@ -255,7 +265,7 @@ function EntryCard({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-muted text-sm tracking-[-0.01em]">
-            {senseLabel(index, total)}
+            {senseLabel(index, total, t)}
           </p>
           <h2 className="mt-1 font-heading text-white tracking-[-0.03em] leading-[1.1] text-[2rem] sm:text-[2.5rem]">
             {headword}
@@ -272,7 +282,11 @@ function EntryCard({
             <Chip>{partOfSpeechLabel}</Chip>
           ) : null}
           {verification ? <Chip>{verification}</Chip> : null}
-          {confidence ? <Chip>{confidence} confidence</Chip> : null}
+          {confidence ? (
+            <Chip>
+              {confidence} {t.confidence}
+            </Chip>
+          ) : null}
         </div>
       </div>
 
@@ -283,19 +297,19 @@ function EntryCard({
       ) : null}
 
       {portuguese ? (
-        <Row label="Portuguese">
+        <Row label={t.portuguese}>
           <p>{portuguese}</p>
         </Row>
       ) : null}
 
       {english ? (
-        <Row label="English">
+        <Row label={t.english}>
           <p>{english}</p>
         </Row>
       ) : null}
 
       {example || examplePt || exampleEn ? (
-        <Row label="Example">
+        <Row label={t.example}>
           {example ? <p className="italic">{example}</p> : null}
           {examplePt ? (
             <p className={example ? "mt-1 text-muted" : undefined}>{examplePt}</p>
@@ -309,43 +323,43 @@ function EntryCard({
       ) : null}
 
       {grammar ? (
-        <Row label="Grammar">
+        <Row label={t.grammar}>
           <p>{grammar}</p>
         </Row>
       ) : null}
 
       {culture ? (
-        <Row label="Cultural context">
+        <Row label={t.culturalContext}>
           <p>{culture}</p>
         </Row>
       ) : null}
 
       {etymology ? (
-        <Row label="Etymology">
+        <Row label={t.etymology}>
           <p>{etymology}</p>
         </Row>
       ) : null}
 
       {variants.length ? (
-        <Row label="Variants">
+        <Row label={t.variants}>
           <p>{variants.join(" · ")}</p>
         </Row>
       ) : null}
 
       {synonyms.length ? (
-        <Row label="Synonyms">
+        <Row label={t.synonyms}>
           <p>{synonyms.join(" · ")}</p>
         </Row>
       ) : null}
 
       {relatedTerms.length ? (
-        <Row label="Related terms">
+        <Row label={t.relatedTerms}>
           <p>{relatedTerms.join(" · ")}</p>
         </Row>
       ) : null}
 
       {appearsIn.length ? (
-        <Row label="Appears in">
+        <Row label={t.appearsIn}>
           <ul className="space-y-2">
             {appearsIn.map((item, itemIndex) => (
               <li key={`${display(item.id) ?? itemIndex}`}>
@@ -353,7 +367,7 @@ function EntryCard({
                   {display(item.title) ||
                     display(item.headword) ||
                     display(item.kind) ||
-                    "Documented occurrence"}
+                    t.documentedOccurrence}
                 </p>
                 {display(item.kind) ? (
                   <p className="mt-0.5 text-muted text-sm">{display(item.kind)}</p>
@@ -371,7 +385,7 @@ function EntryCard({
           display(item.text) ||
           display(item.kind),
       ) ? (
-        <Row label="Related">
+        <Row label={t.related}>
           <ul className="space-y-2">
             {related.map((item, itemIndex) => {
               const title =
@@ -394,7 +408,7 @@ function EntryCard({
       ) : null}
 
       {audio.length ? (
-        <Row label="Recordings">
+        <Row label={t.recordings}>
           <ul className="space-y-3">
             {audio.map((item, itemIndex) => (
               <li
@@ -412,9 +426,7 @@ function EntryCard({
                   controls
                   preload="none"
                   src={item.src ?? undefined}
-                >
-                  Your browser does not play this recording.
-                </audio>
+                />
               </li>
             ))}
           </ul>
@@ -422,13 +434,13 @@ function EntryCard({
       ) : null}
 
       {extraKeys.map((key) => (
-        <Row key={key} label={EXTRA_LABEL[key]}>
+        <Row key={key} label={labels[key]}>
           <p>{display(entry[key])}</p>
         </Row>
       ))}
 
       {source || sourceTitle ? (
-        <Row label="Source">
+        <Row label={t.source}>
           <p>{source || sourceTitle}</p>
           {sourceTitle && source && sourceTitle !== source ? (
             <p className="mt-1 text-muted text-sm">{sourceTitle}</p>
@@ -450,7 +462,7 @@ function EntryCard({
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open source
+              {sourceUrl}
             </a>
           ) : null}
         </Row>
@@ -462,9 +474,11 @@ function EntryCard({
 function LookupResults({
   result,
   datasets,
+  t,
 }: {
   result: LookupResult;
   datasets: DatasetOption[];
+  t: DictCopy;
 }) {
   const dataset = display(result.dataset) ?? "";
   const datasetLabel =
@@ -474,21 +488,23 @@ function LookupResults({
     .filter((item): item is Record<string, unknown> => Boolean(item));
   const queried = display(result.query?.headword);
   const language = display(result.language_name) || display(result.language);
-  const match = matchLabel(display(result.match) ?? undefined);
+  const match = matchLabel(display(result.match) ?? undefined, t);
   const count = typeof result.count === "number" ? result.count : entries.length;
 
   return (
     <div className="mt-10 max-w-[720px]" aria-live="polite">
       <div className="rounded-2xl border border-border bg-surface px-4 py-4 sm:px-6">
         <p className="text-white text-base tracking-[-0.01em]">
-          {queried ? `Results for “${queried}”` : "Lookup results"}
+          {queried
+            ? t.resultsFor.replace("{query}", queried)
+            : t.lookupResults}
         </p>
         <p className="mt-1 text-muted text-sm tracking-[-0.01em] leading-relaxed">
           {[
             datasetLabel,
             language,
             count
-              ? `${count} ${count === 1 ? "sense" : "senses"}`
+              ? `${count} ${count === 1 ? t.sense : t.senses}`
               : null,
             match,
           ]
@@ -505,6 +521,7 @@ function LookupResults({
             dataset={dataset}
             index={index}
             total={entries.length}
+            t={t}
           />
         ))}
       </div>
@@ -519,6 +536,8 @@ export function DictionarySearch({
   datasets: DatasetOption[];
   children?: ReactNode;
 }) {
+  const { copy } = useLocale();
+  const t = copy.dictionarySearch;
   const options = useMemo(
     () => datasets.filter((item) => !isCountryDataset(item.dataset)),
     [datasets],
@@ -543,25 +562,20 @@ export function DictionarySearch({
       );
       const data: unknown = await response.json();
       if (!response.ok) {
-        setError(
-          errorMessage(
-            data,
-            "No entry found for that word in this dictionary.",
-          ),
-        );
+        setError(errorMessage(data, t.noEntry));
         setStatus("done");
         return;
       }
       const payload = asRecord(data);
       if (!payload) {
-        setError("The dictionary could not complete that lookup.");
+        setError(t.lookupFailed);
         setStatus("done");
         return;
       }
       setResult(payload as LookupResult);
       setStatus("done");
     } catch {
-      setError("The dictionary could not complete that lookup.");
+      setError(t.lookupFailed);
       setStatus("done");
     }
   }
@@ -604,7 +618,7 @@ export function DictionarySearch({
           <select
             value={dataset}
             onChange={(event) => setDataset(event.target.value)}
-            aria-label="Dictionary"
+            aria-label={t.ariaDictionary}
             className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           >
             {options.map((item) => (
@@ -617,12 +631,12 @@ export function DictionarySearch({
             type="search"
             value={headword}
             onChange={(event) => setHeadword(event.target.value)}
-            placeholder="Search a word"
+            placeholder={t.placeholder}
             required
             className="field w-full min-w-0 lg:w-auto lg:min-w-[280px]"
           />
           <Button type="submit" disabled={status === "loading"}>
-            {status === "loading" ? "Looking up…" : "Look up"}
+            {status === "loading" ? t.lookingUp : t.lookUp}
           </Button>
         </div>
       </form>
@@ -641,7 +655,9 @@ export function DictionarySearch({
             <p className="text-muted text-base tracking-[-0.01em]">{error}</p>
           ) : null}
 
-          {result ? <LookupResults result={result} datasets={options} /> : null}
+          {result ? (
+            <LookupResults result={result} datasets={options} t={t} />
+          ) : null}
         </div>
       ) : null}
     </div>

@@ -5,7 +5,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import { nav, sectionNavLink } from "@/lib/constants";
+import type { Dictionary } from "@/lib/i18n";
 
 function ExternalArrow() {
   return (
@@ -27,8 +29,38 @@ function ExternalArrow() {
   );
 }
 
+function navLabel(label: string, t: Dictionary["nav"], pathname: string) {
+  const section = sectionNavLink(pathname);
+  if (label === "How it works") {
+    return section.label === "Roadmap" ? t.roadmap : t.howItWorks;
+  }
+  const map: Record<string, string> = {
+    Dictionaries: t.dictionaries,
+    Products: t.products,
+    Overview: t.overview,
+    "Forro Vivo App": t.forroVivoApp,
+    "Forro Connect": t.forroConnect,
+    Languages: t.languages,
+    Documentation: t.documentation,
+    "API Platform": t.apiPlatform,
+    Methodology: t.methodology,
+    Research: t.research,
+    "Machine Translation": t.machineTranslation,
+    About: t.about,
+    Careers: t.careers,
+    GitHub: t.github,
+    Legal: t.legal,
+    "Explore products": t.exploreProducts,
+    Learn: t.learn,
+    Company: t.company,
+  };
+  return map[label] ?? label;
+}
+
 export function Navbar() {
   const pathname = usePathname();
+  const { dictionary, copy } = useLocale();
+  const t = dictionary.nav;
   const authScreen =
     pathname === "/api/login" || pathname === "/api/register";
   const apiAuth = pathname === "/api" || pathname.startsWith("/api/");
@@ -84,7 +116,7 @@ export function Navbar() {
       <Container className="relative flex items-center justify-between gap-2 sm:gap-3 h-[60px] sm:h-[64px] pt-[env(safe-area-inset-top)]">
         <a
           href="/"
-          aria-label="Forro Vivo home"
+          aria-label={copy.layout.homeAria}
           className="group flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
         >
           <Image
@@ -107,11 +139,11 @@ export function Navbar() {
                 link.label === "How it works" ? sectionNavLink(pathname) : link;
               return (
                 <a
-                  key={resolved.label}
+                  key={resolved.href + resolved.label}
                   href={resolved.href}
                   className="hidden sm:inline text-white hover:text-white/70 transition-colors duration-150 text-sm tracking-[-0.01em] whitespace-nowrap rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                 >
-                  {resolved.label}
+                  {navLabel(resolved.label, t, pathname)}
                 </a>
               );
             })}
@@ -126,7 +158,7 @@ export function Navbar() {
               }}
               className="inline-flex shrink-0 items-center h-9 px-1.5 sm:px-0 cursor-pointer transition-colors duration-150 text-sm tracking-[-0.01em] rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25 text-white hover:text-white/70"
             >
-              {nav.menu.label}
+              {t.products}
             </button>
             {open ? (
               <div
@@ -137,7 +169,7 @@ export function Navbar() {
                   {nav.menu.columns.map((column) => (
                     <div key={column.heading}>
                       <p className="text-muted text-xs tracking-[0.08em] uppercase mb-2.5">
-                        {column.heading}
+                        {navLabel(column.heading, t, pathname)}
                       </p>
                       <ul className="space-y-1">
                         {column.items.map((item) => (
@@ -162,7 +194,7 @@ export function Navbar() {
                                   : "block py-1.5 text-foreground text-sm tracking-[-0.01em] hover:text-muted transition-colors duration-150 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
                               }
                             >
-                              {item.label}
+                              {navLabel(item.label, t, pathname)}
                             </a>
                           </li>
                         ))}
@@ -181,7 +213,7 @@ export function Navbar() {
               size="sm"
               className="shrink-0"
             >
-              {nav.apiAuth.loginLabel}
+              {t.logIn}
             </Button>
           ) : null}
 
@@ -191,8 +223,10 @@ export function Navbar() {
               size="sm"
               className="shrink-0 max-sm:px-3"
             >
-              <span className="sm:hidden">It&apos;s free</span>
-              <span className="hidden sm:inline">{nav.apiAuth.cta}</span>
+              <span className="sm:hidden">
+                {localeShortFree(t.createAccount)}
+              </span>
+              <span className="hidden sm:inline">{t.createAccount}</span>
             </Button>
           ) : (
             <Button
@@ -200,7 +234,7 @@ export function Navbar() {
               size="sm"
               className="shrink-0 gap-1.5 whitespace-nowrap"
             >
-              {nav.cta}
+              {t.tryForroVivo}
               <ExternalArrow />
             </Button>
           )}
@@ -208,4 +242,8 @@ export function Navbar() {
       </Container>
     </header>
   );
+}
+
+function localeShortFree(createAccount: string) {
+  return createAccount.includes("grátis") ? "É grátis" : "It's free";
 }

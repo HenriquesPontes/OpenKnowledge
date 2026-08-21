@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
 import { ApiDashboard } from "@/components/sections/ApiDashboard";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 export function ApiPlatformShell({
   children,
@@ -11,6 +12,7 @@ export function ApiPlatformShell({
   children: ReactNode;
   marketing: ReactNode;
 }) {
+  const { copy } = useLocale();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -43,15 +45,15 @@ export function ApiPlatformShell({
           {authenticated === false ? (
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button href="/api/login" className="w-full sm:w-auto">
-                Log in
+                {copy.apiPlatform.logIn}
               </Button>
               <Button href="/api/register" variant="outline" className="w-full sm:w-auto">
-                Create an account
+                {copy.apiPlatform.createAccount}
               </Button>
             </div>
           ) : (
             <p className="mt-8 text-muted text-sm tracking-[-0.01em]">
-              Checking session…
+              {copy.apiPlatform.checkingSession}
             </p>
           )}
           {children}

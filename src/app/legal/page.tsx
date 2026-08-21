@@ -1,4 +1,5 @@
-import { legalNav, footer } from "@/lib/constants";
+import { cookies } from "next/headers";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Legal",
@@ -7,8 +8,10 @@ export const metadata = {
   alternates: { canonical: "/legal" },
 };
 
-export default function LegalPage() {
-  const policies = legalNav.filter((item) => item.href !== "/legal");
+export default async function LegalPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const policies = copy.legalNav.filter((item) => item.href !== "/legal");
 
   return (
     <>
@@ -16,11 +19,10 @@ export default function LegalPage() {
         className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
         style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
       >
-        Legal
+        {copy.legalOverview.title}
       </h1>
       <p className="mt-4 max-w-[40rem] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        Policies for Open Knowledge, Linguistic Research, the Forro Vivo App,
-        and Forro Connect — operated by {footer.companyName}.
+        {copy.legalOverview.intro}
       </p>
 
       <div className="mt-10 divide-y divide-border border-t border-b border-border">

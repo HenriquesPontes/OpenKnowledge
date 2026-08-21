@@ -1,13 +1,19 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
-import { careersPage } from "@/lib/constants";
+import { careersPage as careersPageEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Careers",
-  description: careersPage.description,
+  description: careersPageEn.description,
   alternates: { canonical: "/careers" },
 };
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const careersPage = copy.careersPage;
+
   return (
     <section className="pt-28 pb-20 sm:pt-36">
       <Container>

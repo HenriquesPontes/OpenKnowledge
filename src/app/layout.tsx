@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Ovo } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { LocaleProvider } from "@/components/locale/LocaleProvider";
 import {
   APP_ORIGIN,
   APP_STORE_URL,
@@ -9,6 +11,7 @@ import {
   jsonLdScript,
 } from "@/lib/catalog";
 import { footer } from "@/lib/constants";
+import { LOCALE_COOKIE, getSiteCopy, localeFromCookie } from "@/lib/i18n";
 import "./globals.css";
 
 const ovo = Ovo({
@@ -102,25 +105,35 @@ const organizationJsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const locale = localeFromCookie(cookieStore.get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html
+      lang={locale === "pt" ? "pt" : "en"}
+      className="dark"
+      suppressHydrationWarning
+    >
       <body className={`${ovo.variable} antialiased min-h-dvh flex flex-col`}>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-[#141414]"
-        >
-          Skip to content
-        </a>
-        <Navbar />
-        <main id="main" className="flex flex-1 flex-col">
-          {children}
-        </main>
-        <Footer />
+        <LocaleProvider initialLocale={locale}>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-[#141414]"
+          >
+            {copy.layout.skipToContent}
+          </a>
+          <Navbar />
+          <main id="main" className="flex-1 flex flex-col">
+            {children}
+          </main>
+          <Footer />
+        </LocaleProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd) }}

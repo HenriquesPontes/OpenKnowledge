@@ -3,12 +3,26 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/Container";
-import { countries, languages, principle } from "@/lib/constants";
+import { useLocale } from "@/components/locale/LocaleProvider";
+import { countries, languages } from "@/lib/constants";
 import {
   countryEntryTotal,
   recordForDataset,
   type LanguageRecord,
 } from "@/lib/catalog";
+import type { Locale, SiteCopy } from "@/lib/i18n";
+
+function countryTitle(
+  id: string,
+  titles: SiteCopy["countries"],
+  fallback: string,
+) {
+  return titles[id as keyof typeof titles] ?? fallback;
+}
+
+function formatCount(value: number, locale: Locale) {
+  return value.toLocaleString(locale === "pt" ? "pt-PT" : "en-GB");
+}
 
 function Card({
   href,
@@ -50,22 +64,30 @@ export function FeatureGrid({
 }: {
   catalog?: LanguageRecord[];
 }) {
+  const { copy, locale } = useLocale();
+  const fg = copy.featureGrid;
+
   return (
     <section id="countries" className="pt-2 pb-12 sm:pb-16 md:pb-20 [content-visibility:auto] [contain-intrinsic-size:auto_24rem]">
       <Container>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {countries.map((country, i) => {
             const total = countryEntryTotal(catalog, country.datasetPrefix);
+            const title = countryTitle(
+              country.id,
+              copy.countries,
+              country.title,
+            );
             return (
               <Card
                 key={country.id}
                 href={country.href}
                 delay={i * 0.1}
-                title={`${country.number} — ${country.title}`}
+                title={`${country.number} — ${title}`}
                 subtitle={country.aliases}
                 meta={
                   total > 0
-                    ? `${total.toLocaleString("en-GB")} lexical entries across isolated folders`
+                    ? `${formatCount(total, locale)} ${fg.lexicalAcrossFolders}`
                     : undefined
                 }
               />
@@ -86,12 +108,16 @@ export function VarietyGrid({
   catalog?: LanguageRecord[];
   query?: string;
 }) {
+  const { copy, locale } = useLocale();
   const needle = query.trim().toLowerCase();
   const country = countries.find((item) => item.id === countryId);
+  const localizedCountry = country
+    ? countryTitle(country.id, copy.countries, country.title)
+    : undefined;
   const countryHit =
     !needle ||
-    [country?.title, country?.aliases, country?.id].some((value) =>
-      value?.toLowerCase().includes(needle),
+    [localizedCountry, country?.title, country?.aliases, country?.id].some(
+      (value) => value?.toLowerCase().includes(needle),
     );
 
   const varieties = languages.filter((item) => {
@@ -117,7 +143,7 @@ export function VarietyGrid({
             subtitle={`${language.aliases} · ${language.group}`}
             meta={
               typeof entryCount === "number"
-                ? `${entryCount.toLocaleString("en-GB")} lexical entries`
+                ? `${formatCount(entryCount, locale)} ${copy.featureGrid.lexicalEntries}`
                 : undefined
             }
           />
@@ -146,11 +172,10 @@ type ResearchRow = {
   knowledge: Record<string, number>;
 };
 
-function formatCount(value: number) {
-  return value.toLocaleString("en-GB");
-}
-
-function researchRows(catalog: LanguageRecord[]): ResearchRow[] {
+function researchRows(
+  catalog: LanguageRecord[],
+  countryTitles: SiteCopy["countries"],
+): ResearchRow[] {
   return languages.map((language) => {
     const country = countries.find((item) => item.id === language.country);
     const live = recordForDataset(catalog, language.dataset);
@@ -161,7 +186,9 @@ function researchRows(catalog: LanguageRecord[]): ResearchRow[] {
       href: language.href,
       group: language.group,
       countryId: language.country,
-      countryTitle: country?.title ?? language.country,
+      countryTitle: country
+        ? countryTitle(country.id, countryTitles, country.title)
+        : language.country,
       entries: typeof live?.entry_count === "number" ? live.entry_count : null,
       knowledge: live?.knowledge ?? {},
     };
@@ -186,6 +213,8 @@ function LexiconFlow({
   onFocusCountry: (id: string | null) => void;
   onHover: (id: string | null) => void;
 }) {
+  const { copy, locale } = useLocale();
+  const fg = copy.featureGrid;
   const ranked = rows
     .filter((row) => typeof row.entries === "number")
     .sort((a, b) => (b.entries ?? 0) - (a.entries ?? 0));
@@ -196,7 +225,7 @@ function LexiconFlow({
       .reduce((sum, row) => sum + (row.entries ?? 0), 0);
     return {
       id: country.id,
-      title: country.title,
+      title: countryTitle(country.id, copy.countries, country.title),
       iso: country.isoA2,
       color: REGION_COLOR[country.id] ?? "#ffffff",
       total,
@@ -239,7 +268,7 @@ function LexiconFlow({
         viewBox="0 0 780 460"
         className="block w-full h-auto"
         role="img"
-        aria-label="Published lexical entries by isolated lexicon, flowing into country nodes"
+        aria-label={fg.flowAria}
       >
         {Array.from({ length: ticks }, (_, i) => {
           const value = Math.round((max * (ticks - 1 - i)) / (ticks - 1));
@@ -261,7 +290,7 @@ function LexiconFlow({
                 fill="#818181"
                 fontSize="10"
               >
-                {formatCount(value)}
+                {formatCount(value, locale)}
               </text>
             </g>
           );
@@ -339,7 +368,7 @@ function LexiconFlow({
                 fill="#141414"
                 fontSize="11"
               >
-                {formatCount(node.total)}
+                {formatCount(node.total, locale)}
               </text>
             </g>
           );
@@ -352,7 +381,7 @@ function LexiconFlow({
             {active.countryTitle} · {active.group}
           </p>
           <p className="mt-1 text-white text-xs tracking-[-0.01em]">
-            {formatCount(active.entries ?? 0)} lexical entries
+            {formatCount(active.entries ?? 0, locale)} {fg.lexicalEntries}
           </p>
         </div>
       ) : null}
@@ -388,6 +417,7 @@ function IsolationNetwork({
   onFocusCountry: (id: string | null) => void;
   onHover: (id: string | null) => void;
 }) {
+  const { copy } = useLocale();
   const svgRef = useRef<SVGSVGElement>(null);
   const movedRef = useRef(false);
   const [nodes, setNodes] = useState<NetNode[]>([]);
@@ -439,7 +469,7 @@ function IsolationNetwork({
     const seed: NetNode[] = countries.map((country) => ({
       id: `country:${country.id}`,
       kind: "country",
-      label: country.title,
+      label: countryTitle(country.id, copy.countries, country.title),
       countryId: country.id,
       href: country.href,
       entries: rows
@@ -537,7 +567,7 @@ function IsolationNetwork({
       }
     }
     setNodes(seed.map((node) => ({ ...node })));
-  }, [rows, edges, knowledgeKeys, width, height]);
+  }, [rows, edges, knowledgeKeys, width, height, copy.countries]);
 
   function pointerSvg(event: React.PointerEvent) {
     const svg = svgRef.current;
@@ -587,7 +617,7 @@ function IsolationNetwork({
       viewBox={`0 0 ${width} ${height}`}
       className="block w-full h-auto touch-manipulation"
       role="img"
-      aria-label="Isolation network of countries, lexicons, and knowledge fields"
+      aria-label={copy.featureGrid.networkAria}
       onPointerMove={onPointerMove}
       onPointerUp={() => setDragId(null)}
       onPointerLeave={() => {
@@ -682,7 +712,12 @@ export function ResearchStudio({
 }: {
   catalog?: LanguageRecord[];
 }) {
-  const rows = useMemo(() => researchRows(catalog), [catalog]);
+  const { copy, locale } = useLocale();
+  const fg = copy.featureGrid;
+  const rows = useMemo(
+    () => researchRows(catalog, copy.countries),
+    [catalog, copy.countries],
+  );
   const [focusCountry, setFocusCountry] = useState<string | null>(null);
   const [hoverId, setHoverId] = useState<string | null>(null);
   const published = rows.filter((row) => typeof row.entries === "number");
@@ -699,12 +734,10 @@ export function ResearchStudio({
             className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
             style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
           >
-            Published entries by language
+            {fg.publishedTitle}
           </h2>
           <p className="mt-3 max-w-[40rem] text-muted text-sm sm:text-base leading-6 tracking-[-0.01em]">
-            Each bar is one language or variety. Colour is the country it
-            belongs to. Hover a bar to read the name; click a country node to
-            isolate that cluster.
+            {fg.publishedBody}
           </p>
           <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16.5rem] lg:gap-10">
             <LexiconFlow
@@ -717,7 +750,7 @@ export function ResearchStudio({
             <div className="space-y-8">
               <div>
                 <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
-                  Most documented
+                  {fg.mostDocumented}
                 </p>
                 <ul className="space-y-2">
                   {densest.map((row) => (
@@ -730,7 +763,7 @@ export function ResearchStudio({
                       >
                         <span>{row.title}</span>
                         <span className="text-muted tabular-nums">
-                          {formatCount(row.entries ?? 0)}
+                          {formatCount(row.entries ?? 0, locale)}
                         </span>
                       </a>
                     </li>
@@ -739,7 +772,7 @@ export function ResearchStudio({
               </div>
               <div>
                 <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
-                  Least documented
+                  {fg.leastDocumented}
                 </p>
                 <ul className="space-y-2">
                   {sparsest.map((row) => (
@@ -752,7 +785,7 @@ export function ResearchStudio({
                       >
                         <span>{row.title}</span>
                         <span className="text-muted tabular-nums">
-                          {formatCount(row.entries ?? 0)}
+                          {formatCount(row.entries ?? 0, locale)}
                         </span>
                       </a>
                     </li>
@@ -761,7 +794,7 @@ export function ResearchStudio({
               </div>
               <div>
                 <p className="text-muted text-xs tracking-[0.08em] uppercase mb-3">
-                  Entries by country
+                  {fg.entriesByCountry}
                 </p>
                 <ul className="space-y-2">
                   {countries.map((country) => (
@@ -779,7 +812,9 @@ export function ResearchStudio({
                           className="h-2.5 w-2.5 rounded-full"
                           style={{ background: REGION_COLOR[country.id] }}
                         />
-                        <span>{country.title}</span>
+                        <span>
+                          {countryTitle(country.id, copy.countries, country.title)}
+                        </span>
                       </button>
                     </li>
                   ))}
@@ -788,7 +823,7 @@ export function ResearchStudio({
             </div>
           </div>
           <p className="mt-4 text-muted text-xs tracking-[-0.01em]">
-            Source: ForroVivo Linguistic Research API · isolated lexicons only
+            {fg.sourceFootnote}
           </p>
         </div>
       ) : null}
@@ -798,16 +833,14 @@ export function ResearchStudio({
           className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
           style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
         >
-          Isolation is the method
+          {fg.isolationTitle}
         </h2>
         <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10">
           <p className="text-muted text-sm sm:text-base leading-7 tracking-[-0.01em]">
-            {principle}
+            {copy.principle}
           </p>
           <p className="text-muted text-sm sm:text-base leading-7 tracking-[-0.01em]">
-            São Tomé, Cabo Verde, Guiné-Bissau, and Angola stay separate indexes.
-            Varieties inside a country still keep their own folders. Close spelling
-            is not a reason to merge.
+            {fg.isolationBody}
           </p>
         </div>
       </div>
@@ -817,12 +850,10 @@ export function ResearchStudio({
           className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
           style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
         >
-          Knowledge graph of isolated communities
+          {fg.graphTitle}
         </h2>
         <p className="mt-3 max-w-[40rem] text-muted text-sm sm:text-base leading-6 tracking-[-0.01em]">
-          Colour is community. Label size follows published volume. Drag a node,
-          hover to see neighbours, click a lexicon to open it. There are no edges
-          between countries.
+          {fg.graphBody}
         </p>
         <div className="mt-8 overflow-hidden rounded-2xl bg-[#0c0c0c]">
           <IsolationNetwork
@@ -834,8 +865,7 @@ export function ResearchStudio({
           />
         </div>
         <p className="mt-4 text-muted text-xs tracking-[-0.01em]">
-          Colour marks country community. Size marks published lexical entries.
-          Weights mark co-membership in the same isolated index, never a merged lexicon.
+          {fg.graphFootnote}
         </p>
       </div>
     </div>

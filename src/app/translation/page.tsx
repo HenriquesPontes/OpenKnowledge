@@ -1,10 +1,13 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { translationPage } from "@/lib/constants";
+import { Architecture } from "@/components/sections/Architecture";
+import { translationPage as translationPageEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Machine Translation",
-  description: translationPage.description,
+  description: translationPageEn.description,
   alternates: { canonical: "/translation" },
 };
 
@@ -16,7 +19,11 @@ function Arrow() {
   );
 }
 
-export default function TranslationCapabilityPage() {
+export default async function TranslationCapabilityPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const translationPage = copy.translationPage;
+
   return (
     <div className="flex flex-1 flex-col bg-background text-foreground">
       <section className="pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-40">
@@ -36,6 +43,12 @@ export default function TranslationCapabilityPage() {
           </p>
         </Container>
       </section>
+
+      <Architecture
+        title={copy.translationArchitecture.title}
+        description={copy.translationArchitecture.description}
+        steps={copy.translationArchitecture.steps}
+      />
 
       <section className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         <div className="mx-auto max-w-[77.5rem] rounded-[1.75rem] border border-border bg-surface px-6 py-20 text-center sm:px-12 sm:py-28">
@@ -76,7 +89,7 @@ export default function TranslationCapabilityPage() {
                   <dl className="border-t border-border pt-4">
                     <div className="flex items-baseline justify-between gap-4">
                       <dt className="text-xs tracking-[0.08em] uppercase text-muted">
-                        Surface
+                        {copy.common.surface}
                       </dt>
                       <dd className="text-sm tracking-[-0.01em] text-white text-right">
                         {card.surface}

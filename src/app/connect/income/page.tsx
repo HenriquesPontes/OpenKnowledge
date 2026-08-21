@@ -1,17 +1,24 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
 import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountForm";
-import { connectIncome, productOverview } from "@/lib/constants";
+import { connectIncome as connectIncomeEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Community income",
-  description: connectIncome.description,
+  description: connectIncomeEn.description,
   alternates: { canonical: "/connect/income" },
 };
 
-export default function CommunityIncomePage() {
+export default async function CommunityIncomePage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const connectIncome = copy.connectIncome;
+  const photoCredit = copy.productOverview.photoCredit;
+
   return (
     <div className="flex flex-1 flex-col bg-background">
       <section className="pt-24 pb-10 sm:pt-36 lg:pt-44 sm:pb-16">
@@ -39,7 +46,7 @@ export default function CommunityIncomePage() {
           </div>
           <div className="mt-4">
             <Button href="/connect" variant="outline">
-              Forro Connect
+              {copy.common.forroConnect}
             </Button>
           </div>
         </Container>
@@ -58,12 +65,12 @@ export default function CommunityIncomePage() {
             />
           </div>
           <p className="mt-4 text-muted text-sm tracking-[-0.01em]">
-            {productOverview.photoCredit.label}:{" "}
+            {photoCredit.label}:{" "}
             <a
-              href={productOverview.photoCredit.href}
+              href={photoCredit.href}
               className="text-white hover:text-white/70 transition-colors"
             >
-              {productOverview.photoCredit.name}
+              {photoCredit.name}
             </a>
           </p>
         </Container>

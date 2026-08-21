@@ -1,20 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
-import { appFaq, appLanding, appRoadmap, appVision, appWhy, footer } from "@/lib/constants";
+import {
+  appFaq as appFaqEn,
+  appLanding as appLandingEn,
+  footer,
+} from "@/lib/constants";
 import { APP_ORIGIN, APP_STORE_URL, jsonLdScript } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: { absolute: appLanding.seoTitle },
-  description: appLanding.seoDescription,
+  title: { absolute: appLandingEn.seoTitle },
+  description: appLandingEn.seoDescription,
   alternates: { canonical: "/app" },
   openGraph: {
     type: "website",
     url: `${APP_ORIGIN}/app`,
-    title: appLanding.seoTitle,
-    description: appLanding.seoDescription,
+    title: appLandingEn.seoTitle,
+    description: appLandingEn.seoDescription,
     images: [
       {
         url: "/images/app/phone-hero.png",
@@ -24,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: appLanding.seoTitle,
-    description: appLanding.seoDescription,
+    title: appLandingEn.seoTitle,
+    description: appLandingEn.seoDescription,
     images: ["/images/app/phone-hero.png"],
   },
 };
@@ -38,7 +44,7 @@ const appJsonLd = {
       name: "Forro Vivo",
       applicationCategory: "EducationalApplication",
       operatingSystem: "iOS",
-      description: appLanding.seoDescription,
+      description: appLandingEn.seoDescription,
       url: `${APP_ORIGIN}/app`,
       downloadUrl: APP_STORE_URL,
       image: `${APP_ORIGIN}/images/app/phone-hero.png`,
@@ -56,7 +62,7 @@ const appJsonLd = {
     },
     {
       "@type": "FAQPage",
-      mainEntity: appFaq.items.map((item) => ({
+      mainEntity: appFaqEn.items.map((item) => ({
         "@type": "Question",
         name: item.question,
         acceptedAnswer: {
@@ -88,14 +94,22 @@ function ExternalArrow() {
   );
 }
 
-function StoreCtas({ className }: { className?: string }) {
+function StoreCtas({
+  className,
+  storeCta,
+  playCta,
+}: {
+  className?: string;
+  storeCta: string;
+  playCta: string;
+}) {
   return (
     <div className={className}>
       <Button
         href={APP_STORE_URL}
         className="w-fit gap-1.5 bg-[#58CC02] text-[#121C17] hover:bg-[#4CAF50] focus-visible:ring-offset-[#121C17]"
       >
-        {appLanding.storeCta}
+        {storeCta}
         <ExternalArrow />
       </Button>
       <Button
@@ -103,13 +117,17 @@ function StoreCtas({ className }: { className?: string }) {
         disabled
         className="w-fit border-[#4CAF50] focus-visible:ring-offset-[#121C17]"
       >
-        {appLanding.playCta}
+        {playCta}
       </Button>
     </div>
   );
 }
 
-export default function ForroVivoAppPage() {
+export default async function ForroVivoAppPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const { appLanding, appWhy, appVision, appFaq, appRoadmap } = copy;
+
   return (
     <div className="forro-app flex flex-1 flex-col bg-background">
       <script
@@ -131,11 +149,19 @@ export default function ForroVivoAppPage() {
               <p className="mt-4 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
                 {appLanding.description}
               </p>
-              <StoreCtas className="mt-6 hidden flex-row flex-wrap gap-3 items-center md:flex" />
+              <StoreCtas
+                className="mt-6 hidden flex-row flex-wrap gap-3 items-center md:flex"
+                storeCta={appLanding.storeCta}
+                playCta={appLanding.playCta}
+              />
             </div>
 
             <div className="relative flex flex-col items-center">
-              <StoreCtas className="mb-6 flex flex-col gap-3 items-center md:hidden" />
+              <StoreCtas
+                className="mb-6 flex flex-col gap-3 items-center md:hidden"
+                storeCta={appLanding.storeCta}
+                playCta={appLanding.playCta}
+              />
               <div
                 className="relative mx-auto w-full max-w-[280px] drop-shadow-2xl md:max-w-[350px]"
                 style={{ aspectRatio: "9 / 19.5" }}
@@ -155,7 +181,7 @@ export default function ForroVivoAppPage() {
                 <div className="absolute inset-[-5.84%_-19.79%_-0.01%_0] overflow-hidden rounded-[85px]">
                   <Image
                     src="/images/app/phone-hero.png"
-                    alt="Forro Vivo on iPhone"
+                    alt={appLanding.phoneAlt}
                     fill
                     priority
                     quality={100}
@@ -265,7 +291,7 @@ export default function ForroVivoAppPage() {
               variant="outline"
               className="border-[#4CAF50] hover:border-[#58CC02] hover:bg-[#243829] focus-visible:ring-offset-[#121C17]"
             >
-              Credits
+              {copy.common.credits}
             </Button>
           </div>
         </Container>

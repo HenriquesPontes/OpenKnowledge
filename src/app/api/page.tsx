@@ -1,9 +1,11 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { ApiExplorer } from "@/components/sections/ApiExplorer";
 import { ApiPlatformShell } from "@/components/sections/ApiPlatformShell";
 import { languages } from "@/lib/constants";
 import { fetchLanguagesCatalog } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "API Platform",
@@ -13,6 +15,8 @@ export const metadata = {
 };
 
 export default async function ApiPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
   const catalog = await fetchLanguagesCatalog();
   const catalogOptions =
     catalog?.languages
@@ -39,17 +43,16 @@ export default async function ApiPage() {
           marketing={
             <>
               <p className="text-muted text-sm sm:text-base tracking-[-0.01em]">
-                Product
+                {copy.apiPage.productEyebrow}
               </p>
               <h1
                 className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
                 style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
               >
-                API Platform
+                {copy.apiPage.title}
               </h1>
               <p className="mt-4 max-w-[480px] text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-                Build with attested linguistic data. Manage your keys and try
-                live requests — the full reference is in Documentation.
+                {copy.apiPage.body}
               </p>
             </>
           }
@@ -60,7 +63,7 @@ export default async function ApiPage() {
 
           <div className="mt-10">
             <Button href="/docs" variant="outline" className="w-full sm:w-auto">
-              Documentation
+              {copy.apiPage.documentation}
             </Button>
           </div>
         </ApiPlatformShell>

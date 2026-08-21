@@ -1,17 +1,22 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Architecture } from "@/components/sections/Architecture";
 import { GlobeWireframe } from "@/components/sections/GlobeWireframe";
 import { DictionaryAccountForm } from "@/components/sections/DictionaryAccountForm";
-import { connectArchitecture, connectIncome } from "@/lib/constants";
+import { connectArchitecture as connectArchitectureEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Forro Connect — Live Forro lessons",
-  description: connectArchitecture.description,
+  description: connectArchitectureEn.description,
   alternates: { canonical: "/connect" },
 };
 
-export default function ForroConnectPage() {
+export default async function ForroConnectPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+
   return (
     <>
       <section className="pt-24 pb-8 sm:pt-36 sm:pb-12 lg:pt-44 lg:pb-12">
@@ -20,12 +25,10 @@ export default function ForroConnectPage() {
             className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
             style={{ fontSize: "clamp(1.85rem, 8vw, 4.5rem)" }}
           >
-            Forro Connect
+            {copy.connectPage.title}
           </h1>
           <p className="mt-2 max-w-[593px] text-muted text-base sm:text-lg lg:text-[21px] tracking-[-0.01em] leading-normal">
-            While ForroVivo uses technology to help people discover and learn
-            Forro, Forro Connect connects learners directly with real Forro
-            speakers and cultural knowledge holders.
+            {copy.connectPage.description}
           </p>
           <div id="waitlist" className="mt-6 max-w-[593px]">
             <DictionaryAccountForm surface="connect" />
@@ -38,9 +41,9 @@ export default function ForroConnectPage() {
       </div>
 
       <Architecture
-        title={connectArchitecture.title}
-        description={connectArchitecture.description}
-        steps={connectArchitecture.steps}
+        title={copy.connectArchitecture.title}
+        description={copy.connectArchitecture.description}
+        steps={copy.connectArchitecture.steps}
       />
 
       <section className="pt-10 pb-20 sm:pt-16 sm:pb-28">
@@ -49,14 +52,14 @@ export default function ForroConnectPage() {
             className="font-heading text-white tracking-[-0.03em] leading-[1.05] text-center"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
-            {connectIncome.title}
+            {copy.connectIncome.title}
           </h2>
           <p className="mt-4 mx-auto max-w-[720px] text-center text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-            {connectIncome.description}
+            {copy.connectIncome.description}
           </p>
           <div className="mt-8 flex justify-center">
-            <Button href={connectIncome.href}>
-              Community income breakdown
+            <Button href={copy.connectIncome.href}>
+              {copy.connectPage.incomeCta}
             </Button>
           </div>
         </Container>

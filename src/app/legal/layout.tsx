@@ -1,11 +1,15 @@
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
-import { legalNav } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
-export default function LegalLayout({
+export default async function LegalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+
   return (
     <section className="flex-1 pt-24 pb-20 sm:pt-28 lg:pt-36">
       <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
@@ -14,13 +18,13 @@ export default function LegalLayout({
             href="/legal"
             className="mb-3 inline-block text-muted hover:text-white transition-colors text-sm tracking-[-0.01em] lg:mb-6"
           >
-            Legal
+            {copy.legalLayout.title}
           </a>
           <p className="text-white text-sm tracking-[-0.01em] mb-3 lg:mb-6">
-            Policies
+            {copy.legalLayout.policies}
           </p>
           <nav className="flex gap-x-5 gap-y-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:block lg:space-y-2 lg:overflow-visible lg:pb-0">
-            {legalNav.map((item) => (
+            {copy.legalNav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}

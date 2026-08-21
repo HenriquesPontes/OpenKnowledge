@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -10,8 +11,19 @@ import {
   fetchLanguagesCatalog,
   recordForDataset,
 } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
+import type { SiteCopy } from "@/lib/i18n";
 
 type Props = { params: Promise<{ id: string }> };
+
+function countryTitle(
+  countryId: string | undefined,
+  countriesCopy: SiteCopy["countries"],
+  fallback: string | undefined,
+) {
+  if (!countryId) return fallback;
+  return countriesCopy[countryId as keyof SiteCopy["countries"]] ?? fallback;
+}
 
 export function generateStaticParams() {
   const countryIds = countries.map((country) => ({ id: country.id }));
@@ -37,6 +49,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function LanguageProfilePage({ params }: Props) {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
   const { id } = await params;
   const catalog = await fetchLanguagesCatalog();
   const records = catalog?.languages ?? [];
@@ -44,6 +58,7 @@ export default async function LanguageProfilePage({ params }: Props) {
   const countryHub = countries.find((item) => item.id === id);
   if (countryHub) {
     const total = countryEntryTotal(records, countryHub.datasetPrefix);
+    const title = countryTitle(countryHub.id, copy.countries, countryHub.title);
     return (
       <section className="pt-28 pb-20 sm:pt-36">
         <Container>
@@ -51,13 +66,13 @@ export default async function LanguageProfilePage({ params }: Props) {
             href="/languages"
             className="text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
           >
-            Languages
+            {copy.languageDetail.breadcrumb}
           </a>
           <h1
             className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
-            {countryHub.title}
+            {title}
           </h1>
           <p className="mt-3 text-muted text-lg sm:text-[21px] tracking-[-0.01em]">
             {countryHub.aliases}
@@ -67,8 +82,8 @@ export default async function LanguageProfilePage({ params }: Props) {
           </p>
           {total > 0 ? (
             <p className="mt-4 text-white text-base tracking-[-0.01em]">
-              {total.toLocaleString("en-GB")} lexical entries across isolated
-              folders
+              {total.toLocaleString(locale === "pt" ? "pt-PT" : "en-GB")}{" "}
+              {copy.languageDetail.lexicalAcrossFolders}
             </p>
           ) : null}
           {countryHub.isoA2 ? (
@@ -94,6 +109,11 @@ export default async function LanguageProfilePage({ params }: Props) {
   );
   const country = countries.find((item) => item.id === language.country);
   const countryHref = `/languages/${language.country}`;
+  const localizedCountry = countryTitle(
+    language.country,
+    copy.countries,
+    country?.title,
+  );
 
   return (
     <section className="pt-28 pb-20 sm:pt-36">
@@ -102,7 +122,7 @@ export default async function LanguageProfilePage({ params }: Props) {
           href={countryHref}
           className="text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
         >
-          {country?.title} · {language.group}
+          {localizedCountry} · {language.group}
         </a>
         <h1
           className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
@@ -129,42 +149,48 @@ export default async function LanguageProfilePage({ params }: Props) {
         <dl className="mt-10 max-w-[480px] divide-y divide-border border-t border-b border-border">
           {language.iso ? (
             <div className="flex justify-between gap-6 py-4">
-              <dt className="text-muted">ISO 639-3</dt>
+              <dt className="text-muted">{copy.languageDetail.isoLabel}</dt>
               <dd className="text-white">{language.iso}</dd>
             </div>
           ) : null}
           <div className="flex justify-between gap-6 py-4">
-            <dt className="text-muted">Dataset</dt>
+            <dt className="text-muted">{copy.languageDetail.datasetLabel}</dt>
             <dd className="text-white">{language.dataset}</dd>
           </div>
           {typeof live?.entry_count === "number" ? (
             <div className="flex justify-between gap-6 py-4">
-              <dt className="text-muted">Lexical entries</dt>
+              <dt className="text-muted">
+                {copy.languageDetail.lexicalEntriesLabel}
+              </dt>
               <dd className="text-white">
-                {live.entry_count.toLocaleString("en-GB")}
+                {live.entry_count.toLocaleString(
+                  locale === "pt" ? "pt-PT" : "en-GB",
+                )}
               </dd>
             </div>
           ) : null}
           {publishedKnowledge.map(([name, count]) => (
             <div key={name} className="flex justify-between gap-6 py-4">
               <dt className="text-muted capitalize">{name}</dt>
-              <dd className="text-white">{count.toLocaleString("en-GB")}</dd>
+              <dd className="text-white">
+                {count.toLocaleString(locale === "pt" ? "pt-PT" : "en-GB")}
+              </dd>
             </div>
           ))}
         </dl>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-3">
           <Button href={`${API_ORIGIN}/v1/${language.dataset}`}>
-            Open in the API
+            {copy.languageDetail.openApi}
           </Button>
           <Button href={language.github} variant="outline">
-            View dataset on GitHub
+            {copy.languageDetail.viewGithub}
           </Button>
           <Button
             href={`${API_ORIGIN}/v1/${language.dataset}/entries`}
             variant="ghost"
           >
-            Download JSON via API
+            {copy.languageDetail.downloadJson}
           </Button>
         </div>
       </Container>

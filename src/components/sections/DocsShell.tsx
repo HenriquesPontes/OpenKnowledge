@@ -2,26 +2,27 @@
 
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
-import {
-  appDocsNav,
-  connectDocsNav,
-  openKnowledgeDocsNav,
-} from "@/lib/constants";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 function DocsSidebar({
   title,
   nav,
 }: {
   title: string;
-  nav: typeof openKnowledgeDocsNav;
+  nav: Array<{
+    heading: string;
+    links: Array<{ label: string; href: string }>;
+  }>;
 }) {
+  const { copy } = useLocale();
+
   return (
     <aside>
       <a
         href="/docs"
         className="mb-3 inline-block text-muted hover:text-white transition-colors text-sm tracking-[-0.01em] lg:mb-6"
       >
-        ← All products
+        {copy.docsShell.allProducts}
       </a>
       <p className="text-white text-sm tracking-[-0.01em] mb-3 lg:mb-6">
         {title}
@@ -53,6 +54,7 @@ function DocsSidebar({
 
 export function DocsShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { copy } = useLocale();
   const isHub = pathname === "/docs";
 
   if (isHub) {
@@ -64,13 +66,15 @@ export function DocsShell({ children }: { children: React.ReactNode }) {
     pathname === "/docs/connect" || pathname.startsWith("/docs/connect/");
 
   const title = isApp
-    ? "Forro Vivo App"
+    ? copy.docsShell.forroVivoApp
     : isConnect
-      ? "Forro Connect"
-      : "Open Knowledge";
-  const nav = (
-    isApp ? appDocsNav : isConnect ? connectDocsNav : openKnowledgeDocsNav
-  ) as typeof openKnowledgeDocsNav;
+      ? copy.docsShell.forroConnect
+      : copy.docsShell.openKnowledge;
+  const nav = isApp
+    ? copy.appDocsNav
+    : isConnect
+      ? copy.connectDocsNav
+      : copy.openKnowledgeDocsNav;
 
   return (
     <Container className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">

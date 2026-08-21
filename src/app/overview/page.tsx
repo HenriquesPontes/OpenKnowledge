@@ -1,14 +1,21 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { Container } from "@/components/ui/Container";
-import { productOverview } from "@/lib/constants";
+import { productOverview as productOverviewEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
+import type { SiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Overview",
-  description: productOverview.description,
+  description: productOverviewEn.description,
   alternates: { canonical: "/overview" },
 };
 
-function Collage() {
+function Collage({
+  productOverview,
+}: {
+  productOverview: SiteCopy["productOverview"];
+}) {
   const top = productOverview.collage.slice(0, 4);
   const bottom = productOverview.collage.slice(4);
 
@@ -61,14 +68,17 @@ function Collage() {
   );
 }
 
-export default function OverviewPage() {
+export default async function OverviewPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const { productOverview } = copy;
   const { statement } = productOverview;
 
   return (
     <div className="flex flex-1 flex-col bg-background">
       <section className="pt-[4.75rem] sm:pt-[5.25rem]">
         <Container className="max-w-[90rem]">
-          <Collage />
+          <Collage productOverview={productOverview} />
           <p className="mt-4 text-muted text-sm tracking-[-0.01em]">
             {productOverview.photoCredit.label}:{" "}
             <a

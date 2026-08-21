@@ -1,12 +1,14 @@
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { careerRoleById, careersPage } from "@/lib/constants";
+import { careersPage as careersPageEn, careerRoleById } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-  return careersPage.roles.map((role) => ({ id: role.id }));
+  return careersPageEn.roles.map((role) => ({ id: role.id }));
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -21,8 +23,10 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function CareerRolePage({ params }: Props) {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
   const { id } = await params;
-  const role = careerRoleById(id);
+  const role = copy.careersPage.roles.find((item) => item.id === id);
   if (!role) notFound();
 
   return (
@@ -32,7 +36,7 @@ export default async function CareerRolePage({ params }: Props) {
           href="/careers"
           className="text-muted hover:text-white transition-colors text-sm sm:text-base tracking-[-0.01em]"
         >
-          Careers
+          {copy.common.careersBreadcrumb}
         </a>
         <h1
           className="mt-4 font-heading text-white tracking-[-0.03em] leading-[1.05]"
@@ -52,14 +56,14 @@ export default async function CareerRolePage({ params }: Props) {
         </p>
         <div className="mt-8">
           <Button href={role.applyHref} className="w-fit">
-            {careersPage.applyLabel}
+            {copy.careersPage.applyLabel}
           </Button>
         </div>
 
         <div className="mt-14 max-w-[42rem] space-y-12">
           <section>
             <h2 className="font-heading text-white tracking-[-0.02em] text-2xl leading-tight">
-              About the role
+              {copy.common.aboutTheRole}
             </h2>
             <div className="mt-4 space-y-4 text-muted text-base leading-7 tracking-[-0.01em]">
               {role.about.map((paragraph) => (
@@ -70,7 +74,7 @@ export default async function CareerRolePage({ params }: Props) {
 
           <section>
             <h2 className="font-heading text-white tracking-[-0.02em] text-2xl leading-tight">
-              What you will do
+              {copy.common.whatYouWillDo}
             </h2>
             <ul className="mt-4 space-y-3 text-muted text-base leading-7 tracking-[-0.01em]">
               {role.responsibilities.map((item) => (
@@ -84,7 +88,7 @@ export default async function CareerRolePage({ params }: Props) {
 
           <section>
             <h2 className="font-heading text-white tracking-[-0.02em] text-2xl leading-tight">
-              What we look for
+              {copy.common.whatWeLookFor}
             </h2>
             <ul className="mt-4 space-y-3 text-muted text-base leading-7 tracking-[-0.01em]">
               {role.requirements.map((item) => (
@@ -98,15 +102,14 @@ export default async function CareerRolePage({ params }: Props) {
 
           <section className="border-t border-border pt-10">
             <h2 className="font-heading text-white tracking-[-0.02em] text-2xl leading-tight">
-              How to apply
+              {copy.common.howToApply}
             </h2>
             <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-              Send a short note about why this role fits your work, with a CV or
-              portfolio link. We read every application.
+              {copy.common.applyBody}
             </p>
             <div className="mt-6">
               <Button href={role.applyHref} className="w-fit">
-                {careersPage.applyLabel}
+                {copy.careersPage.applyLabel}
               </Button>
             </div>
           </section>

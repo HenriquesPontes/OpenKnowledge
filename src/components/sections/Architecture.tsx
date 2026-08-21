@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/Container";
-import { architecture } from "@/lib/constants";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 function Node({
   label,
@@ -69,9 +69,9 @@ type PipelineStep = {
 };
 
 export function Architecture({
-  title = architecture.title,
-  description = "Evidence before generation. Missing data is preferable to incorrect data.",
-  steps = architecture.steps,
+  title,
+  description,
+  steps,
   id = "how-it-works",
 }: {
   title?: string;
@@ -79,6 +79,11 @@ export function Architecture({
   steps?: readonly PipelineStep[];
   id?: string;
 }) {
+  const { copy } = useLocale();
+  const resolvedTitle = title ?? copy.architecture.title;
+  const resolvedDescription = description ?? copy.architecture.description;
+  const resolvedSteps = steps ?? copy.architecture.steps;
+
   return (
     <section id={id} className="pt-10 pb-14 sm:pt-20 sm:pb-28 [content-visibility:auto] [contain-intrinsic-size:auto_40rem]">
       <Container>
@@ -92,13 +97,13 @@ export function Architecture({
             className="font-heading text-white tracking-[-0.03em] leading-[1.05] mb-4 text-center"
             style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
           >
-            {title}
+            {resolvedTitle}
           </h2>
           <p className="max-w-[640px] mx-auto text-center text-muted text-sm sm:text-base leading-6 sm:leading-[22px] tracking-[-0.01em] mb-8 sm:mb-14 px-1">
-            {description}
+            {resolvedDescription}
           </p>
 
-          <MethodologyPipeline steps={steps} />
+          <MethodologyPipeline steps={resolvedSteps} />
         </motion.div>
       </Container>
     </section>
@@ -106,22 +111,25 @@ export function Architecture({
 }
 
 export function MethodologyPipeline({
-  steps = architecture.steps,
+  steps,
 }: {
   steps?: readonly PipelineStep[];
 }) {
+  const { copy } = useLocale();
+  const resolvedSteps = steps ?? copy.architecture.steps;
+
   return (
     <div className="flex flex-col items-center">
-      {steps.map((step, index) => (
+      {resolvedSteps.map((step, index) => (
         <div key={step.label} className="flex flex-col items-center w-full">
           {index > 0 ? <Stem /> : null}
           <div className="w-full max-w-[320px]">
             <Node
               label={step.label}
               href={step.href}
-              date={step.date}
-              description={step.description}
-              featured={index === 0 || index === steps.length - 1}
+              date={"date" in step ? step.date : undefined}
+              description={"description" in step ? step.description : undefined}
+              featured={index === 0 || index === resolvedSteps.length - 1}
             />
           </div>
         </div>
@@ -131,7 +139,8 @@ export function MethodologyPipeline({
 }
 
 export function ProductTree() {
-  const tree = architecture.tree;
+  const { copy } = useLocale();
+  const tree = copy.architecture.tree;
 
   return (
     <div className="flex flex-col items-center">

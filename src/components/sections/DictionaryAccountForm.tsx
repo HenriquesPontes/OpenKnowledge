@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 export function DictionaryAccountForm({
   surface = "connect",
 }: {
   surface?: "connect";
 }) {
+  const { copy } = useLocale();
+  const waitlist = copy.waitlist;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
@@ -30,15 +33,15 @@ export function DictionaryAccountForm({
       const data: { error?: string } = await response.json().catch(() => ({}));
       if (response.ok) {
         setStatus("success");
-        setMessage("You're on the Forro Connect waitlist. We'll be in touch.");
+        setMessage(waitlist.successConnect);
         setEmail("");
         return;
       }
       setStatus("error");
-      setMessage(data.error || "Something went wrong. Please try again.");
+      setMessage(data.error || waitlist.error);
     } catch {
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(waitlist.error);
     }
   }
 
@@ -53,7 +56,7 @@ export function DictionaryAccountForm({
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
             <input
               type="email"
-              placeholder="Email"
+              placeholder={waitlist.emailPlaceholder}
               required
               autoComplete="email"
               value={email}
@@ -66,7 +69,7 @@ export function DictionaryAccountForm({
               disabled={status === "loading"}
               className="w-fit"
             >
-              {status === "loading" ? "Joining…" : "Join waitlist"}
+              {status === "loading" ? waitlist.joining : waitlist.joinCta}
             </Button>
           </div>
           {status === "error" ? (

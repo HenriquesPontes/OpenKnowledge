@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { BrowserMockup } from "@/components/sections/BrowserMockup";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import { API_ORIGIN } from "@/lib/catalog";
 
 type DatasetOption = {
@@ -61,13 +62,15 @@ function proxyPath(
 }
 
 export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
+  const { copy } = useLocale();
+  const t = copy.apiExplorer;
   const [operation, setOperation] = useState<Operation>("lookup");
   const [dataset, setDataset] = useState(datasets[0]?.dataset ?? "saotome/forro");
   const [headword, setHeadword] = useState("kume");
   const [query, setQuery] = useState("kume");
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
   const [httpStatus, setHttpStatus] = useState<number | null>(null);
-  const [body, setBody] = useState("Run a request to see the JSON from one isolated dataset.");
+  const [body, setBody] = useState<string | null>(null);
 
   const documented = useMemo(
     () => `${API_ORIGIN}${publicPath(operation, dataset, headword.trim(), query.trim())}`,
@@ -96,11 +99,11 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
       try {
         setBody(JSON.stringify(JSON.parse(text), null, 2));
       } catch {
-        setBody(text || "Empty response.");
+        setBody(text || t.emptyResponse);
       }
     } catch {
       setHttpStatus(502);
-      setBody("The dictionary API could not complete that request from this site.");
+      setBody(t.failed);
     }
     setStatus("done");
   }
@@ -108,7 +111,7 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
   return (
     <div id="try" className="scroll-mt-28">
       <h2 className="text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Try the API
+        {t.tryApi}
       </h2>
 
       <form onSubmit={onSubmit} className="mt-6">
@@ -116,7 +119,7 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
           <select
             value={operation}
             onChange={(event) => setOperation(event.target.value as Operation)}
-            aria-label="API route"
+            aria-label={t.routeAria}
             className="field w-full max-w-full sm:max-w-[280px]"
           >
             {OPERATIONS.map((item) => (
@@ -129,7 +132,7 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
             <select
               value={dataset}
               onChange={(event) => setDataset(event.target.value)}
-              aria-label="Isolated lexicon"
+              aria-label={t.lexiconAria}
               className="field w-full max-w-full sm:max-w-[280px]"
             >
               {datasets.map((item) => (
@@ -144,7 +147,7 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
               type="search"
               value={headword}
               onChange={(event) => setHeadword(event.target.value)}
-              placeholder="Headword"
+              placeholder={t.headword}
               required
               className="field min-w-0 w-full sm:w-[200px]"
             />
@@ -154,13 +157,13 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search query"
+              placeholder={t.searchQuery}
               required
               className="field min-w-0 w-full sm:w-[200px]"
             />
           ) : null}
           <Button type="submit" disabled={status === "loading"} className="shrink-0">
-            {status === "loading" ? "Running…" : "Run"}
+            {status === "loading" ? t.running : t.run}
           </Button>
         </div>
       </form>
@@ -172,7 +175,7 @@ export function ApiExplorer({ datasets }: { datasets: DatasetOption[] }) {
       ) : null}
 
       <div className="mt-6">
-        <BrowserMockup command={`curl "${documented}"`} body={body} />
+        <BrowserMockup command={`curl "${documented}"`} body={body ?? t.emptyBody} />
       </div>
     </div>
   );

@@ -10,8 +10,8 @@ import {
 } from "react";
 import type { FeatureCollection, Geometry } from "geojson";
 import africaGeojson from "@/data/africa-countries.json";
+import { useLocale } from "@/components/locale/LocaleProvider";
 import {
-  africaMap,
   countries,
   languages,
   languageForDataset,
@@ -142,7 +142,10 @@ function datasetForPath(
   return best.dataset;
 }
 
-function countryMeta(id: string) {
+function countryMeta(
+  id: string,
+  countryTitles: Record<string, string>,
+) {
   const catalog = countries.find((item) => item.isoA2 === id);
   const feature = africa.features.find(
     (item) => resolver.id(item.properties) === id,
@@ -151,8 +154,15 @@ function countryMeta(id: string) {
     typeof feature?.properties?.subregion === "string"
       ? feature.properties.subregion
       : "";
+  const localized =
+    catalog && countryTitles[catalog.id]
+      ? countryTitles[catalog.id]
+      : undefined;
   return {
-    title: catalog?.title ?? String(feature?.properties?.name ?? id),
+    title:
+      localized ??
+      catalog?.title ??
+      String(feature?.properties?.name ?? id),
     subregion,
   };
 }
@@ -176,6 +186,7 @@ export function AfricaMap({
   focusDataset?: string;
   onFocusDataset?: (dataset: string) => void;
 } = {}) {
+  const { copy } = useLocale();
   const lockedFocus = Boolean(focusCountryId);
   const [openedCountryId, setOpenedCountryId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -203,7 +214,7 @@ export function AfricaMap({
     }
 
     const iso = countryId.toLowerCase();
-    const subregion = countryMeta(countryId).subregion;
+    const subregion = countryMeta(countryId, copy.countries).subregion;
     let cancelled = false;
     setSvgState("loading");
     setSvgLayout(null);
@@ -228,7 +239,7 @@ export function AfricaMap({
     return () => {
       cancelled = true;
     };
-  }, [countryId]);
+  }, [countryId, copy.countries]);
 
   const geoLayout = useMemo(
     () =>
@@ -327,13 +338,17 @@ export function AfricaMap({
   const hoveredLanguage = hoveredDataset
     ? languageForDataset(hoveredDataset)
     : undefined;
-  const meta = countryId ? countryMeta(countryId) : null;
+  const meta = countryId ? countryMeta(countryId, copy.countries) : null;
   const lexiconHref = countryId ? knowledgeHrefs[countryId] : undefined;
   const namibia = layout.paths.find((path) => path.id === "NA");
   const cardLanguage = hoveredId ? hoveredLanguage : language;
-  const cardCountryName = countries.find(
+  const cardCountry = countries.find(
     (item) => item.id === cardLanguage?.country,
-  )?.title;
+  );
+  const cardCountryName = cardCountry
+    ? (copy.countries[cardCountry.id as keyof typeof copy.countries] ??
+      cardCountry.title)
+    : undefined;
   const cardTitle = focused
     ? (cardLanguage?.title ?? meta?.title ?? active?.name)
     : active?.name;
@@ -398,10 +413,10 @@ export function AfricaMap({
               className="font-heading text-white tracking-[-0.03em] leading-[1.08]"
               style={{ fontSize: "clamp(1.35rem, 4.5vw, 2.35rem)" }}
             >
-              {africaMap.title}
+              {copy.africaMap.title}
             </h2>
             <p className="mt-2 text-muted text-xs sm:text-sm lg:text-base leading-[1.45] tracking-[-0.01em]">
-              {africaMap.subtitle}
+              {copy.africaMap.subtitle}
             </p>
             {countryCard ? (
               <div className="pointer-events-none absolute left-0 top-full mt-4 hidden sm:block">
@@ -423,8 +438,8 @@ export function AfricaMap({
           role="img"
           aria-label={
             focused
-              ? `${language?.title ?? meta?.title ?? "Country"} map`
-              : "Interactive map of Africa"
+              ? `${language?.title ?? meta?.title ?? copy.africaMap.countryFallback} map`
+              : copy.africaMap.interactiveMapAria
           }
           shapeRendering="geometricPrecision"
           className="block w-full h-auto overflow-visible touch-manipulation"

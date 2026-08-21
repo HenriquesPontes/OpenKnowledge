@@ -1,8 +1,10 @@
-import { docsProducts } from "@/lib/constants";
+import { cookies } from "next/headers";
+import { docsProducts as docsProductsEn } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Documentation",
-  description: docsProducts.description,
+  description: docsProductsEn.description,
   alternates: { canonical: "/docs" },
 };
 
@@ -54,7 +56,11 @@ function ProductIcon({ index }: { index: number }) {
   );
 }
 
-export default function DocsIndexPage() {
+export default async function DocsIndexPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const docsProducts = copy.docsProducts;
+
   return (
     <div className="mx-auto max-w-[72rem]">
       <div className="text-center">
@@ -86,7 +92,7 @@ export default function DocsIndexPage() {
               {product.description}
             </p>
             <span className="mt-8 text-sm tracking-[-0.01em] text-white/70 group-hover:text-white transition-colors">
-              Open documentation →
+              {copy.docsHub.openDocsCta}
             </span>
           </a>
         ))}

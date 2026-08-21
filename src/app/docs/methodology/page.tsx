@@ -1,44 +1,40 @@
+import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
 import { MethodologyPipeline } from "@/components/sections/Architecture";
-import { principle } from "@/lib/constants";
 import { GITHUB_URL } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Methodology",
 };
 
-export default function MethodologyPage() {
+export default async function MethodologyPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const docs = copy.docsMethodology;
+
   return (
     <>
       <h1
         className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
         style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
       >
-        Methodology
+        {docs.title}
       </h1>
       <p className="mt-4 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        Evidence before generation
+        {docs.subtitle}
       </p>
       <p className="mt-6 text-muted text-base leading-7 tracking-[-0.01em]">
-        {principle}
+        {copy.principle}
       </p>
       <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-        This is retrieval and verification, not generative translation. Never
-        invent a gloss, infer a missing word, creolize Portuguese, or copy a
-        form from one folder into another because the spelling looks close.
+        {docs.p1}
       </p>
       <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-        Forro, Angolar and Lung’Ie are documented as independent systems. Cabo
-        Verde is one island, one folder. Guinea-Bissau is one region, one
-        folder. Angola is Umbundu, Kimbundu, and Kikongo, each in its own
-        folder; the Angola country index is not Angolar.
-        Official Portuguese of these countries is not a creole lexicon in this
-        knowledge base.
+        {docs.p2}
       </p>
       <p className="mt-4 text-muted text-base leading-7 tracking-[-0.01em]">
-        If evidence does not exist, the field stays empty. A missing translation
-        is better than a guessed one. Disagreements are recorded, not silently
-        resolved.
+        {docs.p3}
       </p>
 
       <div id="how-it-works" className="-mx-6 sm:mx-0 mt-4">
@@ -47,7 +43,7 @@ export default function MethodologyPage() {
 
       <div className="mt-4 flex justify-center">
         <Button href={`${GITHUB_URL}/blob/main/docs/methodology.md`}>
-          Full methodology on GitHub
+          {docs.githubCta}
         </Button>
       </div>
     </>

@@ -1,5 +1,6 @@
+import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
-import { connectArchitecture, connectIncome } from "@/lib/constants";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Forro Connect",
@@ -8,40 +9,43 @@ export const metadata = {
   alternates: { canonical: "/docs/connect" },
 };
 
-export default function ConnectDocsPage() {
+export default async function ConnectDocsPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const docs = copy.docsConnect;
+
   return (
     <>
       <h1
         className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
         style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
       >
-        Forro Connect
+        {docs.title}
       </h1>
       <p className="mt-4 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        {connectArchitecture.description}
+        {copy.connectArchitecture.description}
       </p>
 
       <div className="mt-10 rounded-2xl border border-border bg-surface px-6 py-7 sm:px-8 sm:py-8">
         <h2 className="font-heading text-white text-2xl sm:text-3xl tracking-[-0.02em]">
-          Join the waitlist
+          {docs.waitlistTitle}
         </h2>
         <p className="mt-3 max-w-[40rem] text-muted text-base leading-7 tracking-[-0.01em]">
-          Connect learners with real Forro speakers and cultural knowledge
-          holders. Product details and signup live on the Forro Connect page.
+          {docs.waitlistBody}
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
-          <Button href="/connect#waitlist">Join waitlist</Button>
+          <Button href="/connect#waitlist">{docs.joinWaitlist}</Button>
           <Button href="/connect" variant="outline">
-            Product page
+            {docs.productPage}
           </Button>
         </div>
       </div>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        {connectArchitecture.title}
+        {copy.connectArchitecture.title}
       </h2>
       <ul className="mt-4 divide-y divide-border border-t border-b border-border max-w-[40rem]">
-        {connectArchitecture.steps.map((step) => (
+        {copy.connectArchitecture.steps.map((step) => (
           <li key={step.label} className="py-3 text-muted text-base tracking-[-0.01em]">
             {step.label}
           </li>
@@ -49,7 +53,7 @@ export default function ConnectDocsPage() {
       </ul>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Explore
+        {docs.explore}
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <a
@@ -57,27 +61,27 @@ export default function ConnectDocsPage() {
           className="rounded-2xl border border-border bg-surface px-6 py-6 transition-colors hover:border-white/25"
         >
           <h3 className="text-white font-heading text-xl tracking-[-0.02em]">
-            How it works
+            {docs.howItWorksTitle}
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            The learner-to-speaker path on the product page.
+            {docs.howItWorksBody}
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
-            Open how it works →
+            {docs.openHowItWorks}
           </span>
         </a>
         <a
-          href={connectIncome.href}
+          href={copy.connectIncome.href}
           className="rounded-2xl border border-border bg-surface px-6 py-6 transition-colors hover:border-white/25"
         >
           <h3 className="text-white font-heading text-xl tracking-[-0.02em]">
-            {connectIncome.title}
+            {copy.connectIncome.title}
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            How a paid live lesson pays the speaker and funds the project.
+            {docs.incomeBody}
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
-            Open breakdown →
+            {docs.openBreakdown}
           </span>
         </a>
       </div>

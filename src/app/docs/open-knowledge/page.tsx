@@ -1,7 +1,9 @@
+import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
 import { BrowserMockup } from "@/components/sections/BrowserMockup";
-import { apiSection, principle } from "@/lib/constants";
-import { API_ORIGIN, GITHUB_URL } from "@/lib/catalog";
+import { apiSection } from "@/lib/constants";
+import { GITHUB_URL } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Open Knowledge",
@@ -10,46 +12,45 @@ export const metadata = {
   alternates: { canonical: "/docs/open-knowledge" },
 };
 
-export default function OpenKnowledgeDocsPage() {
+export default async function OpenKnowledgeDocsPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const docs = copy.docsOpenKnowledge;
+
   return (
     <>
       <h1
         className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
         style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
       >
-        Open Knowledge
+        {docs.title}
       </h1>
       <p className="mt-4 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        Public linguistic knowledge site for ForroVivo. Isolated lexicons,
-        attested sources, and a read-only API.
+        {docs.description}
       </p>
 
       <div className="mt-10 rounded-2xl border border-border bg-surface px-6 py-7 sm:px-8 sm:py-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 lg:items-center">
           <div>
             <h2 className="font-heading text-white text-2xl sm:text-3xl tracking-[-0.02em]">
-              Developer quickstart
+              {docs.quickstartTitle}
             </h2>
             <p className="mt-3 text-muted text-base leading-7 tracking-[-0.01em]">
-              Make your first API request in minutes. Full auth, errors, and
-              routes live only in the API reference.
+              {docs.quickstartBody}
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <Button href="/docs/quickstart">Get started</Button>
+              <Button href="/docs/quickstart">{docs.getStarted}</Button>
               <Button href="/api/login" variant="outline">
-                Create API key
+                {docs.createApiKey}
               </Button>
             </div>
           </div>
-          <BrowserMockup
-            command={apiSection.command}
-            body="Returns every published lexicon with entry counts."
-          />
+          <BrowserMockup command={apiSection.command} body={docs.mockBody} />
         </div>
       </div>
 
       <h2 className="mt-12 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        Explore
+        {docs.explore}
       </h2>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <a
@@ -57,14 +58,13 @@ export default function OpenKnowledgeDocsPage() {
           className="rounded-2xl border border-border bg-surface px-6 py-6 transition-colors hover:border-white/25"
         >
           <h3 className="text-white font-heading text-xl tracking-[-0.02em]">
-            API documentation
+            {docs.apiDocsTitle}
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            The source of truth for /v1 on {API_ORIGIN.replace("https://", "")}:
-            authentication, errors, lookup, search, and every route.
+            {docs.apiDocsBody}
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
-            Open API documentation →
+            {docs.openApiDocs}
           </span>
         </a>
         <a
@@ -72,23 +72,23 @@ export default function OpenKnowledgeDocsPage() {
           className="rounded-2xl border border-border bg-surface px-6 py-6 transition-colors hover:border-white/25"
         >
           <h3 className="text-white font-heading text-xl tracking-[-0.02em]">
-            Methodology
+            {docs.methodologyTitle}
           </h3>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            {principle}
+            {copy.principle}
           </p>
           <span className="mt-5 inline-block text-sm text-white/70">
-            Read methodology →
+            {docs.readMethodology}
           </span>
         </a>
       </div>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
         <Button href="/languages" variant="outline">
-          Languages
+          {docs.languages}
         </Button>
         <Button href={GITHUB_URL} variant="ghost">
-          View source on GitHub
+          {docs.viewGithub}
         </Button>
       </div>
     </>

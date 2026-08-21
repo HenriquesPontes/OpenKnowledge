@@ -4,11 +4,13 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { hero } from "@/lib/constants";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 type Status = "idle" | "loading" | "success" | "error";
 
 export function Hero() {
+  const { copy } = useLocale();
+  const hero = copy.hero;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
@@ -31,15 +33,15 @@ export function Hero() {
 
       if (res.ok) {
         setStatus("success");
-        setMessage("You're on the list. We'll be in touch.");
+        setMessage(hero.success);
         setEmail("");
       } else {
         setStatus("error");
-        setMessage(data.error || "Something went wrong. Please try again.");
+        setMessage(data.error || hero.error);
       }
     } catch {
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(hero.error);
     }
   }
 
@@ -83,7 +85,7 @@ export function Hero() {
                   className="field w-full sm:w-[280px]"
                 />
                 <Button type="submit" disabled={status === "loading"} className="w-fit">
-                  {status === "loading" ? "Joining…" : hero.waitlistCta}
+                  {status === "loading" ? hero.joining : hero.waitlistCta}
                 </Button>
               </div>
               {status === "error" && (

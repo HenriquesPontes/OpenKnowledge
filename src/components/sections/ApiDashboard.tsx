@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/components/locale/LocaleProvider";
 
 type SessionState = {
   authenticated: boolean;
@@ -12,6 +13,8 @@ type SessionState = {
 
 export function ApiDashboard() {
   const router = useRouter();
+  const { copy } = useLocale();
+  const t = copy.apiDashboard;
   const [session, setSession] = useState<SessionState | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -47,7 +50,7 @@ export function ApiDashboard() {
         await response.json().catch(() => ({}));
       if (!response.ok || !data.key) {
         setStatus("error");
-        setMessage(data.error || "The API could not issue a key.");
+        setMessage(data.error || t.issueFailed);
         return;
       }
       setIssuedKey(data.key);
@@ -62,7 +65,7 @@ export function ApiDashboard() {
       setStatus("idle");
     } catch {
       setStatus("error");
-      setMessage("The API could not issue a key.");
+      setMessage(t.issueFailed);
     }
   }
 
@@ -75,7 +78,7 @@ export function ApiDashboard() {
   if (!session?.authenticated) {
     return (
       <div className="mt-10 max-w-[640px]">
-        <p className="text-muted text-base tracking-[-0.01em]">Opening dashboard…</p>
+        <p className="text-muted text-base tracking-[-0.01em]">{t.opening}</p>
       </div>
     );
   }
@@ -85,30 +88,30 @@ export function ApiDashboard() {
       <div className="rounded-2xl border border-border bg-surface px-6 py-7 sm:px-8 sm:py-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-muted text-sm tracking-[-0.01em]">Dashboard</p>
+            <p className="text-muted text-sm tracking-[-0.01em]">{t.dashboard}</p>
             <h2 className="mt-2 font-heading text-white text-2xl sm:text-3xl tracking-[-0.02em]">
-              API Platform
+              {t.platform}
             </h2>
             <p className="mt-2 text-muted text-base tracking-[-0.01em]">
-              Signed in as {session.email}
+              {t.signedInAs} {session.email}
             </p>
           </div>
           <Button variant="outline" size="sm" onClick={signOut} className="w-fit">
-            Sign out
+            {t.signOut}
           </Button>
         </div>
 
         <div className="mt-8 border-t border-border pt-6">
           <p className="text-white font-heading text-lg tracking-[-0.02em]">
-            Your API key
+            {t.yourKey}
           </p>
           <p className="mt-2 text-muted text-base leading-7 tracking-[-0.01em]">
-            Shown once when you create or replace it.
+            {t.shownOnce}
           </p>
 
           {session.key_prefix && !issuedKey ? (
             <p className="mt-4 text-white text-sm tracking-[-0.01em]">
-              Active key prefix:{" "}
+              {t.activePrefix}{" "}
               <code className="text-white">{session.key_prefix}…</code>
             </p>
           ) : null}
@@ -116,7 +119,7 @@ export function ApiDashboard() {
           {issuedKey ? (
             <div className="mt-5">
               <label className="text-muted text-sm tracking-[-0.01em]">
-                Copy this key now
+                {t.copyKey}
               </label>
               <input
                 readOnly
@@ -128,7 +131,7 @@ export function ApiDashboard() {
                   href="/docs/api-reference#authentication"
                   className="text-white hover:text-white/70"
                 >
-                  How to use this key
+                  {t.howToUse}
                 </a>
               </p>
             </div>
@@ -142,13 +145,13 @@ export function ApiDashboard() {
               className="w-full sm:w-auto"
             >
               {status === "loading"
-                ? "Issuing…"
+                ? t.issuing
                 : session.key_prefix || issuedKey
-                  ? "Replace API key"
-                  : "Get API key"}
+                  ? t.replaceKey
+                  : t.getKey}
             </Button>
             <Button href="#try" variant="outline" className="w-full sm:w-auto">
-              Try the API
+              {t.tryApi}
             </Button>
           </div>
 

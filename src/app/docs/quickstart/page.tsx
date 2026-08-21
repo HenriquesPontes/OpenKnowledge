@@ -1,7 +1,9 @@
+import { cookies } from "next/headers";
 import { Button } from "@/components/ui/Button";
 import { BrowserMockup } from "@/components/sections/BrowserMockup";
 import { apiSection } from "@/lib/constants";
 import { API_ORIGIN } from "@/lib/catalog";
+import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 
 export const metadata = {
   title: "Quickstart",
@@ -10,7 +12,10 @@ export const metadata = {
   alternates: { canonical: "/docs/quickstart" },
 };
 
-export default function QuickstartPage() {
+export default async function QuickstartPage() {
+  const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
+  const copy = getSiteCopy(locale);
+  const docs = copy.docsQuickstart;
   const lookup = `curl "${API_ORIGIN}/v1/saotome/forro/lookup?headword=kume"`;
 
   return (
@@ -19,51 +24,44 @@ export default function QuickstartPage() {
         className="font-heading text-white tracking-[-0.03em] leading-[1.05]"
         style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
       >
-        Quickstart
+        {docs.title}
       </h1>
       <p className="mt-4 text-muted text-lg sm:text-[21px] tracking-[-0.01em] leading-normal">
-        Three calls to get started. Rules for keys, errors, CORS, and naming are
-        only in the{" "}
+        {docs.introBefore}{" "}
         <a href="/docs/api-reference" className="text-white hover:text-white/70">
-          API reference
+          {docs.apiReferenceLink}
         </a>
-        .
+        {docs.introAfter}
       </p>
 
       <h2 className="mt-10 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        1. List languages
+        {docs.step1}
       </h2>
       <div className="mt-4">
-        <BrowserMockup
-          command={apiSection.command}
-          body="Catalog of published lexicons."
-        />
+        <BrowserMockup command={apiSection.command} body={docs.step1Body} />
       </div>
 
       <h2 className="mt-10 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        2. Look up a headword in one dataset
+        {docs.step2}
       </h2>
       <div className="mt-4">
-        <BrowserMockup
-          command={lookup}
-          body="Exact matches from one dataset only, for example saotome/forro or angola/umbundu."
-        />
+        <BrowserMockup command={lookup} body={docs.step2Body} />
       </div>
 
       <h2 className="mt-10 text-white text-lg sm:text-[21px] tracking-[-0.01em]">
-        3. Search inside one dataset
+        {docs.step3}
       </h2>
       <div className="mt-4">
         <BrowserMockup
           command={`curl "${API_ORIGIN}/v1/search?dataset=saotome/forro&q=kume"`}
-          body="Both dataset= and q= are required. Search never crosses datasets."
+          body={docs.step3Body}
         />
       </div>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3">
-        <Button href="/docs/api-reference">API documentation</Button>
+        <Button href="/docs/api-reference">{docs.apiDocumentation}</Button>
         <Button href="/api/login" variant="outline">
-          API Platform
+          {docs.apiPlatform}
         </Button>
       </div>
     </>
