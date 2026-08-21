@@ -64,7 +64,7 @@ export function DictionaryAccountForm({
             <Button
               type="submit"
               disabled={status === "loading"}
-              className="w-full sm:w-auto"
+              className="w-fit"
             >
               {status === "loading" ? "Joining…" : "Join waitlist"}
             </Button>

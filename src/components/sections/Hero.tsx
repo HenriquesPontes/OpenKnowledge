@@ -82,7 +82,7 @@ export function Hero() {
                   disabled={status === "loading"}
                   className="field w-full sm:w-[280px]"
                 />
-                <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
+                <Button type="submit" disabled={status === "loading"} className="w-fit">
                   {status === "loading" ? "Joining…" : hero.waitlistCta}
                 </Button>
               </div>
