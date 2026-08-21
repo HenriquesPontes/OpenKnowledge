@@ -30,11 +30,6 @@ export default function ForroConnectPage() {
           <div id="waitlist" className="mt-6 max-w-[593px]">
             <DictionaryAccountForm surface="connect" />
           </div>
-          <div className="mt-4">
-            <Button href="/app" variant="outline" className="w-full sm:w-auto">
-              Forro Vivo App
-            </Button>
-          </div>
         </Container>
       </section>
 

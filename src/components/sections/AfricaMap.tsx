@@ -46,7 +46,7 @@ const knowledgeHrefs: Record<string, string> = {
 
 const fillNorth = "#ffffff";
 const fillSouth = "#e6e6e6";
-const fillSelected = "#4285F4";
+const fillSelected = "#174729";
 const fillIdle = "#c8c8c8";
 const stroke = "#141414";
 const strokeHover = "#818181";

@@ -45,7 +45,7 @@ export default function MethodologyPage() {
         <MethodologyPipeline />
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 flex justify-center">
         <Button href={`${GITHUB_URL}/blob/main/docs/methodology.md`}>
           Full methodology on GitHub
         </Button>
