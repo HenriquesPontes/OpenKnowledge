@@ -34,7 +34,7 @@
        |
 [DONE] Phase 7c: Turnstile production guard (dummy keys local/dev only)
        |
-[DONE] Phase 8: Persistent API Platform (D1 adapter + DB + Vercel env; smoke-test remaining)
+[DONE] Phase 8: Persistent API Platform (D1 + Vercel env + Turnstile + invite codes)
        |
 [NEXT] Phase 9: Deeper developer onboarding & playground polish
        |
