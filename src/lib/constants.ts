@@ -30,6 +30,9 @@ export function sectionNavLink(pathname: string) {
       href: pathname === "/app" ? "#roadmap" : "/app#roadmap",
     };
   }
+  if (pathname === "/overview") {
+    return { label: "Roadmap", href: "#roadmap" };
+  }
   return { label: "How it works", href: howItWorksHref(pathname) };
 }
 
@@ -1123,6 +1126,55 @@ export const productOverview = {
       href: "/api",
       description:
         "Build with the linguistic data. Create an account, get a key, and try the Linguistic Research API live.",
+    },
+  ],
+} as const;
+
+export const productRoadmap = {
+  title: "Product roadmap",
+  description:
+    "From linguistic research in 2023 to a family of products: documented languages, a learning app, an API for developers, and live lessons with native speakers.",
+  steps: [
+    {
+      label: "Foundation",
+      date: "23 March 2023",
+      description:
+        "Linguistic research begins. Founder: Henriques Pontes. Early collaborator: Luís Lima.",
+      href: "/research",
+    },
+    {
+      label: "Open Knowledge",
+      date: "Public",
+      description:
+        "Isolated lexicons, attested sources, and the public Linguistic Research API.",
+      href: "/languages",
+    },
+    {
+      label: "Forro Vivo App",
+      date: "App Store",
+      description:
+        "Dictionary, academy, and lessons. The first learning app for African Creole languages.",
+      href: "/app",
+    },
+    {
+      label: "API Platform",
+      date: "Developers",
+      description:
+        "Accounts, keys, and a live explorer on the same attested data.",
+      href: "/api",
+    },
+    {
+      label: "Forro Connect",
+      date: "Waitlist",
+      description:
+        "Learners with native speakers. Live lessons and community income.",
+      href: "/connect",
+    },
+    {
+      label: "Next",
+      date: "In progress",
+      description:
+        "Voice and audio in the learning app. Live Connect lessons. More languages, each on its own terms.",
     },
   ],
 } as const;

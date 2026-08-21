@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cookies } from "next/headers";
 import { docsProducts as docsProductsEn } from "@/lib/constants";
 import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
@@ -11,48 +12,37 @@ export const metadata = {
 function ProductIcon({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path
-          d="M5 8h18M5 14h18M5 20h12"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+      <Image
+        src="/images/logo-icon.png"
+        alt=""
+        width={512}
+        height={512}
+        sizes="28px"
+        className="h-7 w-7"
+      />
     );
   }
   if (index === 1) {
     return (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect
-          x="7"
-          y="4"
-          width="14"
-          height="20"
-          rx="3"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-        <path
-          d="M11 8h6"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+      <Image
+        src="/images/app/phone-hero.png"
+        alt=""
+        width={1024}
+        height={1024}
+        sizes="28px"
+        className="h-7 w-7"
+      />
     );
   }
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      <circle cx="10" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="18" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M7 20c1.2-2 2.8-3 5-3s3.8 1 5 3"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-    </svg>
+    <Image
+      src="/images/app/ForroConnect.png"
+      alt=""
+      width={512}
+      height={512}
+      sizes="28px"
+      className="h-7 w-7 invert"
+    />
   );
 }
 

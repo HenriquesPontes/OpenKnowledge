@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
+import { Architecture } from "@/components/sections/Architecture";
 import { Container } from "@/components/ui/Container";
 import { productOverview as productOverviewEn } from "@/lib/constants";
 import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
@@ -71,7 +72,7 @@ function Collage({
 export default async function OverviewPage() {
   const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
   const copy = getSiteCopy(locale);
-  const { productOverview } = copy;
+  const { productOverview, productRoadmap } = copy;
   const { statement } = productOverview;
 
   return (
@@ -112,7 +113,7 @@ export default async function OverviewPage() {
         </h1>
       </section>
 
-      <section className="pb-20 sm:pb-28">
+      <section className="pb-10 sm:pb-16">
         <Container>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {productOverview.products.map((product) => (
@@ -132,6 +133,13 @@ export default async function OverviewPage() {
           </div>
         </Container>
       </section>
+
+      <Architecture
+        id="roadmap"
+        title={productRoadmap.title}
+        description={productRoadmap.description}
+        steps={productRoadmap.steps}
+      />
     </div>
   );
 }
