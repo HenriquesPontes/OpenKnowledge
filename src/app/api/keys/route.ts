@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { setAccountKeyPrefix } from "@/lib/api-accounts";
 import { fetchResearchApi } from "@/lib/catalog";
 import {
@@ -9,6 +9,13 @@ import {
 
 const GENERIC_ERROR = "The API could not issue a key. Please try again.";
 const UNAUTHORIZED = "Log in to the API Platform to get a key.";
+const ISSUE_NOT_CONFIGURED =
+  "Key issuance is not configured. Set KEYS_ISSUE_SECRET for this site.";
+
+/** Shared with the Research Worker (`KEYS_ISSUE_SECRET` / X-ForroVivo-Keys-Issue). */
+function keysIssueSecret() {
+  return process.env.KEYS_ISSUE_SECRET?.trim() || "";
+}
 
 export async function POST() {
   try {
@@ -17,9 +24,18 @@ export async function POST() {
       return NextResponse.json({ error: UNAUTHORIZED }, { status: 401 });
     }
 
+    const issueSecret = keysIssueSecret();
+    if (!issueSecret) {
+      console.error("KEYS_ISSUE_SECRET is not set; refusing key mint.");
+      return NextResponse.json({ error: ISSUE_NOT_CONFIGURED }, { status: 503 });
+    }
+
     const response = await fetchResearchApi("/v1/keys", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-ForroVivo-Keys-Issue": issueSecret,
+      },
       body: JSON.stringify({ email: session.email }),
       cache: "no-store",
     });

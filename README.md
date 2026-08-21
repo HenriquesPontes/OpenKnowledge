@@ -140,6 +140,7 @@ Lint: `npm run lint`.
 | `BEEHIIV_API_KEY` | Server. Waitlist subscriptions. |
 | `BEEHIIV_PUBLICATION_ID` | Server. Beehiiv publication. |
 | `API_SESSION_SECRET` | Server. Signs API Platform dashboard sessions. |
+| `KEYS_ISSUE_SECRET` | Server. Shared with the Research Worker for server-to-server `POST /v1/keys` (must match Worker secret). |
 | `API_REGISTRATION_CODES` | Server. Optional comma-separated registration codes for `/api/register`. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public. Cloudflare Turnstile site key for create-account. |
 | `TURNSTILE_SECRET_KEY` | Server. Cloudflare Turnstile secret for siteverify. |

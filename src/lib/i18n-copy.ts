@@ -628,7 +628,7 @@ const en = {
     authenticationP1:
       "Public GET, HEAD, and OPTIONS work without a key. Optional keys identify your client. Create an account at /api/register, sign in at /api/login, then get or replace a key in the API Platform dashboard. Keys are shown once.",
     authenticationP2:
-      "Send the key as Authorization: Bearer <key> or X-Api-Key: <key>. Keys use the fv_live_ prefix. POST /v1/keys issues or replaces a key for an email; replacing invalidates the previous key.",
+      "Send the key as Authorization: Bearer <key> or X-Api-Key: <key>. Keys use the fv_live_ prefix. Keys are issued only through the API Platform after sign-in; replacing a key invalidates the previous one.",
     authenticationMock:
       "Same lookup response. The key identifies the client; public GET still works without it.",
     headersTitle: "Response headers",
@@ -641,7 +641,7 @@ const en = {
     ],
     corsTitle: "CORS",
     corsBody:
-      "Browser clients may call the API from any origin. Credentials are not used. Preflight allows GET, HEAD, POST (keys), and OPTIONS. Exposed headers include API-Version, Link, and rate-limit headers.",
+      "Browser clients may call the API from any origin. Credentials are not used. Preflight allows GET, HEAD, and OPTIONS. Exposed headers include API-Version, Link, and rate-limit headers.",
     rateLimitsTitle: "Rate limits",
     rateLimitsBody:
       "Fair-use limits apply per client. When a client exceeds the policy the API returns 429 with code RATE_LIMITED and Retry-After. Always read RateLimit-Policy on the response rather than hard-coding a budget. Health and OpenAPI paths stay exempt.",
@@ -2187,7 +2187,7 @@ const pt: SiteCopy = {
     authenticationP1:
       "GET, HEAD e OPTIONS públicos funcionam sem chave. Chaves opcionais identificam o seu cliente. Crie uma conta em /api/register, inicie sessão em /api/login e depois obtenha ou substitua uma chave no painel da API Platform. As chaves são mostradas uma vez.",
     authenticationP2:
-      "Envie a chave como Authorization: Bearer <key> ou X-Api-Key: <key>. As chaves usam o prefixo fv_live_. POST /v1/keys emite ou substitui uma chave para um email; substituir invalida a chave anterior.",
+      "Envie a chave como Authorization: Bearer <key> ou X-Api-Key: <key>. As chaves usam o prefixo fv_live_. As chaves são emitidas apenas pela API Platform após início de sessão; substituir uma chave invalida a anterior.",
     authenticationMock:
       "A mesma resposta de consulta. A chave identifica o cliente; GET público continua a funcionar sem ela.",
     headersTitle: "Cabeçalhos de resposta",
@@ -2200,7 +2200,7 @@ const pt: SiteCopy = {
     ],
     corsTitle: "CORS",
     corsBody:
-      "Clientes de browser podem chamar a API a partir de qualquer origem. Credenciais não são usadas. O preflight permite GET, HEAD, POST (chaves) e OPTIONS. Os cabeçalhos expostos incluem API-Version, Link e cabeçalhos de limite de taxa.",
+      "Clientes de browser podem chamar a API a partir de qualquer origem. Credenciais não são usadas. O preflight permite GET, HEAD e OPTIONS. Os cabeçalhos expostos incluem API-Version, Link e cabeçalhos de limite de taxa.",
     rateLimitsTitle: "Limites de taxa",
     rateLimitsBody:
       "Aplicam-se limites de uso justo por cliente. Quando um cliente excede a política, a API devolve 429 com o código RATE_LIMITED e Retry-After. Leia sempre RateLimit-Policy na resposta em vez de codificar um orçamento. Os caminhos de saúde e OpenAPI permanecem isentos.",

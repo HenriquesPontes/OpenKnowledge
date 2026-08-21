@@ -1317,7 +1317,7 @@ export const apiPaths = [
   { method: "GET", path: "/v1", detail: "Service identity, versioning, CORS, rate limit, attribution, and catalog links." },
   { method: "GET", path: "/v1/health", detail: "Versioned health check." },
   { method: "GET", path: "/v1/openapi.yaml", detail: "OpenAPI 3 contract for this release." },
-  { method: "POST", path: "/v1/keys", detail: "Issue or replace an optional API key. Shown once. Public GET still works without it." },
+  { method: "POST", path: "/v1/keys", detail: "API Platform only (server-to-server). Issues or replaces an optional key. Public GET still works without it." },
   { method: "GET", path: "/v1/kb", detail: "Knowledge Base collection map." },
   { method: "GET", path: "/v1/languages", detail: "Isolated lexicons only. Parent country indexes are omitted." },
   { method: "GET", path: "/v1/datasets", detail: "Published dataset index, including country indexes." },
