@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { TurnstileWidget } from "@/components/sections/TurnstileWidget";
 import { useLocale } from "@/components/locale/LocaleProvider";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -12,12 +13,18 @@ export function Hero() {
   const { copy } = useLocale();
   const hero = copy.hero;
   const [email, setEmail] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
   async function handleWaitlist(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email.trim()) return;
+    if (!turnstileToken) {
+      setStatus("error");
+      setMessage(copy.apiAuth.turnstileRequired);
+      return;
+    }
 
     setStatus("loading");
     setMessage("");
@@ -26,7 +33,11 @@ export function Hero() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), source: "home" }),
+        body: JSON.stringify({
+          email: email.trim(),
+          source: "home",
+          turnstileToken,
+        }),
       });
 
       const data = await res.json();
@@ -35,6 +46,7 @@ export function Hero() {
         setStatus("success");
         setMessage(hero.success);
         setEmail("");
+        setTurnstileToken("");
       } else {
         setStatus("error");
         setMessage(data.error || hero.error);
@@ -80,19 +92,26 @@ export function Hero() {
                   required
                   autoComplete="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(event) => setEmail(event.target.value)}
                   disabled={status === "loading"}
                   className="field w-full sm:w-[280px]"
                 />
-                <Button type="submit" disabled={status === "loading"} className="w-fit">
+                <Button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-fit"
+                >
                   {status === "loading" ? hero.joining : hero.waitlistCta}
                 </Button>
               </div>
-              {status === "error" && (
+              <div className="mt-3">
+                <TurnstileWidget onToken={setTurnstileToken} />
+              </div>
+              {status === "error" ? (
                 <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
                   {message}
                 </p>
-              )}
+              ) : null}
             </form>
           )}
         </motion.div>

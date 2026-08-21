@@ -121,9 +121,9 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
       if (!registrationCode.trim()) {
         nextErrors.registrationCode = t.registrationCodeRequired;
       }
-      if (!turnstileToken) {
-        nextErrors.turnstile = t.turnstileRequired;
-      }
+    }
+    if (!turnstileToken) {
+      nextErrors.turnstile = t.turnstileRequired;
     }
     if (Object.keys(nextErrors).length > 0) {
       setFieldErrors(nextErrors);
@@ -147,6 +147,7 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
           : {
               email: email.trim(),
               password,
+              turnstileToken,
               remember,
             };
 
@@ -346,6 +347,11 @@ export function ApiAuthForm({ mode }: { mode: Mode }) {
             className={fieldErrors.password ? fieldErrorClass : fieldClass}
           />
           <FieldError message={fieldErrors.password} />
+
+          <div className="mt-3">
+            <TurnstileWidget onToken={setTurnstileToken} />
+            <FieldError message={fieldErrors.turnstile} />
+          </div>
 
           <label className="mt-3 flex items-start gap-2 cursor-pointer select-none">
             <input

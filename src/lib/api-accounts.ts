@@ -14,15 +14,18 @@ export type ApiAccount = {
 };
 
 const PASSWORD_MIN = 12;
+const PASSWORD_MAX = 128;
 const PASSWORD_NUMBER = /\d/;
 const PASSWORD_SPECIAL = /[^A-Za-z0-9]/;
 
 export function passwordRequirementsMessage() {
-  return "Password requirements: 12 characters including a number and a special character.";
+  return "Password requirements: 12–128 characters including a number and a special character.";
 }
 
 export function validatePassword(password: string): string | null {
-  if (password.length < PASSWORD_MIN) return passwordRequirementsMessage();
+  if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
+    return passwordRequirementsMessage();
+  }
   if (!PASSWORD_NUMBER.test(password) || !PASSWORD_SPECIAL.test(password)) {
     return passwordRequirementsMessage();
   }

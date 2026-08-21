@@ -9,11 +9,14 @@ import {
   readApiSession,
   writeApiSession,
 } from "@/lib/api-session";
+import { AUTH_RATE, clientIp, rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const INVALID_EMAIL = "A valid email address is required.";
 const INVALID_CREDENTIALS = "Email or password is incorrect.";
 const SESSION_SECRET_MISSING =
   "API Platform sessions are not configured on this host.";
+const RATE_LIMITED = "Too many sign-in attempts. Try again shortly.";
 
 export async function GET() {
   const session = await readApiSession();
@@ -30,6 +33,18 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = clientIp(request);
+    const limited = rateLimit(`auth:login:${ip}`, AUTH_RATE.limit, AUTH_RATE.windowMs);
+    if (!limited.ok) {
+      return NextResponse.json(
+        { error: RATE_LIMITED },
+        {
+          status: 429,
+          headers: { "Retry-After": String(limited.retryAfterSec) },
+        },
+      );
+    }
+
     const body: unknown = await request.json();
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "Invalid request." }, { status: 400 });
@@ -38,10 +53,13 @@ export async function POST(request: NextRequest) {
       email?: unknown;
       password?: unknown;
       remember?: unknown;
+      turnstileToken?: unknown;
     };
     const email = typeof payload.email === "string" ? payload.email : "";
     const password =
       typeof payload.password === "string" ? payload.password : "";
+    const turnstileToken =
+      typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
     const remember =
       payload.remember === undefined ? true : Boolean(payload.remember);
 
@@ -60,6 +78,14 @@ export async function POST(request: NextRequest) {
     if (!password) {
       return NextResponse.json(
         { error: "Password cannot be blank.", field: "password" },
+        { status: 400 },
+      );
+    }
+
+    const challenge = await verifyTurnstileToken(turnstileToken, ip);
+    if (!challenge.ok) {
+      return NextResponse.json(
+        { error: challenge.error, field: "turnstile" },
         { status: 400 },
       );
     }

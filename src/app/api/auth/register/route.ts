@@ -11,10 +11,12 @@ import {
   writeApiSession,
 } from "@/lib/api-session";
 import { verifyTurnstileToken } from "@/lib/turnstile";
+import { AUTH_RATE, clientIp, rateLimit } from "@/lib/rate-limit";
 
 const INVALID_EMAIL = "A valid email address is required.";
 const SESSION_SECRET_MISSING =
   "API Platform sessions are not configured on this host.";
+const RATE_LIMITED = "Too many registration attempts. Try again shortly.";
 
 function sessionConfigError(error: unknown) {
   return (
@@ -24,6 +26,22 @@ function sessionConfigError(error: unknown) {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = clientIp(request);
+    const limited = rateLimit(
+      `auth:register:${ip}`,
+      AUTH_RATE.limit,
+      AUTH_RATE.windowMs,
+    );
+    if (!limited.ok) {
+      return NextResponse.json(
+        { error: RATE_LIMITED },
+        {
+          status: 429,
+          headers: { "Retry-After": String(limited.retryAfterSec) },
+        },
+      );
+    }
+
     const body: unknown = await request.json();
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "Invalid request." }, { status: 400 });

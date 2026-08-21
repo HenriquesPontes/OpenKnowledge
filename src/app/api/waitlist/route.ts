@@ -2,6 +2,8 @@ import { mkdir, readFile, rename, writeFile } from "fs/promises";
 import path from "path";
 import { randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { WAITLIST_RATE, clientIp, rateLimit } from "@/lib/rate-limit";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 const BEEHIIV_API_BASE = "https://api.beehiiv.com/v2";
 const WAITLIST_DIR = path.join(process.cwd(), "Join waitlist");
@@ -11,6 +13,7 @@ const INVALID_EMAIL = "A valid email address is required.";
 const GENERIC_ERROR = "Something went wrong. Please try again.";
 const UNAVAILABLE =
   "The waitlist is temporarily unavailable. Please try again later.";
+const RATE_LIMITED = "Too many waitlist attempts. Try again shortly.";
 
 type WaitlistSource = "home" | "connect" | "dictionary" | "api";
 
@@ -122,12 +125,30 @@ async function subscribeToBeehiiv(
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = clientIp(request);
+    const limited = rateLimit(
+      `waitlist:${ip}`,
+      WAITLIST_RATE.limit,
+      WAITLIST_RATE.windowMs,
+    );
+    if (!limited.ok) {
+      return NextResponse.json(
+        { error: RATE_LIMITED },
+        {
+          status: 429,
+          headers: { "Retry-After": String(limited.retryAfterSec) },
+        },
+      );
+    }
+
     const body: unknown = await request.json();
     const payload =
       body && typeof body === "object" ? (body as Record<string, unknown>) : {};
     const email = payload.email;
     const normalized =
       typeof email === "string" ? email.trim().toLowerCase() : "";
+    const turnstileToken =
+      typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
     const source: WaitlistSource = WAITLIST_SOURCES.includes(
       payload.source as WaitlistSource,
     )
@@ -136,6 +157,11 @@ export async function POST(request: NextRequest) {
 
     if (!normalized || !EMAIL_PATTERN.test(normalized)) {
       return NextResponse.json({ error: INVALID_EMAIL }, { status: 400 });
+    }
+
+    const challenge = await verifyTurnstileToken(turnstileToken, ip);
+    if (!challenge.ok) {
+      return NextResponse.json({ error: challenge.error }, { status: 400 });
     }
 
     let stored = false;

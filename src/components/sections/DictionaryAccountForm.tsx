@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { TurnstileWidget } from "@/components/sections/TurnstileWidget";
 import { useLocale } from "@/components/locale/LocaleProvider";
 
 export function DictionaryAccountForm({
@@ -12,6 +13,7 @@ export function DictionaryAccountForm({
   const { copy } = useLocale();
   const waitlist = copy.waitlist;
   const [email, setEmail] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
   );
@@ -20,6 +22,11 @@ export function DictionaryAccountForm({
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!email.trim()) return;
+    if (!turnstileToken) {
+      setStatus("error");
+      setMessage(copy.apiAuth.turnstileRequired);
+      return;
+    }
 
     setStatus("loading");
     setMessage("");
@@ -28,13 +35,18 @@ export function DictionaryAccountForm({
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), source: surface }),
+        body: JSON.stringify({
+          email: email.trim(),
+          source: surface,
+          turnstileToken,
+        }),
       });
       const data: { error?: string } = await response.json().catch(() => ({}));
       if (response.ok) {
         setStatus("success");
         setMessage(waitlist.successConnect);
         setEmail("");
+        setTurnstileToken("");
         return;
       }
       setStatus("error");
@@ -71,6 +83,9 @@ export function DictionaryAccountForm({
             >
               {status === "loading" ? waitlist.joining : waitlist.joinCta}
             </Button>
+          </div>
+          <div className="mt-3">
+            <TurnstileWidget onToken={setTurnstileToken} />
           </div>
           {status === "error" ? (
             <p className="mt-3 text-muted text-sm tracking-[-0.01em]">
