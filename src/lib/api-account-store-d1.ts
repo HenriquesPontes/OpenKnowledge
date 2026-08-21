@@ -69,7 +69,10 @@ export function isD1AccountStoreConfigured() {
   return d1Config() !== null;
 }
 
-async function d1Query(sql: string, params: unknown[] = []): Promise<D1QueryResult> {
+export async function d1Query(
+  sql: string,
+  params: unknown[] = [],
+): Promise<D1QueryResult> {
   const config = d1Config();
   if (!config) {
     throw new Error(ACCOUNT_STORE_UNAVAILABLE);
@@ -93,9 +96,6 @@ async function d1Query(sql: string, params: unknown[] = []): Promise<D1QueryResu
     const message =
       payload?.errors?.[0]?.message ||
       `D1 query failed (${response.status}).`;
-    if (/UNIQUE|constraint|already exists/i.test(message)) {
-      throw new Error("ACCOUNT_EXISTS");
-    }
     throw new Error(message);
   }
 

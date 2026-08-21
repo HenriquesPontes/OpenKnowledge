@@ -163,7 +163,7 @@ export function Navbar() {
             {open ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-2xl border border-border bg-background/95 px-4 py-4 sm:px-5 sm:py-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.18)] backdrop-blur-xl max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
+                className="absolute right-0 top-full mt-2 w-[min(40rem,100%)] rounded-2xl border border-border bg-background px-4 py-4 sm:px-5 sm:py-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.18)] max-h-[min(32rem,calc(100dvh-5rem))] overflow-y-auto overscroll-contain max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-[calc(3.75rem+env(safe-area-inset-top))] max-sm:mt-0 max-sm:w-auto"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-8">
                   {nav.menu.columns.map((column) => (

@@ -1,10 +1,18 @@
 import { cookies } from "next/headers";
 import { ApiPlatformShell } from "@/components/sections/ApiPlatformShell";
-import { languages } from "@/lib/constants";
-import { fetchLanguagesCatalog } from "@/lib/catalog";
+import {
+  countries,
+  languageForDataset,
+  languages,
+} from "@/lib/constants";
+import {
+  fetchLanguagesCatalog,
+  isCountryDataset,
+} from "@/lib/catalog";
 import { findAccount } from "@/lib/api-accounts";
 import { readApiSession } from "@/lib/api-session";
 import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
+import type { DashboardDataset } from "@/components/sections/ApiDashboard";
 
 export const metadata = {
   title: "API Platform",
@@ -13,28 +21,54 @@ export const metadata = {
   alternates: { canonical: "/api" },
 };
 
+function familyId(dataset: string) {
+  return dataset.includes("/") ? dataset.split("/")[0] : dataset;
+}
+
+function familyTitle(family: string) {
+  return (
+    countries.find((country) => country.id === family)?.title ?? family
+  );
+}
+
 export default async function ApiPage() {
   const locale = localeFromCookie((await cookies()).get(LOCALE_COOKIE)?.value);
   const copy = getSiteCopy(locale);
   const session = await readApiSession();
   const account = session ? await findAccount(session.email) : null;
   const catalog = await fetchLanguagesCatalog();
-  const catalogOptions =
+  const catalogRows =
     catalog?.languages
       ?.filter((item) => item.dataset)
-      .map((item) => ({
-        dataset: item.dataset,
-        label: item.language_name
-          ? `${item.language_name} (${item.dataset})`
-          : item.dataset,
-      })) ?? [];
+      .map((item): DashboardDataset => {
+        const language = languageForDataset(item.dataset);
+        const family = familyId(item.dataset);
+        const name =
+          item.language_name || language?.title || item.dataset;
+        return {
+          dataset: item.dataset,
+          label: `${name} (${item.dataset})`,
+          name,
+          family,
+          familyLabel: familyTitle(family),
+          entries: item.entry_count ?? 0,
+          iso: item.iso_639_3 || language?.iso,
+          index: isCountryDataset(item.dataset, item),
+        };
+      }) ?? [];
 
-  const datasets =
-    catalogOptions.length > 0
-      ? catalogOptions
+  const datasets: DashboardDataset[] =
+    catalogRows.length > 0
+      ? catalogRows
       : languages.map((language) => ({
           dataset: language.dataset,
           label: `${language.title} (${language.dataset})`,
+          name: language.title,
+          family: language.country,
+          familyLabel: familyTitle(language.country),
+          entries: 0,
+          iso: language.iso,
+          index: false,
         }));
 
   const initialSession = session

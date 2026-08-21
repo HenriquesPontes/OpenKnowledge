@@ -200,7 +200,8 @@ Persistent accounts on Vercel (D1, Postgres, or equivalent) are **Phase 8** — 
 > **Goal:** Waitlist for learners ↔ native speakers without hosting the Learning app.
 
 - [x] `/connect` waitlist product page
-- [x] Beehiiv on Vercel (local JSON off Vercel) per TECH_REPORT
+- [x] Waitlist rows in Cloudflare D1 (`waitlist` table); Beehiiv remains optional email delivery
+- [x] Local JSON fallback only when D1 env is unset (non-Vercel)
 
 ---
 
@@ -229,7 +230,7 @@ Persistent accounts on Vercel (D1, Postgres, or equivalent) are **Phase 8** — 
 
 - [x] Choose backend: **Cloudflare D1** (same stack as Research)
 - [x] D1 adapter via Cloudflare query API (`api-account-store-d1.ts`)
-- [x] Schema: `scripts/d1-api-accounts.sql` (`api_accounts` table)
+- [x] Schema: `scripts/d1-api-accounts.sql` (`api_accounts` + `waitlist`)
 - [x] Env: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID`
 - [x] Keep scrypt password hashes and signed session cookie behaviour
 - [x] Local JSON remains the fallback when D1 env is unset (non-Vercel)
@@ -243,7 +244,7 @@ npx wrangler d1 execute <your-d1-name> --remote --file=./scripts/d1-api-accounts
 ### Step 3 — Production env (DONE)
 
 - [x] Create D1 database `open-knowledge-accounts` (WEUR)
-- [x] Apply schema (`api_accounts` + index)
+- [x] Apply schema (`api_accounts` + `waitlist` + indexes)
 - [x] Set Cloudflare account / D1 id / auth on Vercel (Production / Preview / Development)
 - [x] Local `.env.local` wired for D1
 - [x] D1 adapter accepts Bearer API tokens **or** Global API Key + `CLOUDFLARE_EMAIL`
@@ -297,6 +298,7 @@ Database id is in env (not committed). Schema: `scripts/d1-api-accounts.sql`.
 | **Locale** | `fv_locale` + `i18n` / `i18n-copy` | EN / PT site chrome |
 | **Maps** | d3-geo + country overlays; cobe globe | Atlas without merging lexicons |
 | **Accounts** | JSON local · Cloudflare D1 on Vercel | Optional API Platform |
+| **Waitlist** | Cloudflare D1 (`waitlist`) · JSON local fallback | Email + product source |
 | **Data origin** | Research API (`api.forrovivo.com`) | Attested lexicons stay in Research |
 | **Hosting** | Vercel | Production forrovivo.com |
 | **Docs** | `TECH_REPORT.md` · `TECH_REPORT_v2.0.md` · this file | Spec vs shipped site |

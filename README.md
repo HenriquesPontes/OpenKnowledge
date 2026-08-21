@@ -147,9 +147,9 @@ Lint: `npm run lint`.
 | `CLOUDFLARE_ACCOUNT_ID` | Server. Cloudflare account id for D1 API Platform accounts. |
 | `CLOUDFLARE_API_TOKEN` | Server. Cloudflare API token (Bearer) **or** Global API Key (`cfk_…`) for D1. |
 | `CLOUDFLARE_EMAIL` | Server. Required when using a Global API Key (`X-Auth-Email`). |
-| `CLOUDFLARE_D1_DATABASE_ID` | Server. D1 database UUID for `api_accounts`. |
+| `CLOUDFLARE_D1_DATABASE_ID` | Server. D1 database UUID for `api_accounts` and `waitlist`. |
 
-On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored). API Platform accounts use Cloudflare D1 when the three Cloudflare env vars above are set; otherwise local JSON at `API accounts/accounts.json` (gitignored) on non-Vercel hosts. Password hashes use scrypt. Create-account on Vercel requires D1. Apply the schema with `npx wrangler d1 execute <db-name> --remote --file=./scripts/d1-api-accounts.sql`.
+On Vercel, waitlist rows persist in Cloudflare D1. Beehiiv is optional email delivery after the D1 write. Locally, without D1 env, the waitlist writes `Join waitlist/waitlist.json` (gitignored). API Platform accounts use Cloudflare D1 when the Cloudflare env vars above are set; otherwise local JSON at `API accounts/accounts.json` (gitignored) on non-Vercel hosts. Password hashes use scrypt. Create-account and waitlist on Vercel require D1. Apply the schema with `npx wrangler d1 execute <db-name> --remote --file=./scripts/d1-api-accounts.sql`.
 
 ---
 
@@ -170,7 +170,7 @@ livlutechnologies.com is the planned company website. It is not ready yet.
 ## 🔒 Privacy & Security
 
 - **No lexicon store** — attested entries live in the Linguistic Research API and GitHub datasets.
-- **Waitlist emails** — used to notify product availability; not sold. On Vercel they go to Beehiiv when credentials exist.
+- **Waitlist emails** — used to notify product availability; not sold. Stored in Cloudflare D1. Beehiiv is used only to send those notices when configured.
 - **API Platform** — passwords hashed (scrypt); session cookie is httpOnly and signed. Register uses Turnstile.
 - **Public GET** — the linguistic API is readable without a key. Optional keys are issued only to a signed-in session.
 - **Legal** — company, terms, privacy, and EULA at `/legal`.
