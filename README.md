@@ -144,8 +144,12 @@ Lint: `npm run lint`.
 | `API_REGISTRATION_CODES` | Server. Comma-separated invite codes. Registration is closed if unset or empty. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public. Cloudflare Turnstile site key for create-account. |
 | `TURNSTILE_SECRET_KEY` | Server. Cloudflare Turnstile secret for siteverify. |
+| `CLOUDFLARE_ACCOUNT_ID` | Server. Cloudflare account id for D1 API Platform accounts. |
+| `CLOUDFLARE_API_TOKEN` | Server. Cloudflare API token (Bearer) **or** Global API Key (`cfk_…`) for D1. |
+| `CLOUDFLARE_EMAIL` | Server. Required when using a Global API Key (`X-Auth-Email`). |
+| `CLOUDFLARE_D1_DATABASE_ID` | Server. D1 database UUID for `api_accounts`. |
 
-On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored). API Platform accounts write `API accounts/accounts.json` (gitignored) on persistent hosts; password hashes use scrypt. Create-account is unavailable on Vercel until a persistent store is wired.
+On Vercel, waitlist persistence uses Beehiiv. Locally, without those credentials, the waitlist writes `Join waitlist/waitlist.json` (gitignored). API Platform accounts use Cloudflare D1 when the three Cloudflare env vars above are set; otherwise local JSON at `API accounts/accounts.json` (gitignored) on non-Vercel hosts. Password hashes use scrypt. Create-account on Vercel requires D1. Apply the schema with `npx wrangler d1 execute <db-name> --remote --file=./scripts/d1-api-accounts.sql`.
 
 ---
 
