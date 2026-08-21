@@ -1402,7 +1402,8 @@ export const legalNav = [
   {
     label: "Overview",
     href: "/legal",
-    description: "How ForroVivo products are operated and where to find each policy.",
+    description:
+      "Company umbrella policies versus product-only supplements for each pillar.",
   },
   {
     label: "Company",
@@ -1412,17 +1413,38 @@ export const legalNav = [
   {
     label: "Terms of service",
     href: "/legal/terms",
-    description: "Rules for using Open Knowledge, the app, Connect, research, and the API.",
+    description:
+      "Umbrella Terms of service for all ForroVivo products operated by LIVLU TECHNOLOGIES LTD.",
   },
   {
     label: "Privacy",
     href: "/legal/privacy",
-    description: "How waitlists, accounts, and product data are handled.",
+    description:
+      "Umbrella Privacy Policy for waitlists, accounts, apps, and related ForroVivo surfaces.",
   },
   {
     label: "EULA",
     href: "/legal/eula",
-    description: "Licence for the site, Linguistic Research data, and related software.",
+    description:
+      "Umbrella End User License Agreement for ForroVivo software and published research materials.",
+  },
+  {
+    label: "Open Knowledge",
+    href: "/legal/open-knowledge",
+    description:
+      "Product-only terms and privacy for this site, docs hub, API Platform, and Connect waitlist.",
+  },
+  {
+    label: "Forro Vivo App",
+    href: "/legal/app",
+    description:
+      "Product-only terms and privacy for the Learning apps (iOS and Android).",
+  },
+  {
+    label: "Linguistic Research",
+    href: "/legal/research",
+    description:
+      "Product-only terms and privacy for attested datasets and the read-only API.",
   },
 ] as const;
 

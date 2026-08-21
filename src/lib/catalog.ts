@@ -2,7 +2,7 @@ export const API_ORIGIN = "https://api.forrovivo.com";
 export const API_FALLBACK_ORIGIN =
   "https://linguistic-research-forro-vivo.pontes-18.workers.dev";
 export const GITHUB_URL =
-  "https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-";
+  "https://github.com/Forrovivo/linguistic-research";
 export const APP_ORIGIN = "https://www.forrovivo.com";
 export const APP_STORE_URL = "https://apps.apple.com/app/id6751409176";
 export const PLAY_STORE_URL =

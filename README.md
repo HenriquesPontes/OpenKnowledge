@@ -80,11 +80,12 @@ Open knowledge/
 │       ├── api-session.ts   # Signed session cookie
 │       └── turnstile.ts     # Create-account human check
 ├── TECH_REPORT.md           # v1.0 baseline
-└── TECH_REPORT_v2.0.md      # Incremental v2.0 report
+├── TECH_REPORT_v2.0.md      # Incremental v2.0 report
+└── CONTEXT.md               # Implementation masterplan
 ```
 
 **Pattern:** Next.js App Router + React Server Components + client islands  
-**Lexical data:** not in this repo — [Linguistic Research](https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-) and `https://api.forrovivo.com`
+**Lexical data:** not in this repo — [Linguistic Research](https://github.com/Forrovivo/linguistic-research) and `https://api.forrovivo.com`
 
 ---
 
@@ -184,7 +185,7 @@ Dictionary login/register permanently redirect to API Platform. They are not a s
 
 ## 🤝 Contributing
 
-Pull requests are welcome. For major changes, open an issue first.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Pull requests for site and docs fixes are welcome; open an issue first for major changes. Lexical evidence belongs in Research, not in this repository.
 
 **Setup for contributors:**
 
@@ -206,8 +207,8 @@ This website and repository are **proprietary**. They are **not** open source. S
 ## Legal & contact
 
 - Company: [forrovivo.com/legal/company](https://www.forrovivo.com/legal/company)
-- Terms: [forrovivo.com/legal/terms](https://www.forrovivo.com/legal/terms)
-- Privacy: [forrovivo.com/legal/privacy](https://www.forrovivo.com/legal/privacy)
+- Terms: [forrovivo.com/legal/terms](https://www.forrovivo.com/legal/terms) · product [TERMS.md](TERMS.md)
+- Privacy: [forrovivo.com/legal/privacy](https://www.forrovivo.com/legal/privacy) · product [PRIVACY.md](PRIVACY.md)
 - EULA: [forrovivo.com/legal/eula](https://www.forrovivo.com/legal/eula)
 - Contact: support@forrovivo.com | geral@forrovivo.com
 
@@ -215,5 +216,10 @@ This website and repository are **proprietary**. They are **not** open source. S
 
 ## 📚 Technical Documentation
 
+- [CONTEXT.md](CONTEXT.md) — Implementation masterplan (phases, next work)
+- [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — Site theme tokens (`globals.css`) and UI principles
+- [CONTRIBUTING.md](CONTRIBUTING.md) — How to contribute site code and docs (lexicon data goes to Research)
+- [TERMS.md](TERMS.md) — Product-only terms (company umbrella: workspace `LEGAL/TERMS.md` · live site)
+- [PRIVACY.md](PRIVACY.md) — Product-only privacy (company umbrella: workspace `LEGAL/PRIVACY.md` · live site)
 - [TECH_REPORT.md](TECH_REPORT.md) — v1.0 baseline (isolation, playground, waitlist, hosts)
 - [TECH_REPORT_v2.0.md](TECH_REPORT_v2.0.md) — v2.0 incremental report (accounts, docs hub, locale, legal)

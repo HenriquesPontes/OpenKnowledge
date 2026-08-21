@@ -48,7 +48,7 @@ Domain architecture is `forrovivo.com`. Production is served at `https://forrovi
 | --- | --- | --- |
 | Open Knowledge | Public linguistic knowledge site, documentation, dictionary lookup UI, API playground, API Platform accounts | This Next.js site at `https://forrovivo.com` |
 | Linguistic Research API | Read-only JSON API over published datasets; optional key issue | `https://api.forrovivo.com` |
-| Linguistic Research repository | Isolated JSON datasets, methodology, bibliography | [Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-](https://github.com/Forrovivo/LINGUISTIC-RESEARCH-Forro-Vivo-) |
+| Linguistic Research repository | Isolated JSON datasets, methodology, bibliography | [Forrovivo/linguistic-research](https://github.com/Forrovivo/linguistic-research) |
 | Forro Vivo App | Learning product: dictionary, lessons, exercises | App Store. Product page at `/app` |
 | Forro Connect | Connects learners with native speakers. How it works: learner, native speaker, direct match, live lesson. Public CTA is the waitlist. | `/connect` on this Next.js site |
 

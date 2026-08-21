@@ -31,6 +31,9 @@ const staticPaths = [
   "/legal/terms",
   "/legal/privacy",
   "/legal/eula",
+  "/legal/open-knowledge",
+  "/legal/app",
+  "/legal/research",
   "/translation",
 ] as const;
 

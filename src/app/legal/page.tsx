@@ -4,7 +4,7 @@ import { LOCALE_COOKIE, localeFromCookie, getSiteCopy } from "@/lib/i18n";
 export const metadata = {
   title: "Legal",
   description:
-    "Legal policies for ForroVivo: company information, terms of service, privacy, and EULA for Open Knowledge, the Forro Vivo App, Forro Connect, and Linguistic Research.",
+    "LIVLU TECHNOLOGIES LTD company umbrella policies (Terms, Privacy, EULA) and product-only supplements for Open Knowledge, the Forro Vivo App, and Linguistic Research.",
   alternates: { canonical: "/legal" },
 };
 

@@ -703,7 +703,7 @@ const en = {
   legalOverview: {
     title: "Legal",
     intro:
-      "Policies for Open Knowledge, Linguistic Research, the Forro Vivo App, and Forro Connect — operated by LIVLU TECHNOLOGIES LTD.",
+      "LIVLU TECHNOLOGIES LTD publishes company umbrella policies (Terms, Privacy, EULA) for the whole ForroVivo family. Each pillar also keeps product-only supplements that do not replace the umbrella.",
   },
   legalLayout: {
     title: "Legal",
@@ -738,9 +738,10 @@ const en = {
   },
   legalTerms: {
     title: "Terms of service",
-    intro: "The rules for using ForroVivo products and this website.",
+    intro:
+      "Umbrella rules for using ForroVivo products and this website, operated by LIVLU TECHNOLOGIES LTD. Product-only supplements live under Open Knowledge, Forro Vivo App, and Linguistic Research in the legal menu.",
     opening:
-      "By using this website, joining a waitlist, creating an API Platform account, downloading or using the Forro Vivo App, or joining Forro Connect, you agree to these terms. If you use a product on behalf of an organisation, you confirm that you are allowed to bind that organisation.",
+      "By using this website, joining a waitlist, creating an API Platform account, downloading or using the Forro Vivo App, or joining Forro Connect, you agree to these company terms. If you use a product on behalf of an organisation, you confirm that you are allowed to bind that organisation.",
     researchTitle: "Open Knowledge and Linguistic Research",
     researchP1:
       "Open Knowledge publishes public linguistic knowledge for African Creole languages and related language work, including isolated lexicons and documentation. Linguistic Research is the evidence layer: sources, methodology, and the read-only Linguistic Research API.",
@@ -783,9 +784,9 @@ const en = {
   legalPrivacy: {
     title: "Privacy",
     intro:
-      "How LIVLU TECHNOLOGIES LTD handles personal data across ForroVivo products.",
+      "Umbrella Privacy Policy for how LIVLU TECHNOLOGIES LTD handles personal data across ForroVivo products. Product-only supplements are listed in the legal menu.",
     opening:
-      "This policy explains what we collect, why we collect it, and how to reach us. It covers Open Knowledge, Linguistic Research surfaces on this site, waitlists, the API Platform, and related ForroVivo product pages. The Forro Vivo App and Forro Connect may also process data needed to deliver those products, as described below.",
+      "This company policy explains what we collect, why we collect it, and how to reach us. It covers Open Knowledge, Linguistic Research surfaces on this site, waitlists, the API Platform, and related ForroVivo product pages. The Forro Vivo App and Forro Connect may also process data needed to deliver those products, as described below.",
     whoTitle: "Who is responsible",
     whoBody:
       "LIVLU TECHNOLOGIES LTD operates ForroVivo products and is responsible for personal data processed through this website and the related product surfaces described here. Registered in England and Wales. Company number 16799761.",
@@ -827,7 +828,7 @@ const en = {
   legalEula: {
     title: "End User License Agreement",
     intro:
-      "The licence under which you may use ForroVivo software, documentation, and published research materials.",
+      "Umbrella licence under which you may use ForroVivo software, documentation, and published research materials. Product-only supplements are listed in the legal menu.",
     opening:
       "This End User License Agreement (“EULA”) is between you and LIVLU TECHNOLOGIES LTD. It covers this website, Open Knowledge documentation, the Linguistic Research API and related public materials, and ForroVivo software products including the Forro Vivo App, except where a platform store licence or a separate written agreement says otherwise.",
     grantTitle: "Licence grant",
@@ -867,6 +868,95 @@ const en = {
       "This EULA is governed by the laws of England and Wales. Questions about licensing:",
     writeToLegal: "write to legal",
     governingAfter: ".",
+  },
+  legalProductOpenKnowledge: {
+    title: "Open Knowledge",
+    intro:
+      "Product-only terms and privacy for this website, docs hub, API Platform, and Forro Connect waitlist. They supplement — and do not replace — the company umbrella policies.",
+    umbrellaBefore: "Company umbrella:",
+    umbrellaTerms: "Terms",
+    umbrellaPrivacy: "Privacy",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". If this page and the umbrella policies differ, the company pages control.",
+    termsTitle: "Product terms",
+    termsBody: [
+      "Covers the public site at forrovivo.com, the docs hub and API playground, API Platform accounts and optional keys, and Forro Connect waitlist pages on this site.",
+      "Keep dataset isolation: do not invent, merge, or substitute lexical data across languages or varieties, and do not present generated forms as ForroVivo-attested evidence.",
+      "Keep API keys secret; do not attack, overload, or misrepresent the API Platform or playground.",
+      "Waitlist signup does not guarantee a Connect match or lesson time.",
+      "This website and repository are proprietary under the company EULA. They are not open source.",
+    ],
+    privacyTitle: "Product privacy",
+    privacyBody: [
+      "Waitlists: email and which waitlist you joined so we can notify you.",
+      "API Platform accounts: email, authentication credentials, optional registration codes, and keys that identify your API client.",
+      "Technical logs: IP and request metadata for security, reliability, and abuse prevention on this site.",
+      "Lexicons shown here are language documentation, not end-user personal profiles.",
+      "Learning app on-device data is covered on the Forro Vivo App product page, not here.",
+    ],
+    rightsBefore: "Privacy rights and security reports use the company contacts on the",
+    rightsPrivacy: "Privacy",
+    rightsAfter: "page.",
+  },
+  legalProductApp: {
+    title: "Forro Vivo App",
+    intro:
+      "Product-only terms and privacy for the Learning apps (iOS and Android). They supplement — and do not replace — the company umbrella policies.",
+    umbrellaBefore: "Company umbrella:",
+    umbrellaTerms: "Terms",
+    umbrellaPrivacy: "Privacy",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". If this page and the umbrella policies differ, the company pages control.",
+    termsTitle: "Product terms",
+    termsBody: [
+      "Covers the Forro Vivo learning apps: dictionary, lessons, exercises, and related on-device features as each client ships them.",
+      "Use the app lawfully and under App Store or Google Play rules that apply to your download.",
+      "Do not reverse engineer, scrape, or redistribute the app or non-public assets beyond the company EULA and store terms.",
+      "Grey Parrot is an AI tutor on the device, not a person — formative study only, not official grading or certification.",
+      "Do not present invented or cross-creole-merged forms as ForroVivo-attested evidence.",
+      "App source is proprietary. Features not yet shipped in a given client are not licensed as present.",
+    ],
+    privacyTitle: "Product privacy",
+    privacyBody: [
+      "On-device study state: preferences, legal-consent flags, bookmarks, academy progress, and similar offline-first data.",
+      "Account and platform: Sign in with Apple or Google when offered, plus store requirements under those platforms’ terms.",
+      "Microphone and speech when enabled: pronunciation and voice search as disclosed in each app.",
+      "Optional Wi‑Fi language packs the learner starts; linguistic content is language data, not a private-life profile.",
+      "Privacy and Terms acceptance may be recorded on device (GDPR Art. 7) before guest or signed-in study continues.",
+      "Waitlists and API Platform accounts are processed on Open Knowledge — see that product page.",
+    ],
+    rightsBefore: "Privacy rights and security reports use the company contacts on the",
+    rightsPrivacy: "Privacy",
+    rightsAfter: "page.",
+  },
+  legalProductResearch: {
+    title: "Linguistic Research",
+    intro:
+      "Product-only terms and privacy for attested datasets and the read-only Linguistic Research API. They supplement — and do not replace — the company umbrella policies.",
+    umbrellaBefore: "Company umbrella:",
+    umbrellaTerms: "Terms",
+    umbrellaPrivacy: "Privacy",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". If this page and the umbrella policies differ, the company pages control.",
+    termsTitle: "Product terms",
+    termsBody: [
+      "Covers attested lexicons under the Research repository, the read-only API at api.forrovivo.com, and methodology docs for this pillar.",
+      "Respect dataset isolation — one language or variety per folder; no merging lookalike creoles.",
+      "Do not invent glosses; missing stays TERM_NOT_FOUND.",
+      "Keep third-party source licences and attribution; do not relicense extracts as CC BY 4.0.",
+      "The API is GET-only for lexicon — no write endpoints that invent translations.",
+      "Project-original materials follow the Research LICENSE (CC BY 4.0 + source terms). Open Research does not relicense Open Knowledge or the apps.",
+    ],
+    privacyTitle: "Product privacy",
+    privacyBody: [
+      "Lexicons and Knowledge Base records are language documentation tied to sources — not end-user personal profiles and not advertising profiles.",
+      "API technical logs may include IP and request metadata for security, reliability, and abuse prevention.",
+      "Do not submit personal profiles, contact lists, or private learner data into dataset folders.",
+      "API Platform account email and credentials are processed on Open Knowledge, not as lexicon content.",
+    ],
+    rightsBefore: "Privacy rights and security reports use the company contacts on the",
+    rightsPrivacy: "Privacy",
+    rightsAfter: "page.",
   },
   apiPage: {
     productEyebrow: "Product",
@@ -1584,7 +1674,7 @@ const pt: SiteCopy = {
       label: "Visão geral",
       href: "/legal",
       description:
-        "Como os produtos ForroVivo são operados e onde encontrar cada política.",
+        "Políticas-guarda-chuva da empresa versus suplementos só do produto para cada pilar.",
     },
     {
       label: "Empresa",
@@ -1596,19 +1686,37 @@ const pt: SiteCopy = {
       label: "Termos de serviço",
       href: "/legal/terms",
       description:
-        "Regras para usar Open Knowledge, a aplicação, o Connect, a investigação e a API.",
+        "Termos de serviço guarda-chuva para todos os produtos ForroVivo operados pela LIVLU TECHNOLOGIES LTD.",
     },
     {
       label: "Privacidade",
       href: "/legal/privacy",
       description:
-        "Como são tratados as listas de espera, as contas e os dados dos produtos.",
+        "Política de privacidade guarda-chuva para listas de espera, contas, aplicações e superfícies ForroVivo relacionadas.",
     },
     {
       label: "EULA",
       href: "/legal/eula",
       description:
-        "Licença para o site, dados de Linguistic Research e software relacionado.",
+        "Acordo de licença de utilizador final guarda-chuva para software ForroVivo e materiais de investigação publicados.",
+    },
+    {
+      label: "Open Knowledge",
+      href: "/legal/open-knowledge",
+      description:
+        "Termos e privacidade só deste produto: site, docs, API Platform e lista de espera do Connect.",
+    },
+    {
+      label: "Forro Vivo App",
+      href: "/legal/app",
+      description:
+        "Termos e privacidade só do produto Learning (iOS e Android).",
+    },
+    {
+      label: "Linguistic Research",
+      href: "/legal/research",
+      description:
+        "Termos e privacidade só do produto: conjuntos de dados atestados e API só de leitura.",
     },
   ],
 
@@ -2154,7 +2262,7 @@ const pt: SiteCopy = {
   legalOverview: {
     title: "Legal",
     intro:
-      "Políticas para Open Knowledge, Linguistic Research, a Forro Vivo App e o Forro Connect — operados pela LIVLU TECHNOLOGIES LTD.",
+      "A LIVLU TECHNOLOGIES LTD publica políticas-guarda-chuva da empresa (Termos, Privacidade, EULA) para toda a família ForroVivo. Cada pilar também mantém suplementos só do produto, que não substituem o guarda-chuva.",
   },
   legalLayout: {
     title: "Legal",
@@ -2190,9 +2298,10 @@ const pt: SiteCopy = {
 
   legalTerms: {
     title: "Termos de serviço",
-    intro: "As regras para usar os produtos ForroVivo e este website.",
+    intro:
+      "Regras guarda-chuva para usar os produtos ForroVivo e este website, operados pela LIVLU TECHNOLOGIES LTD. Os suplementos só do produto estão em Open Knowledge, Forro Vivo App e Linguistic Research no menu legal.",
     opening:
-      "Ao usar este website, juntar-se a uma lista de espera, criar uma conta na API Platform, descarregar ou usar a Forro Vivo App, ou juntar-se ao Forro Connect, concorda com estes termos. Se usar um produto em nome de uma organização, confirma que está autorizado a vincular essa organização.",
+      "Ao usar este website, juntar-se a uma lista de espera, criar uma conta na API Platform, descarregar ou usar a Forro Vivo App, ou juntar-se ao Forro Connect, concorda com estes termos da empresa. Se usar um produto em nome de uma organização, confirma que está autorizado a vincular essa organização.",
     researchTitle: "Open Knowledge e Linguistic Research",
     researchP1:
       "Open Knowledge publica conhecimento linguístico público para línguas crioulas africanas e trabalho linguístico relacionado, incluindo léxicos isolados e documentação. Linguistic Research é a camada de evidência: fontes, metodologia e a Linguistic Research API só de leitura.",
@@ -2237,9 +2346,9 @@ const pt: SiteCopy = {
   legalPrivacy: {
     title: "Privacidade",
     intro:
-      "Como a LIVLU TECHNOLOGIES LTD trata dados pessoais nos produtos ForroVivo.",
+      "Política de privacidade guarda-chuva sobre como a LIVLU TECHNOLOGIES LTD trata dados pessoais nos produtos ForroVivo. Os suplementos só do produto estão no menu legal.",
     opening:
-      "Esta política explica o que recolhemos, porque o recolhemos e como nos contactar. Abrange Open Knowledge, superfícies de Linguistic Research neste site, listas de espera, a API Platform e páginas de produto ForroVivo relacionadas. A Forro Vivo App e o Forro Connect também podem processar dados necessários para prestar esses produtos, conforme descrito abaixo.",
+      "Esta política da empresa explica o que recolhemos, porque o recolhemos e como nos contactar. Abrange Open Knowledge, superfícies de Linguistic Research neste site, listas de espera, a API Platform e páginas de produto ForroVivo relacionadas. A Forro Vivo App e o Forro Connect também podem processar dados necessários para prestar esses produtos, conforme descrito abaixo.",
     whoTitle: "Quem é responsável",
     whoBody:
       "A LIVLU TECHNOLOGIES LTD opera os produtos ForroVivo e é responsável pelos dados pessoais processados através deste website e das superfícies de produto relacionadas aqui descritas. Registada em Inglaterra e País de Gales. Número da empresa 16799761.",
@@ -2281,7 +2390,7 @@ const pt: SiteCopy = {
   legalEula: {
     title: "Acordo de licença de utilizador final",
     intro:
-      "A licença ao abrigo da qual pode usar software ForroVivo, documentação e materiais de investigação publicados.",
+      "Licença guarda-chuva ao abrigo da qual pode usar software ForroVivo, documentação e materiais de investigação publicados. Os suplementos só do produto estão no menu legal.",
     opening:
       "Este Acordo de Licença de Utilizador Final (“EULA”) é celebrado entre si e a LIVLU TECHNOLOGIES LTD. Abrange este website, a documentação Open Knowledge, a Linguistic Research API e materiais públicos relacionados, e produtos de software ForroVivo incluindo a Forro Vivo App, excepto quando uma licença de loja de plataforma ou um acordo escrito em separado disponha de outro modo.",
     grantTitle: "Concessão de licença",
@@ -2321,6 +2430,95 @@ const pt: SiteCopy = {
       "Este EULA é regido pelas leis de Inglaterra e País de Gales. Questões sobre licenciamento:",
     writeToLegal: "escreva para legal",
     governingAfter: ".",
+  },
+  legalProductOpenKnowledge: {
+    title: "Open Knowledge",
+    intro:
+      "Termos e privacidade só deste produto: website, hub de docs, API Platform e lista de espera do Forro Connect. Complementam — e não substituem — as políticas-guarda-chuva da empresa.",
+    umbrellaBefore: "Guarda-chuva da empresa:",
+    umbrellaTerms: "Termos",
+    umbrellaPrivacy: "Privacidade",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". Se esta página e as políticas da empresa diferirem, as páginas da empresa prevalecem.",
+    termsTitle: "Termos do produto",
+    termsBody: [
+      "Abrange o site público forrovivo.com, o hub de documentação e o playground da API, contas da API Platform e chaves opcionais, e páginas de lista de espera do Forro Connect neste site.",
+      "Mantenha o isolamento de conjuntos de dados: não invente, funda ou substitua dados lexicais entre línguas ou variedades, nem apresente formas geradas como evidência atestada do ForroVivo.",
+      "Mantenha as chaves de API secretas; não ataque, sobrecarregue ou deturpe a API Platform ou o playground.",
+      "Inscrever-se na lista de espera não garante emparelhamento nem horário de lição no Connect.",
+      "Este website e repositório são proprietários ao abrigo do EULA da empresa. Não são open source.",
+    ],
+    privacyTitle: "Privacidade do produto",
+    privacyBody: [
+      "Listas de espera: email e a lista a que se juntou para o notificarmos.",
+      "Contas da API Platform: email, credenciais de autenticação, códigos de registo opcionais e chaves que identificam o seu cliente de API.",
+      "Registos técnicos: IP e metadados de pedido para segurança, fiabilidade e prevenção de abuso neste site.",
+      "Os léxicos mostrados aqui são documentação linguística, não perfis pessoais de utilizadores finais.",
+      "Dados no dispositivo da app de aprendizagem estão na página do produto Forro Vivo App, não aqui.",
+    ],
+    rightsBefore: "Direitos de privacidade e relatórios de segurança usam os contactos da empresa na página",
+    rightsPrivacy: "Privacidade",
+    rightsAfter: ".",
+  },
+  legalProductApp: {
+    title: "Forro Vivo App",
+    intro:
+      "Termos e privacidade só do produto Learning (iOS e Android). Complementam — e não substituem — as políticas-guarda-chuva da empresa.",
+    umbrellaBefore: "Guarda-chuva da empresa:",
+    umbrellaTerms: "Termos",
+    umbrellaPrivacy: "Privacidade",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". Se esta página e as políticas da empresa diferirem, as páginas da empresa prevalecem.",
+    termsTitle: "Termos do produto",
+    termsBody: [
+      "Abrange as apps de aprendizagem Forro Vivo: dicionário, lições, exercícios e funcionalidades no dispositivo conforme cada cliente as envia.",
+      "Use a app de forma lícita e ao abrigo das regras da App Store ou do Google Play aplicáveis ao seu download.",
+      "Não faça engenharia inversa, raspe ou redistribua a app ou activos não públicos para além do EULA da empresa e dos termos da loja.",
+      "O Grey Parrot é um tutor de IA neste dispositivo, não uma pessoa — estudo formativo apenas, não classificação ou certificação oficial.",
+      "Não apresente formas inventadas ou fundidas entre crioulos como evidência atestada do ForroVivo.",
+      "O código da app é proprietário. Funcionalidades ainda não enviadas num cliente não estão licenciadas como presentes.",
+    ],
+    privacyTitle: "Privacidade do produto",
+    privacyBody: [
+      "Estado de estudo no dispositivo: preferências, flags de consentimento legal, marcadores, progresso da academia e dados semelhantes offline-first.",
+      "Conta e plataforma: Iniciar sessão com Apple ou Google quando oferecido, mais requisitos da loja ao abrigo dos termos dessas plataformas.",
+      "Microfone e fala quando activados: pronúncia e pesquisa por voz conforme divulgado em cada app.",
+      "Pacotes de língua opcionais por Wi‑Fi que o aprendente inicia; o conteúdo linguístico é dados de língua, não um perfil da vida privada.",
+      "A aceitação de Privacidade e Termos pode ser registada no dispositivo (RGPD Art. 7) antes de continuar como convidado ou com sessão iniciada.",
+      "Listas de espera e contas da API Platform são processadas no Open Knowledge — veja essa página de produto.",
+    ],
+    rightsBefore: "Direitos de privacidade e relatórios de segurança usam os contactos da empresa na página",
+    rightsPrivacy: "Privacidade",
+    rightsAfter: ".",
+  },
+  legalProductResearch: {
+    title: "Linguistic Research",
+    intro:
+      "Termos e privacidade só do produto para conjuntos de dados atestados e a Linguistic Research API só de leitura. Complementam — e não substituem — as políticas-guarda-chuva da empresa.",
+    umbrellaBefore: "Guarda-chuva da empresa:",
+    umbrellaTerms: "Termos",
+    umbrellaPrivacy: "Privacidade",
+    umbrellaEula: "EULA",
+    umbrellaAfter: ". Se esta página e as políticas da empresa diferirem, as páginas da empresa prevalecem.",
+    termsTitle: "Termos do produto",
+    termsBody: [
+      "Abrange léxicos atestados no repositório Research, a API só de leitura em api.forrovivo.com e a documentação de metodologia deste pilar.",
+      "Respeite o isolamento de conjuntos de dados — uma língua ou variedade por pasta; sem fundir crioulos semelhantes.",
+      "Não invente glossas; em falta permanece TERM_NOT_FOUND.",
+      "Mantenha licenças e atribuição de fontes de terceiros; não relicencie extractos como CC BY 4.0.",
+      "A API é só GET para léxico — sem endpoints de escrita que inventem traduções.",
+      "Materiais originais do projecto seguem o LICENSE do Research (CC BY 4.0 + termos de fonte). O Research aberto não relicencia o Open Knowledge nem as apps.",
+    ],
+    privacyTitle: "Privacidade do produto",
+    privacyBody: [
+      "Léxicos e registos da Knowledge Base são documentação linguística ligada a fontes — não perfis pessoais de utilizadores finais nem perfis publicitários.",
+      "Registos técnicos da API podem incluir IP e metadados de pedido para segurança, fiabilidade e prevenção de abuso.",
+      "Não submeta perfis pessoais, listas de contactos ou dados privados de aprendentes para pastas de dados.",
+      "Email e credenciais de contas da API Platform são processados no Open Knowledge, não como conteúdo de léxico.",
+    ],
+    rightsBefore: "Direitos de privacidade e relatórios de segurança usam os contactos da empresa na página",
+    rightsPrivacy: "Privacidade",
+    rightsAfter: ".",
   },
   apiPage: {
     productEyebrow: "Produto",
