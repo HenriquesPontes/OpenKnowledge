@@ -67,7 +67,6 @@ export const nav = {
         size: "medium",
         items: [
           { label: "About", href: "/about" },
-          { label: "Careers", href: "/careers" },
           { label: "GitHub", href: GITHUB_URL, external: true },
           { label: "Legal", href: "/legal" },
         ],
